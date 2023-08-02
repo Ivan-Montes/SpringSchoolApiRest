@@ -1,17 +1,18 @@
 package ime.SchoolApiRest.entity;
 
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table( name = "SUBJECTS_STUDENTS")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class SubjectStudent {
 
 	@EmbeddedId
@@ -25,6 +26,10 @@ public class SubjectStudent {
 	@MapsId("studentId")
 	private Student student;
 	
+	@Column(name = "avegare_grade")
+	@Min(value=0)
+	@Max(value=10)
+	private Double averageGrade;
 	
 	
 }
