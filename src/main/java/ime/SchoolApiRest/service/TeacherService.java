@@ -10,4 +10,6 @@ import ime.SchoolApiRest.entity.Teacher;
 public interface TeacherService {
 
 	List<Teacher> findAll();
+	
+	List<Teacher> findAllEager();
 }

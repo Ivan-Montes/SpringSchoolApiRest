@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class TeacherDto {
+public class TeacherDto{
 
 	private Long teacherId;
 

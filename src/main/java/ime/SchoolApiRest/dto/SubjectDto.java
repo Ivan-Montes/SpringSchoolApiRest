@@ -7,13 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
+import java.io.Serializable;
 import java.util.HashSet;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class SubjectDto {
+public class SubjectDto  implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1000001948781618012L;
 
 	private Long subjectId;
 	
