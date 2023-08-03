@@ -20,10 +20,12 @@ public class SubjectStudent {
 	
 	@ManyToOne
 	@MapsId("subjectId")
+	@JoinColumn(name = "sub_id")
 	private Subject subject;
 	
 	@ManyToOne
 	@MapsId("studentId")
+	@JoinColumn(name = "stu_id")
 	private Student student;
 	
 	@Column(name = "avegare_grade")
