@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ime.SchoolApiRest.dto.TeacherDto;
 import ime.SchoolApiRest.entity.Teacher;
+import ime.SchoolApiRest.mapper.TeacherMapper;
 import ime.SchoolApiRest.service.TeacherService;
 
 @RestController
@@ -18,10 +19,11 @@ public class TeacherController {
 	private TeacherService teacherService;
 	
 	@GetMapping("/api/teachers")
-	public ResponseEntity<List<Teacher>> findAll(){
+	public ResponseEntity<List<TeacherDto>> findAll(){
 		
 		List<Teacher>teachers = teacherService.findAllEager();
+		List<TeacherDto>teachersDto = TeacherMapper.ListToTeacherDto(teachers);
 		
-		return ResponseEntity.ok(teachers);
+		return ResponseEntity.ok(teachersDto);
 	}
 }
