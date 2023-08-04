@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ime.SchoolApiRest.entity.Teacher;
+import ime.SchoolApiRest.dto.TeacherDto;
 
 @Service
 public interface TeacherService {
-
-	List<Teacher> findAll();
 	
-	List<Teacher> findAllEager();
+	List<TeacherDto> getAllEagerTeachersDto();
 }

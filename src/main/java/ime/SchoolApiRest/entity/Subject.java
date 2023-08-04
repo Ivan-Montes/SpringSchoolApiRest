@@ -3,17 +3,20 @@ package ime.SchoolApiRest.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 import java.util.Set;
+
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 @Table ( name = "SUBJECTS")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Subject {
 
 	@Id
@@ -31,6 +34,29 @@ public class Subject {
 
 	@OneToMany(mappedBy = "subject")
 	private Set<SubjectStudent>students = new HashSet<>();
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, students, subjectId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Subject other = (Subject) obj;
+		return Objects.equals(name, other.name) && Objects.equals(students, other.students)
+				&& Objects.equals(subjectId, other.subjectId);
+	}
+
+	@Override
+	public String toString() {
+		return "Subject [subjectId=" + subjectId + ", name=" + name + "]";
+	}
 	
 	
 }
