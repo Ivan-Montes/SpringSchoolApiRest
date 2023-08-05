@@ -14,7 +14,11 @@ import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.dto.*;
 
 import java.util.List;
-import java.util.HashSet;
+
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 
 @ExtendWith(MockitoExtension.class)
 class TeacherServiceImplTest {
@@ -28,5 +32,15 @@ class TeacherServiceImplTest {
 	@Test
 	public void TeacherServiceImpl_getAllEagerTeachersDto_ReturnListTeacherDto() {
 		
+		List<Teacher>teachers = List.of(Mockito.mock(Teacher.class));
+		doReturn(teachers).when(teacherRepo).findAllEager();
+		
+		List<TeacherDto>list = teacherService.getAllEagerTeachersDto();
+		
+		Assertions.assertThat(list).isNotNull();
+		Assertions.assertThat(list).isNotEmpty();
+		verify(teacherRepo, times(1)).findAllEager();
+		
 	}
+	
 }
