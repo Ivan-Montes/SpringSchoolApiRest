@@ -1,7 +1,10 @@
 # SpringSchoolApiRest 
-:construction::construction:
-### UNDER CONSTRUCCTION :construction_worker::construction_worker:
-:construction::construction:
+			:construction::construction:
+### :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker:
+			:construction::construction:
+
+Welcome to Api Rest with Spring Framework. A small work simulating a school structure.
+
 
 ## Table of contents
 
@@ -14,7 +17,7 @@
 
 ## Installation
 
-
+You could Use the jar file hosted in /target or clone the whole project
 
 ## Usage
 
