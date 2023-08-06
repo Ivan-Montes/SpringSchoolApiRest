@@ -1,6 +1,6 @@
-# SpringSchoolApiRest 
-:construction::construction:
-### :construction::construction: :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker: :construction::construction:
+# :construction::construction: SpringSchoolApiRest :construction::construction:
+
+### :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker:
 
 Welcome to Api Rest with Spring Framework. A small work simulating a school structure.
 
