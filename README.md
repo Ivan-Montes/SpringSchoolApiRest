@@ -1,7 +1,6 @@
 # SpringSchoolApiRest 
-          :construction::construction:
-### :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker:
-   :construction::construction:
+:construction::construction:
+### :construction::construction: :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker: :construction::construction:
 
 Welcome to Api Rest with Spring Framework. A small work simulating a school structure.
 
@@ -44,7 +43,7 @@ Contributions are always welcome!
 
 <div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1em; margin: 4em 0;">
 <a href="https://spring.io/">
-<img class="d-block mx-auto mb-4" src="./src/main/resources/static/images/spring-3-logo-svg-vector.svg" alt="Logo de Spring" width="72" height="57" style="flex-grow:1;">
+<img class="d-block mx-auto mb-4" src="./src/main/resources/static/spring-3-logo-svg-vector.svg" alt="Logo de Spring" width="72" height="57" style="flex-grow:1;">
 </a>
 </div>
 	
