@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import ime.SchoolApiRest.dto.TeacherDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
+import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.entity.Teacher;
 
 public class TeacherMapper {
@@ -34,5 +35,13 @@ public class TeacherMapper {
 		return listDto;
 	}
 	
-	
+	public static TeacherBasicDto ToTeacherBasicDto(Teacher teacher) {
+		
+		return TeacherBasicDto.builder()
+				.teacherId(teacher.getTeacherId())
+				.name(teacher.getName())
+				.surname(teacher.getSurname())
+				.build();
+				
+	}
 }

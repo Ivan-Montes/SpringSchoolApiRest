@@ -5,23 +5,32 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.dto.TeacherDto;
 import ime.SchoolApiRest.service.TeacherService;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/teachers")
 public class TeacherController {
 
 	@Autowired
 	private TeacherService teacherService;
 	
-	@GetMapping("teachers")
+	@GetMapping
 	public ResponseEntity<List<TeacherDto>> getAllEagerTeachersDto(){
 		
 		return ResponseEntity.ok(teacherService.getAllEagerTeachersDto());
+		
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<TeacherBasicDto>getTeacherDtoById(@PathVariable Long id){
+		
+		return ResponseEntity.ok(teacherService.getTeacherDtoById(id));
 		
 	}
 }
