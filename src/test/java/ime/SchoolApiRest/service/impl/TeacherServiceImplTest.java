@@ -14,6 +14,7 @@ import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.dto.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -40,6 +41,20 @@ class TeacherServiceImplTest {
 		Assertions.assertThat(list).isNotNull();
 		Assertions.assertThat(list).isNotEmpty();
 		verify(teacherRepo, times(1)).findAllEager();
+		
+	}
+	
+	@Test
+	public void TeacherServiceImpl_getTeacherDtoById_ReturnTeacherDto() {
+		
+		Teacher teacher = Mockito.mock(Teacher.class);	
+		Optional<Teacher>opt = Optional.of(teacher);
+		doReturn(opt).when(teacherRepo).findById(Mockito.anyLong());
+		
+		TeacherBasicDto tbd = teacherService.getTeacherDtoById(Mockito.anyLong());
+		
+		Assertions.assertThat(tbd).isNotNull();
+		verify(teacherRepo, times(1)).findById(Mockito.anyLong());
 		
 	}
 	

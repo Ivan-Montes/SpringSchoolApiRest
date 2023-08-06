@@ -5,6 +5,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -34,6 +37,20 @@ class TeacherControllerTest {
 	@MockBean
 	private TeacherServiceImpl teacherService;
 	
+	private TeacherBasicDto teacherBasicDto;
+	private TeacherBasicDto teacherBasicDtoMock;
+	
+	@BeforeEach
+	public void beforeEach() {
+		teacherBasicDtoMock = Mockito.mock(TeacherBasicDto.class);		
+		teacherBasicDto = TeacherBasicDto.builder()
+										.teacherId(1L)
+										.name("John")
+										.surname("Doe")
+										.build();
+	}
+	
+	
 	@Test
 	public void TeacherController_getAllEagerTeachersDto_ReturnListTeacherDto() throws Exception{
 		
@@ -48,5 +65,20 @@ class TeacherControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.collection.IsCollectionWithSize.hasSize(1)));
 		verify(teacherService,times(1)).getAllEagerTeachersDto();
    }
+	
+	@Test
+	public void TeacherController_getTeacherDtoById_ReturnTeacherDto() throws Exception{
+			
+		doReturn(teacherBasicDto).when(teacherService).getTeacherDtoById(Mockito.anyLong());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{id}", Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON)
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)));
+		
+		verify(teacherService,times(1)).getTeacherDtoById(Mockito.anyLong());
+	}
 
 }
