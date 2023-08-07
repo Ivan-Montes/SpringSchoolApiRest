@@ -36,10 +36,10 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public void deteleTeacher(Long teacherId) {
+	public void deleteTeacherById(Long teacherId) {
 		
 		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		if ( t.getSubjects() != null || !t.getSubjects().isEmpty() ) throw new SubjectAssociatedException(teacherId);
+		if ( t.getSubjects() != null && !t.getSubjects().isEmpty() ) throw new SubjectAssociatedException(teacherId);
 		teacherRepo.deleteById(teacherId);
 		
 	}

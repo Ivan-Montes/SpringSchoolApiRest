@@ -14,5 +14,5 @@ public interface TeacherService {
 	
 	TeacherBasicDto getTeacherDtoById(Long teacherId);
 	
-	void deteleTeacher(Long teacherId);
+	void deleteTeacherById(Long teacherId);
 }

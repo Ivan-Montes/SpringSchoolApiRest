@@ -37,7 +37,7 @@ public class TeacherController {
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<String>deteteTeacher(@PathVariable Long id){
-		teacherService.deteleTeacher(id);
+		teacherService.deleteTeacherById(id);
 		return ResponseEntity.ok("Teacher with identifier " + id + " deleted successfully");
 	}
 }
