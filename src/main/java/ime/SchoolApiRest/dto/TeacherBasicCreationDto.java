@@ -1,6 +1,5 @@
 package ime.SchoolApiRest.dto;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,10 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class TeacherBasicDto {
-
-	@NotNull
-	private Long teacherId;
+public class TeacherBasicCreationDto {
 
 	@Size(min = 1, max = 50)
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.name}")
