@@ -1,5 +1,6 @@
 package ime.SchoolApiRest.controller;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -20,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import ime.SchoolApiRest.service.impl.TeacherServiceImpl;
@@ -80,5 +82,20 @@ class TeacherControllerTest {
 		
 		verify(teacherService,times(1)).getTeacherDtoById(Mockito.anyLong());
 	}
+	
+	@Test
+	public void TeacherController_deteteTeacher_ReturnString() throws Exception{
+		
+		doNothing().when(teacherService).deleteTeacherById(Mockito.anyLong());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete("/api/teachers/{id}", Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON)
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		verify(teacherService,times(1)).deleteTeacherById(Mockito.anyLong());
+		
+	}
+	
 
 }

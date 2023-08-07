@@ -2,7 +2,12 @@ package ime.SchoolApiRest.service.impl;
 
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,12 +21,15 @@ import ime.SchoolApiRest.dto.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+import java.util.HashSet;
 
 @ExtendWith(MockitoExtension.class)
+@TestMethodOrder(OrderAnnotation.class)
 class TeacherServiceImplTest {
 
 	@Mock
@@ -30,7 +38,20 @@ class TeacherServiceImplTest {
 	@InjectMocks
 	private TeacherServiceImpl teacherService;
 	
+	private Teacher teacherTest;
+	
+	@BeforeEach
+	public void createTeacher() {
+		teacherTest = new Teacher();
+		teacherTest.setTeacherId(1L);
+		teacherTest.setName("Jane");
+		teacherTest.setSurname("Doe");
+		teacherTest.setSubjects(new HashSet<>());
+	}
+	
 	@Test
+	@DisplayName("Test for getAllEagerTeachersDto method")
+	@Order(1)
 	public void TeacherServiceImpl_getAllEagerTeachersDto_ReturnListTeacherDto() {
 		
 		List<Teacher>teachers = List.of(Mockito.mock(Teacher.class));
@@ -38,13 +59,17 @@ class TeacherServiceImplTest {
 		
 		List<TeacherDto>list = teacherService.getAllEagerTeachersDto();
 		
-		Assertions.assertThat(list).isNotNull();
-		Assertions.assertThat(list).isNotEmpty();
+		assertAll(
+					()->Assertions.assertThat(list).isNotNull(),
+					()->Assertions.assertThat(list).isNotEmpty()
+				);		
 		verify(teacherRepo, times(1)).findAllEager();
 		
 	}
 	
 	@Test
+	@DisplayName("Test for getTeacherDtoById method")
+	@Order(2)
 	public void TeacherServiceImpl_getTeacherDtoById_ReturnTeacherDto() {
 		
 		Teacher teacher = Mockito.mock(Teacher.class);	
@@ -53,8 +78,26 @@ class TeacherServiceImplTest {
 		
 		TeacherBasicDto tbd = teacherService.getTeacherDtoById(Mockito.anyLong());
 		
-		Assertions.assertThat(tbd).isNotNull();
+		assertAll(
+					()->Assertions.assertThat(tbd).isNotNull()
+				);		
 		verify(teacherRepo, times(1)).findById(Mockito.anyLong());
+		
+	}
+	
+	@Test
+	@DisplayName("Test for deleteTeacher method")
+	@Order(3)
+	public void TeacherServiceImpl_deteleTeacher_ReturnVoid() {
+		
+		Optional<Teacher>opt = Optional.ofNullable(teacherTest);
+		doReturn(opt).when(teacherRepo).findById(Mockito.anyLong());
+		doNothing().when(teacherRepo).deleteById(Mockito.anyLong());
+		
+		teacherService.deleteTeacherById(Mockito.anyLong());
+		
+		verify(teacherRepo, times(1)).findById(Mockito.anyLong());
+		verify(teacherRepo, times(1)).deleteById(Mockito.anyLong());		
 		
 	}
 	
