@@ -13,4 +13,6 @@ public interface TeacherService {
 	List<TeacherDto> getAllEagerTeachersDto();
 	
 	TeacherBasicDto getTeacherDtoById(Long teacherId);
+	
+	void deteleTeacher(Long teacherId);
 }
