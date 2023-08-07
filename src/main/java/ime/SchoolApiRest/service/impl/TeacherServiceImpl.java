@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ime.SchoolApiRest.dto.TeacherDto;
+
 import ime.SchoolApiRest.mapper.TeacherMapper;
 import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.service.TeacherService;
@@ -42,6 +42,11 @@ public class TeacherServiceImpl implements TeacherService {
 		if ( t.getSubjects() != null && !t.getSubjects().isEmpty() ) throw new SubjectAssociatedException(teacherId);
 		teacherRepo.deleteById(teacherId);
 		
+	}
+
+	@Override
+	public TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto) {
+		return TeacherMapper.ToTeacherBasicDto(teacherRepo.save(TeacherMapper.DtoCreationToTeacher(tbcDto)));
 	}
 
 }

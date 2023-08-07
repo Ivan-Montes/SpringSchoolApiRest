@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ime.SchoolApiRest.dto.TeacherBasicCreationDto;
 import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.dto.TeacherDto;
 
@@ -15,4 +16,6 @@ public interface TeacherService {
 	TeacherBasicDto getTeacherDtoById(Long teacherId);
 	
 	void deleteTeacherById(Long teacherId);
+	
+	TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto);
 }
