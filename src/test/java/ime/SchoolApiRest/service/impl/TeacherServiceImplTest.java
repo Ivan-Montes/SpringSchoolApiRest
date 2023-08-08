@@ -39,14 +39,19 @@ class TeacherServiceImplTest {
 	private TeacherServiceImpl teacherService;
 	
 	private Teacher teacherTest;
+	private TeacherBasicCreationDto tbcDto;
 	
 	@BeforeEach
-	public void createTeacher() {
+	public void createDiferentTeachers() {
 		teacherTest = new Teacher();
 		teacherTest.setTeacherId(1L);
 		teacherTest.setName("Jane");
 		teacherTest.setSurname("Doe");
 		teacherTest.setSubjects(new HashSet<>());
+		
+		tbcDto = new TeacherBasicCreationDto();
+		tbcDto.setName("John");
+		tbcDto.setSurname("Doe");
 	}
 	
 	@Test
@@ -99,6 +104,23 @@ class TeacherServiceImplTest {
 		verify(teacherRepo, times(1)).findById(Mockito.anyLong());
 		verify(teacherRepo, times(1)).deleteById(Mockito.anyLong());		
 		
+	}
+	
+	@Test
+	@DisplayName("Test for createTeacher method")
+	@Order(4)
+	public void TeacherServiceImpl_createTeacher_ReturnTeacherBasicDto() {
+		
+		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
+		
+		TeacherBasicDto tbDto = teacherService.createTeacher(tbcDto);
+		
+		assertAll(
+					()->Assertions.assertThat(tbDto).isNotNull(),
+					()->Assertions.assertThat(tbDto.getTeacherId()).isEqualTo(1L)
+				);
+		
+		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
 	}
 	
 }
