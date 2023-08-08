@@ -40,6 +40,7 @@ class TeacherServiceImplTest {
 	
 	private Teacher teacherTest;
 	private TeacherBasicCreationDto tbcDto;
+	private TeacherBasicDto tbDto;
 	
 	@BeforeEach
 	public void createDiferentTeachers() {
@@ -49,9 +50,8 @@ class TeacherServiceImplTest {
 		teacherTest.setSurname("Doe");
 		teacherTest.setSubjects(new HashSet<>());
 		
-		tbcDto = new TeacherBasicCreationDto();
-		tbcDto.setName("John");
-		tbcDto.setSurname("Doe");
+		tbcDto = TeacherBasicCreationDto.builder().name("John").surname("Doe").build();		
+		tbDto = TeacherBasicDto.builder().teacherId(1L).name("Mrs").surname("Smith").build();
 	}
 	
 	@Test
@@ -120,6 +120,25 @@ class TeacherServiceImplTest {
 					()->Assertions.assertThat(tbDto.getTeacherId()).isEqualTo(1L)
 				);
 		
+		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
+	}
+	
+	@Test
+	@DisplayName("Test for updateTeacher method")
+	@Order(5)
+	public void TeacherServiceImpl_updateTeacher_ReturnTeacherBasicDto() {
+		Optional<Teacher>opt = Optional.ofNullable(teacherTest);
+		doReturn(opt).when(teacherRepo).findById(Mockito.anyLong());
+		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
+		
+		TeacherBasicDto tbDtoUpdated = teacherService.updateTeacher(tbDto.getTeacherId(), tbDto);
+		
+		assertAll(
+					()->Assertions.assertThat(tbDtoUpdated).isNotNull(),
+					()->Assertions.assertThat(tbDtoUpdated.getTeacherId()).isEqualTo(1L),
+					()->Assertions.assertThat(tbDtoUpdated.getSurname()).isEqualTo("Smith")
+				);
+		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
 		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
 	}
 	

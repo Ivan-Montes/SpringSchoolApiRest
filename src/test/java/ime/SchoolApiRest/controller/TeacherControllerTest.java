@@ -48,8 +48,8 @@ class TeacherControllerTest {
 	public void beforeEach() {	
 		teacherBasicDto = TeacherBasicDto.builder()
 										.teacherId(1L)
-										.name("John")
-										.surname("Doe")
+										.name("Mrs")
+										.surname("Smith")
 										.build();
 		
 		tbcDto = new TeacherBasicCreationDto();
@@ -114,9 +114,27 @@ class TeacherControllerTest {
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isCreated())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("John")))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo("Doe")));		
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mrs")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo("Smith")));		
 		verify(teacherService,times(1)).createTeacher(Mockito.any(TeacherBasicCreationDto.class));
+		
+	}
+	
+	@Test
+	public void TeacherController_updateTeacher_ReturnTeacherBasicDto() throws Exception {
+		
+		doReturn(teacherBasicDto).when(teacherService).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put("/api/teachers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(teacherBasicDto))
+				);
+				
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mrs")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo("Smith")));
+		verify(teacherService,times(1)).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
 		
 	}
 }
