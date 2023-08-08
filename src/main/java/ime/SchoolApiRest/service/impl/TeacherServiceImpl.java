@@ -49,4 +49,13 @@ public class TeacherServiceImpl implements TeacherService {
 		return TeacherMapper.ToTeacherBasicDto(teacherRepo.save(TeacherMapper.DtoCreationToTeacher(tbcDto)));
 	}
 
+	@Override
+	public TeacherBasicDto updateTeacher(Long teacherId, TeacherBasicDto tbDto) {
+		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
+		t.setName(tbDto.getName());
+		t.setSurname(tbDto.getSurname());
+		Teacher teacherUpdated = teacherRepo.save(t);
+		return TeacherMapper.ToTeacherBasicDto(teacherUpdated);
+	}
+
 }

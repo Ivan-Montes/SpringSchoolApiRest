@@ -18,4 +18,6 @@ public interface TeacherService {
 	void deleteTeacherById(Long teacherId);
 	
 	TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto);
+	
+	TeacherBasicDto updateTeacher(Long teacherId, TeacherBasicDto tbDto);
 }

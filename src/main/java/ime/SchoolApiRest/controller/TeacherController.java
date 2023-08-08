@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,11 @@ public class TeacherController {
 	@PostMapping
 	public ResponseEntity<TeacherBasicDto>createTeacher(@RequestBody TeacherBasicCreationDto tbcDto){
 		TeacherBasicDto tbd = teacherService.createTeacher(tbcDto);
-		return new ResponseEntity(tbd, HttpStatus.CREATED);
+		return new ResponseEntity<TeacherBasicDto>(tbd, HttpStatus.CREATED);
+	}
+	
+	@PutMapping
+	public ResponseEntity<TeacherBasicDto>updateTeacher(@RequestBody TeacherBasicDto tbd){
+		return ResponseEntity.ok(teacherService.updateTeacher(tbd.getTeacherId(), tbd));
 	}
 }
