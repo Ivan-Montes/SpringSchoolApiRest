@@ -11,7 +11,7 @@ import ime.SchoolApiRest.entity.Teacher;
 
 public class TeacherMapper {
 
-	public static List<TeacherDto>ListToTeacherDto(List<Teacher>list){
+	public static List<TeacherDto>listToTeacherDto(List<Teacher>list){
 		
 		List<TeacherDto> listDto = list.stream()
 										.map( t -> {
@@ -36,7 +36,7 @@ public class TeacherMapper {
 		return listDto;
 	}
 	
-	public static TeacherBasicDto ToTeacherBasicDto(Teacher teacher) {
+	public static TeacherBasicDto toTeacherBasicDto(Teacher teacher) {
 		
 		return TeacherBasicDto.builder()
 				.teacherId(teacher.getTeacherId())
@@ -46,10 +46,28 @@ public class TeacherMapper {
 				
 	}
 	
-	public static Teacher DtoCreationToTeacher(TeacherBasicCreationDto tbcDto) {
+	public static Teacher dtoCreationToTeacher(TeacherBasicCreationDto tbcDto) {
 		Teacher t = new Teacher();
 		t.setName(tbcDto.getName());
 		t.setSurname(tbcDto.getSurname());
 		return t;
+	}
+
+	public static TeacherDto toTeacherDto(Teacher t) {
+		TeacherDto teacherDto = new TeacherDto();
+		teacherDto.setTeacherId(t.getTeacherId());
+		teacherDto.setName(t.getName());
+		teacherDto.setSurname(t.getSurname());
+		teacherDto.setSubjects(t.getSubjects()
+				.stream()
+				.map(s -> {
+					SubjectBasicDto sbd = new SubjectBasicDto();
+					sbd.setSubjectId(s.getSubjectId());
+					sbd.setName(s.getName());
+					return sbd;
+				})
+				.collect(Collectors.toSet())
+				);
+		return teacherDto;
 	}
 }

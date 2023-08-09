@@ -1,15 +1,17 @@
 package ime.SchoolApiRest.service.impl;
 
 import java.util.List;
+import java.util.HashSet;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ime.SchoolApiRest.mapper.TeacherMapper;
+import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.service.TeacherService;
-
+import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.Teacher;
 import ime.SchoolApiRest.dto.*;
 
@@ -21,17 +23,20 @@ public class TeacherServiceImpl implements TeacherService {
 	@Autowired
 	private TeacherRepository teacherRepo;	
 
+	@Autowired
+	private SubjectRepository subjectRepo;
+	
 	@Override
 	public List<TeacherDto> getAllEagerTeachersDto() {		
 		
-		return TeacherMapper.ListToTeacherDto(teacherRepo.findAllEager());
+		return TeacherMapper.listToTeacherDto(teacherRepo.findAllEager());
 	}
 
 	@Override
 	public TeacherBasicDto getTeacherDtoById(Long teacherId) {
 		
 		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		return TeacherMapper.ToTeacherBasicDto(t);
+		return TeacherMapper.toTeacherBasicDto(t);
 		
 	}
 
@@ -46,7 +51,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto) {
-		return TeacherMapper.ToTeacherBasicDto(teacherRepo.save(TeacherMapper.DtoCreationToTeacher(tbcDto)));
+		return TeacherMapper.toTeacherBasicDto(teacherRepo.save(TeacherMapper.dtoCreationToTeacher(tbcDto)));
 	}
 
 	@Override
@@ -55,7 +60,26 @@ public class TeacherServiceImpl implements TeacherService {
 		t.setName(tbDto.getName());
 		t.setSurname(tbDto.getSurname());
 		Teacher teacherUpdated = teacherRepo.save(t);
-		return TeacherMapper.ToTeacherBasicDto(teacherUpdated);
+		return TeacherMapper.toTeacherBasicDto(teacherUpdated);
+	}
+
+	@Override
+	public TeacherDto addSubjectToTeacher(Long teacherId, Long subjectId) {
+		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( ()-> new ResourceNotFoundException(subjectId));
+		
+		subject.setTeacher(t);
+		if ( t.getSubjects() == null ) t.setSubjects(new HashSet<>()); 
+		t.getSubjects().add(subject);
+		
+		Teacher teacherUpdated = teacherRepo.save(t);
+		return TeacherMapper.toTeacherDto(teacherUpdated);
+	}
+
+	@Override
+	public void removeSubjectFromTeacher(Long teacherId, Long subjectId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -20,4 +20,8 @@ public interface TeacherService {
 	TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto);
 	
 	TeacherBasicDto updateTeacher(Long teacherId, TeacherBasicDto tbDto);
+	
+	TeacherDto addSubjectToTeacher(Long teacherId, Long subjectId);
+	
+	void removeSubjectFromTeacher(Long teacherId, Long subjectId);
 }

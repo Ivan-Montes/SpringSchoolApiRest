@@ -56,4 +56,12 @@ public class TeacherController {
 	public ResponseEntity<TeacherBasicDto>updateTeacher(@RequestBody TeacherBasicDto tbd){
 		return ResponseEntity.ok(teacherService.updateTeacher(tbd.getTeacherId(), tbd));
 	}
+	
+	@GetMapping("{teacherId}/{subjectId}")
+	public ResponseEntity<TeacherDto>addSubject(@PathVariable Long teacherId, @PathVariable Long subjectId){
+		TeacherDto teacherDto = teacherService.addSubjectToTeacher(teacherId, subjectId);
+		return ResponseEntity.ok(teacherDto);
+	}
+	
+	
 }
