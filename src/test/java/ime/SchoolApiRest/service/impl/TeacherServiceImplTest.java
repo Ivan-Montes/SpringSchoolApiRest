@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ime.SchoolApiRest.entity.*;
+import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.dto.*;
 
@@ -35,12 +36,16 @@ class TeacherServiceImplTest {
 	@Mock
 	private TeacherRepository teacherRepo;
 	
+	@Mock
+	private SubjectRepository subjectRepo;
+	
 	@InjectMocks
 	private TeacherServiceImpl teacherService;
 	
 	private Teacher teacherTest;
 	private TeacherBasicCreationDto tbcDto;
 	private TeacherBasicDto tbDto;
+	private Subject subjectTest;
 	
 	@BeforeEach
 	public void createDiferentTeachers() {
@@ -52,6 +57,10 @@ class TeacherServiceImplTest {
 		
 		tbcDto = TeacherBasicCreationDto.builder().name("John").surname("Doe").build();		
 		tbDto = TeacherBasicDto.builder().teacherId(1L).name("Mrs").surname("Smith").build();
+		
+		subjectTest = new Subject();
+		subjectTest.setSubjectId(1L);
+		subjectTest.setName("Street University");
 	}
 	
 	@Test
@@ -140,6 +149,34 @@ class TeacherServiceImplTest {
 				);
 		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
 		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
+	}
+	
+	@Test
+	@DisplayName("Test for addSubjectToTeacher method")
+	@Order(6)
+	public void TeacherServiceImpl_addSubjectToTeacher_ReturnTeacherDto() {
+		Optional<Teacher>optT = Optional.ofNullable(teacherTest);
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		doReturn(optT).when(teacherRepo).findById(Mockito.anyLong());
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
+		
+		TeacherDto tDto = teacherService.addSubjectToTeacher(1L, Mockito.anyLong());
+		//TeacherDto tDto = teacherService.addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong()); //Find out why fails
+		
+		assertAll(
+					()->Assertions.assertThat(tDto).isNotNull(),
+					()->Assertions.assertThat(tDto.getTeacherId()).isEqualTo(1L),
+					()->Assertions.assertThat(tDto.getName()).isEqualTo("Jane"),
+					()->Assertions.assertThat(tDto.getSurname()).isEqualTo("Doe"),
+					()->Assertions.assertThat(tDto.getSubjects()).isNotEmpty(),
+					()->Assertions.assertThat(tDto.getSubjects()).first().extracting(SubjectBasicDto::getSubjectId).isEqualTo(1L),
+					()->Assertions.assertThat(tDto.getSubjects()).first().extracting(SubjectBasicDto::getName).isEqualTo("Street University")
+				);		
+		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
+		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		
 	}
 	
 }

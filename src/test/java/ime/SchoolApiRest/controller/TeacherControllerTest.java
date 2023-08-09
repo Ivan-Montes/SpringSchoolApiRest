@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,6 +45,8 @@ class TeacherControllerTest {
 	
 	private TeacherBasicDto teacherBasicDto;
 	private TeacherBasicCreationDto tbcDto;
+	private TeacherDto teacherDto;
+	private SubjectBasicDto sbDto;
 	
 	@BeforeEach
 	public void beforeEach() {	
@@ -55,6 +59,16 @@ class TeacherControllerTest {
 		tbcDto = new TeacherBasicCreationDto();
 		tbcDto.setName("John");
 		tbcDto.setSurname("Doe");
+		
+		teacherDto = new TeacherDto();
+		teacherDto.setTeacherId(1L);
+		teacherDto.setName("Mr");
+		teacherDto.setSurname("Smith");
+		teacherDto.setSubjects(new HashSet<>());
+		
+		sbDto = new SubjectBasicDto();
+		sbDto.setSubjectId(1L);
+		sbDto.setName("Street University");
 	}
 	
 	
@@ -64,12 +78,13 @@ class TeacherControllerTest {
 		List<TeacherDto>teachers = List.of(Mockito.mock(TeacherDto.class));		
 		doReturn(teachers).when(teacherService).getAllEagerTeachersDto();
 		
-		ResultActions response = mvc.perform(MockMvcRequestBuilders.get("/api/teachers")
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers")
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
-		response.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.collection.IsCollectionWithSize.hasSize(1)));
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.collection.IsCollectionWithSize.hasSize(1)));
 		verify(teacherService,times(1)).getAllEagerTeachersDto();
    }
 	
@@ -121,7 +136,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_updateTeacher_ReturnTeacherBasicDto() throws Exception {
+	public void TeacherController_updateTeacher_ReturnTeacherBasicDto() throws Exception {		
 		
 		doReturn(teacherBasicDto).when(teacherService).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
 		
@@ -135,6 +150,26 @@ class TeacherControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mrs")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo("Smith")));
 		verify(teacherService,times(1)).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
+		
+	}
+	
+	@Test
+	public void TeacherController_addSubject_ReturnTeacherDto() throws Exception {
+		
+		teacherDto.setSubjects(Set.of(sbDto));
+		doReturn(teacherDto).when(teacherService).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mr")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo("Smith")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjects", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjects", org.hamcrest.collection.IsCollectionWithSize.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjects[0].name", org.hamcrest.Matchers.equalTo("Street University")));
+		verify(teacherService,times(1)).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
 	}
 }
