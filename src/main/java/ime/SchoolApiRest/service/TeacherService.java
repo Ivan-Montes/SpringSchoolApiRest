@@ -23,5 +23,5 @@ public interface TeacherService {
 	
 	TeacherDto addSubjectToTeacher(Long teacherId, Long subjectId);
 	
-	void removeSubjectFromTeacher(Long teacherId, Long subjectId);
+	TeacherDto removeSubjectFromTeacher(Long teacherId, Long subjectId);
 }

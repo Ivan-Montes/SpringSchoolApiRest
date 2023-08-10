@@ -63,5 +63,9 @@ public class TeacherController {
 		return ResponseEntity.ok(teacherDto);
 	}
 	
-	
+	@DeleteMapping("{teacherId}/{subjectId}")
+	public ResponseEntity<TeacherDto>removeSubject(@PathVariable Long teacherId, @PathVariable Long subjectId){
+		TeacherDto teacherDto = teacherService.removeSubjectFromTeacher(teacherId, subjectId);
+		return ResponseEntity.ok(teacherDto);
+	}
 }

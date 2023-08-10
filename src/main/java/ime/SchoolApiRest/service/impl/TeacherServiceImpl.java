@@ -35,51 +35,70 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public TeacherBasicDto getTeacherDtoById(Long teacherId) {
 		
-		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		return TeacherMapper.toTeacherBasicDto(t);
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		return TeacherMapper.toTeacherBasicDto(teacher);
 		
 	}
 
 	@Override
 	public void deleteTeacherById(Long teacherId) {
 		
-		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		if ( t.getSubjects() != null && !t.getSubjects().isEmpty() ) throw new SubjectAssociatedException(teacherId);
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		if ( teacher.getSubjects() != null && !teacher.getSubjects().isEmpty()) throw new SubjectAssociatedException(teacherId);
 		teacherRepo.deleteById(teacherId);
 		
 	}
 
 	@Override
 	public TeacherBasicDto createTeacher(TeacherBasicCreationDto tbcDto) {
+		
 		return TeacherMapper.toTeacherBasicDto(teacherRepo.save(TeacherMapper.dtoCreationToTeacher(tbcDto)));
 	}
 
 	@Override
 	public TeacherBasicDto updateTeacher(Long teacherId, TeacherBasicDto tbDto) {
-		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		t.setName(tbDto.getName());
-		t.setSurname(tbDto.getSurname());
-		Teacher teacherUpdated = teacherRepo.save(t);
+		
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		teacher.setName(tbDto.getName());
+		teacher.setSurname(tbDto.getSurname());
+		Teacher teacherUpdated = teacherRepo.save(teacher);
 		return TeacherMapper.toTeacherBasicDto(teacherUpdated);
 	}
 
 	@Override
 	public TeacherDto addSubjectToTeacher(Long teacherId, Long subjectId) {
-		Teacher t = teacherRepo.findById(teacherId).orElseThrow(()-> new ResourceNotFoundException(teacherId));
-		Subject subject = subjectRepo.findById(subjectId).orElseThrow( ()-> new ResourceNotFoundException(subjectId));
 		
-		subject.setTeacher(t);
-		if ( t.getSubjects() == null ) t.setSubjects(new HashSet<>()); 
-		t.getSubjects().add(subject);
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( ()-> new ResourceNotFoundException(subjectId) );
 		
-		Teacher teacherUpdated = teacherRepo.save(t);
+		subject.setTeacher(teacher);
+		if ( teacher.getSubjects() == null ) teacher.setSubjects( new HashSet<>() ); 
+		teacher.getSubjects().add(subject);
+		
+		Teacher teacherUpdated = teacherRepo.save(teacher);
 		return TeacherMapper.toTeacherDto(teacherUpdated);
 	}
 
 	@Override
-	public void removeSubjectFromTeacher(Long teacherId, Long subjectId) {
-		// TODO Auto-generated method stub
+	public TeacherDto removeSubjectFromTeacher(Long teacherId, Long subjectId) {
 		
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( ()-> new ResourceNotFoundException(subjectId) );
+		
+		if ( subject.getTeacher() != null && subject.getTeacher().getTeacherId() == teacher.getTeacherId() ) {
+			
+			if ( teacher.getSubjects() != null && teacher.getSubjects().stream().anyMatch( (s)->s.getSubjectId() == subject.getSubjectId()) ) {
+
+				subject.setTeacher(null);							
+				teacher.getSubjects().remove(subject);
+				
+			}
+		}
+		
+		
+		Teacher teacherUpdated = teacherRepo.save(teacher);
+		
+		return TeacherMapper.toTeacherDto(teacherUpdated);
 	}
 
 }
