@@ -56,19 +56,16 @@ class TeacherControllerTest {
 										.surname("Smith")
 										.build();
 		
-		tbcDto = new TeacherBasicCreationDto();
-		tbcDto.setName("John");
-		tbcDto.setSurname("Doe");
+		tbcDto = TeacherBasicCreationDto.builder().name("John").surname("Doe").build();
 		
-		teacherDto = new TeacherDto();
-		teacherDto.setTeacherId(1L);
-		teacherDto.setName("Mr");
-		teacherDto.setSurname("Smith");
-		teacherDto.setSubjects(new HashSet<>());
+		teacherDto = TeacherDto.builder()
+								.teacherId(1L)
+								.name("Mr")
+								.surname("Smith")
+								.subjects(new HashSet<>())
+								.build();
 		
-		sbDto = new SubjectBasicDto();
-		sbDto.setSubjectId(1L);
-		sbDto.setName("Street University");
+		sbDto = SubjectBasicDto.builder().subjectId(1L).name("Street University").build();
 	}
 	
 	
@@ -160,7 +157,8 @@ class TeacherControllerTest {
 		doReturn(teacherDto).when(teacherService).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON));
+				.contentType(MediaType.APPLICATION_JSON)
+				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)))
@@ -171,5 +169,22 @@ class TeacherControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjects[0].name", org.hamcrest.Matchers.equalTo("Street University")));
 		verify(teacherService,times(1)).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
+	}
+	
+	@Test
+	public void TeacherController_removeSubject_ReturnTeacherDto() throws Exception {
+		
+		doReturn(teacherDto).when(teacherService).removeSubjectFromTeacher(Mockito.anyLong(), Mockito.anyLong());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete("/api/teachers/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON)
+		);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mr")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjects", org.hamcrest.Matchers.hasSize(0)));		
+		verify(teacherService,times(1)).removeSubjectFromTeacher(Mockito.anyLong(), Mockito.anyLong());
+
 	}
 }

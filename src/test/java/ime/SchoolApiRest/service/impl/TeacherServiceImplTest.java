@@ -2,6 +2,7 @@ package ime.SchoolApiRest.service.impl;
 
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -176,6 +177,39 @@ class TeacherServiceImplTest {
 		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
 		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		
+	}
+	
+	@Test
+	@DisplayName("Test for removeSubjectFromTeacher method")
+	@Order(7)
+	public void TeacherServiceImpl_removeSubjectFromTeacher_ReturnTeacherDto() {
+		
+		teacherTest.getSubjects().add(subjectTest);
+		subjectTest.setTeacher(teacherTest);
+		Optional<Teacher>optT = Optional.ofNullable(teacherTest);
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		doReturn(optT).when(teacherRepo).findById(Mockito.anyLong());
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
+		
+		TeacherDto tDto = teacherService.removeSubjectFromTeacher(1L, Mockito.anyLong());
+		
+		Condition<TeacherDto>conditionTeacherSurname = new Condition<>( t -> t.getSurname().equals(teacherTest.getSurname()), "**Condition Teacher Surname \"Doe\" ");
+		Condition<SubjectBasicDto>conditionSubjectId = new Condition<>( s -> s.getSubjectId() == subjectTest.getSubjectId(), "**Condition SubjectId 1L");
+		Condition<SubjectBasicDto>conditionSubjectName = new Condition<>( s-> s.getName().equals("Street University"), "**Condition SubjectName: Street University");
+		assertAll(
+					()->Assertions.assertThat(tDto.getTeacherId()).isEqualTo(teacherTest.getTeacherId()),
+					()->Assertions.assertThat(tDto).is(conditionTeacherSurname),
+					()->Assertions.assertThat(tDto.getSubjects()).haveExactly(0, conditionSubjectName),
+					()->Assertions.assertThat(tDto.getSubjects()).doNotHave(conditionSubjectId),
+					()->Assertions.assertThat(tDto.getSubjects()).doNotHave(conditionSubjectName)
+				
+				);
+		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
+		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		
 		
 	}
 	
