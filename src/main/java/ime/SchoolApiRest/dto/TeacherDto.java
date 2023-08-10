@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,6 +29,7 @@ public class TeacherDto{
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.surname}")
 	private String surname;
 	
+	@Default
 	private Set<SubjectBasicDto>subjects = new HashSet<>();
 	
 }
