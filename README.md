@@ -20,6 +20,9 @@ You could Use the jar file hosted in /target or clone the whole project
 
 ## Usage
 
+Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI
+
+If not, ensure you add the path /api/[Class] to your requests
 
 
 ## Maintainers
