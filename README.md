@@ -49,12 +49,5 @@ Contributions are always welcome!
 [![Maven](https://badgen.net/badge/icon/maven?icon=maven&label)](https://https://maven.apache.org/)
 [![Eclipse](https://badgen.net/badge/icon/eclipse?icon=eclipse&label)](https://https://eclipse.org/)
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
-
-
-
-<div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1em; margin: 4em 0;">
-<a href="https://spring.io/">
-<img class="d-block mx-auto mb-4" src="./src/main/resources/static/spring-3-logo-svg-vector.svg" alt="Logo de Spring" width="72" height="57" style="flex-grow:1;">
-</a>
-</div>
+[![Spring](https://img.shields.io/badge/spring-blue?logo=Spring&logoColor=white)](https://spring.io)
 	
