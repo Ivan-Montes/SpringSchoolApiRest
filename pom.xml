@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ime</groupId>
 	<artifactId>SchoolApiRest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>SchoolApiRest</name>
 	<description>Project for Spring Boot</description>
 	<properties>
