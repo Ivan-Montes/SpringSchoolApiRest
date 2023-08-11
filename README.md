@@ -22,7 +22,15 @@ You could Use the jar file hosted in /target or clone the whole project
 
 Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI
 
-If not, ensure you add the path /api/[Class] to your requests
+If not, ensure you add the path /api/ to your requests:
+
+```
+** Get a List of all teachers **
+https://springschoolapirest.onrender.com/api/teachers
+
+**  Get a teacher according to Id **
+https://springschoolapirest.onrender.com/api/teachers/1
+```
 
 
 ## Maintainers
