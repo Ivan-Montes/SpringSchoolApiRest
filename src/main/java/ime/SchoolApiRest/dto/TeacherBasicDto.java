@@ -16,14 +16,14 @@ import lombok.Setter;
 @Builder
 public class TeacherBasicDto {
 
-	@NotNull
+	@NotNull(message="{NotNull.Teacher.id}")
 	private Long teacherId;
 
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50, message="{Size.Teacher.name}")
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.name}")
 	private String name;
 	
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50, message="{Size.Teacher.name}")
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.surname}")
 	private String surname;
 }
