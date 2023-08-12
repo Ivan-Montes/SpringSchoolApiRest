@@ -18,6 +18,7 @@ import ime.SchoolApiRest.dto.TeacherBasicCreationDto;
 import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.dto.TeacherDto;
 import ime.SchoolApiRest.service.TeacherService;
+import jakarta.validation.Valid;
 /**
  * Controller for Teacher environment
  * 
@@ -74,7 +75,7 @@ public class TeacherController {
 	 * @return ResponseEntity with the teacher required
 	 */
 	@PostMapping
-	public ResponseEntity<TeacherBasicDto>createTeacher(@RequestBody TeacherBasicCreationDto tbcDto){
+	public ResponseEntity<TeacherBasicDto>createTeacher(@Valid @RequestBody TeacherBasicCreationDto tbcDto){
 		TeacherBasicDto tbd = teacherService.createTeacher(tbcDto);
 		return new ResponseEntity<TeacherBasicDto>(tbd, HttpStatus.CREATED);
 	}
