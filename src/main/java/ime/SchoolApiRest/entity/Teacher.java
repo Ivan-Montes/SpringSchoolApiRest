@@ -12,9 +12,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import java.util.Set;
 
 
@@ -24,8 +22,6 @@ import java.util.HashSet;
 @Table( name = "TEACHERS")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Data
 public class Teacher {
 
