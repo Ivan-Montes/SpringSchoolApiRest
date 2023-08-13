@@ -87,7 +87,7 @@ public class TeacherController {
 	 * @return ResponseEntity with the teacher modified
 	 */
 	@PutMapping
-	public ResponseEntity<TeacherBasicDto>updateTeacher(@RequestBody TeacherBasicDto tbd){
+	public ResponseEntity<TeacherBasicDto>updateTeacher(@Valid @RequestBody TeacherBasicDto tbd){
 		return ResponseEntity.ok(teacherService.updateTeacher(tbd.getTeacherId(), tbd));
 	}
 	
