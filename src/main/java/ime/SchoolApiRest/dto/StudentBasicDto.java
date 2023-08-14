@@ -1,6 +1,5 @@
 package ime.SchoolApiRest.dto;
 
-import java.util.Set;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
