@@ -1,14 +1,18 @@
 package ime.SchoolApiRest.mapper;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.entity.Subject;
 
 public class SubjectMapper {
 
-	public static List<SubjectDto> toListSubjectDto(List<Subject> subjects) {
-		return null;
+	public static Set<SubjectDto> toListSubjectDto(List<Subject> subjects) {
+		return subjects.stream()
+						.map(SubjectMapper::toSubjectDto)
+						.collect(Collectors.toSet());
 		
 	}
 	
