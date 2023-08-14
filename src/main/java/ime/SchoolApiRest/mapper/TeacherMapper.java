@@ -38,11 +38,11 @@ public class TeacherMapper {
 	
 	public static TeacherBasicDto toTeacherBasicDto(Teacher teacher) {
 		
-		return TeacherBasicDto.builder()
-				.teacherId(teacher.getTeacherId())
-				.name(teacher.getName())
-				.surname(teacher.getSurname())
-				.build();
+		return teacher != null? TeacherBasicDto.builder()
+								.teacherId(teacher.getTeacherId())
+								.name(teacher.getName())
+								.surname(teacher.getSurname())
+								.build():new TeacherBasicDto();
 				
 	}
 	
