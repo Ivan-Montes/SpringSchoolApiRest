@@ -2,6 +2,8 @@ package ime.SchoolApiRest.dto;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import java.util.HashSet;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class StudentDto implements Serializable{
 	
 	/**
@@ -29,6 +32,7 @@ public class StudentDto implements Serializable{
 	@Size(min = 1, max = 50)
 	private String surname;
 	
-	private Set<SubjectDto>subjects = new HashSet<>();
+	@Default
+	private Set<SubjectStudentDto>subjectStudents = new HashSet<>();
 	
 }

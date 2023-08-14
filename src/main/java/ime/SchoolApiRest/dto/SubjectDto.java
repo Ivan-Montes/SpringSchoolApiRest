@@ -4,28 +4,33 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Builder.Default;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.Set;
+import lombok.Setter;
 
-import ime.SchoolApiRest.entity.Teacher;
+import java.util.Set;
 
 import java.util.HashSet;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@Builder
 public class SubjectDto{
 
-	@NotNull
+	@NotNull(message="{NotNull.Subject.name}")
 	private Long subjectId;
 	
 	@Size(min = 1, max = 50)
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Subject.name}")
 	private String name;
 
-	private Teacher teacher;
+	private TeacherBasicDto teacher;
 	
-	private Set<StudentDto>students = new HashSet<>();
+	@Default
+	private Set<SubjectStudentDto>subjectStudents = new HashSet<>();
 	
 }
