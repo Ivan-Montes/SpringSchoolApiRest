@@ -18,12 +18,13 @@ public class SubjectMapper {
 	
 	public static SubjectDto toSubjectDto(Subject subject) {
 		
-		return SubjectDto.builder()
-							.subjectId(subject.getSubjectId())
-							.name(subject.getName())
-							.teacher(TeacherMapper.toTeacherBasicDto(subject.getTeacher()))
-							.subjectStudents(SubjectStudentMapper.toListSubjectStudentDto(subject.getStudents()))
-							.build();
+		return subject != null? SubjectDto.builder()
+											.subjectId(subject.getSubjectId())
+											.name(subject.getName())
+											.teacher(TeacherMapper.toTeacherBasicDto(subject.getTeacher()))
+											.subjectStudents(SubjectStudentMapper.toListSubjectStudentDto(subject.getStudents()))
+											.build()
+								: new SubjectDto();
 							
 	}
 	

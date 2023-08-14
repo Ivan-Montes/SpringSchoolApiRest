@@ -19,11 +19,11 @@ public class SubjectStudentMapper {
 	
 	public static SubjectStudentDto toSubjectStudentDto(SubjectStudent subjectStudent) {
 		
-		return SubjectStudentDto.builder()
-				.studentId(subjectStudent.getId().getStudentId())
-				.subjectId(subjectStudent.getId().getSubjectId())
-				.averageGrade(subjectStudent.getAverageGrade())
-				.build();
+		return subjectStudent == null? new SubjectStudentDto():SubjectStudentDto.builder()
+																.studentId(subjectStudent.getId().getStudentId())
+																.subjectId(subjectStudent.getId().getSubjectId())
+																.averageGrade(subjectStudent.getAverageGrade())
+																.build();
 		
 	}
 }
