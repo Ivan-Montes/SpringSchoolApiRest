@@ -2,20 +2,26 @@ package ime.SchoolApiRest.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
+import ime.SchoolApiRest.mapper.SubjectMapper;
+import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.service.SubjectService;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
+	@Autowired
+	private SubjectRepository subjectRepo;
+	
 	@Override
 	public List<SubjectDto> getAllEagerSubjectDto() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return SubjectMapper.toListSubjectDto(subjectRepo.getAllEagerSubject());
 	}
 
 	@Override
