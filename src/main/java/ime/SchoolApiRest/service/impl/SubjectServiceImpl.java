@@ -1,6 +1,6 @@
 package ime.SchoolApiRest.service.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class SubjectServiceImpl implements SubjectService {
 	private SubjectRepository subjectRepo;
 	
 	@Override
-	public List<SubjectDto> getAllEagerSubjectDto() {
+	public Set<SubjectDto> getAllEagerSubjectDto() {
 		
 		return SubjectMapper.toListSubjectDto(subjectRepo.getAllEagerSubject());
 	}
