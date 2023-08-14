@@ -1,14 +1,68 @@
 package ime.SchoolApiRest.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import ime.SchoolApiRest.dto.SubjectDto;
+import ime.SchoolApiRest.service.impl.SubjectServiceImpl;
+
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@WebMvcTest(SubjectController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
 class SubjectControllerTest {
 
+	@Autowired
+	private MockMvc mvc;
+	
+	@MockBean
+	private SubjectServiceImpl subjectService;
+	
+	private SubjectDto subjectDto;
+	
+	@BeforeEach
+	public void createUsersTest() {
+		subjectDto = SubjectDto.builder()
+					.subjectId(1L)
+					.name("101")
+					.teacher(null)
+					.subjectStudents(new HashSet<>())
+					.build();
+					
+		
+	}
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void SubjectController_getAllEagerSubjectDto_ReturnListSubjectDto() throws Exception {
+		
+		Set<SubjectDto>subjects = Set.of(subjectDto);		
+		doReturn(subjects).when(subjectService).getAllEagerSubjectDto();
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/subjects")
+				.contentType(MediaType.APPLICATION_JSON)
+				);
+	
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		verify(subjectService,times(1)).getAllEagerSubjectDto();
 	}
 
 }
