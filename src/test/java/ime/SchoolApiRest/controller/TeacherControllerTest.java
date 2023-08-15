@@ -43,6 +43,7 @@ class TeacherControllerTest {
 	@Autowired
     private ObjectMapper objectMapper;
 	
+	private final String path = "/api/teachers";
 	private TeacherBasicDto teacherBasicDto;
 	private TeacherBasicCreationDto tbcDto;
 	private TeacherDto teacherDto;
@@ -75,7 +76,7 @@ class TeacherControllerTest {
 		List<TeacherDto>teachers = List.of(Mockito.mock(TeacherDto.class));		
 		doReturn(teachers).when(teacherService).getAllEagerTeachersDto();
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers")
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path)
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
@@ -90,12 +91,14 @@ class TeacherControllerTest {
 			
 		doReturn(teacherBasicDto).when(teacherService).getTeacherDtoById(Mockito.anyLong());
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{id}", Mockito.anyLong())
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path + "/{id}", Mockito.anyLong())
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)));
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacherId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Mrs")));
 		
 		verify(teacherService,times(1)).getTeacherDtoById(Mockito.anyLong());
 	}
@@ -105,7 +108,7 @@ class TeacherControllerTest {
 		
 		doNothing().when(teacherService).deleteTeacherById(Mockito.anyLong());
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete("/api/teachers/{id}", Mockito.anyLong())
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", Mockito.anyLong())
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
@@ -120,7 +123,7 @@ class TeacherControllerTest {
 		
 		doReturn(teacherBasicDto).when(teacherService).createTeacher(Mockito.any(TeacherBasicCreationDto.class));
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.post("/api/teachers")
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.post(path)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(tbcDto))
 				);
@@ -137,7 +140,7 @@ class TeacherControllerTest {
 		
 		doReturn(teacherBasicDto).when(teacherService).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.put("/api/teachers")
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put(path)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(teacherBasicDto))
 				);
@@ -156,7 +159,7 @@ class TeacherControllerTest {
 		teacherDto.setSubjects(Set.of(sbDto));
 		doReturn(teacherDto).when(teacherService).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path + "/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
@@ -176,7 +179,7 @@ class TeacherControllerTest {
 		
 		doReturn(teacherDto).when(teacherService).removeSubjectFromTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete("/api/teachers/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete(path + "/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
 				.contentType(MediaType.APPLICATION_JSON)
 		);
 		
