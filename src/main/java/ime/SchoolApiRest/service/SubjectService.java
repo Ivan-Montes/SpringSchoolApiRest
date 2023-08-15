@@ -12,7 +12,7 @@ public interface SubjectService {
 
 	Set<SubjectDto> getAllEagerSubjectDto();
 	
-	SubjectBasicDto getSubjectDtoById(Long subjectId);
+	SubjectBasicDto getSubjectBasicDtoById(Long subjectId);
 	
 	void deleteSubjectById(Long subjectId);
 	

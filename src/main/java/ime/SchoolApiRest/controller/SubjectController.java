@@ -38,9 +38,9 @@ public class SubjectController {
 	 * @return ResponseEntity with the subject required
 	 */
 	@GetMapping("{id}")
-	public ResponseEntity<SubjectBasicDto> getSubjectDtoById(@PathVariable Long id){
+	public ResponseEntity<SubjectBasicDto> getSubjectBasicDtoById(@PathVariable Long id){
 		
-		return ResponseEntity.ok(subjectService.getSubjectDtoById(id));
+		return ResponseEntity.ok(subjectService.getSubjectBasicDtoById(id));
 		
 	}
 	

@@ -27,7 +27,7 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public SubjectBasicDto getSubjectDtoById(Long subjectId) {
+	public SubjectBasicDto getSubjectBasicDtoById(Long subjectId) {
 		
 		return SubjectMapper.toSubjectBasicDto(subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId)));
 		
