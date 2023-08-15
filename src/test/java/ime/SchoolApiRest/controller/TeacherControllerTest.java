@@ -101,7 +101,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_deteteTeacher_ReturnString() throws Exception{
+	public void TeacherController_deteteTeacherById_ReturnString() throws Exception{
 		
 		doNothing().when(teacherService).deleteTeacherById(Mockito.anyLong());
 		

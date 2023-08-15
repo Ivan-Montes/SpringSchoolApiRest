@@ -44,9 +44,9 @@ public class TeacherController {
 		
 	}
 	/**
-	 * Get a teacher according to Id
+	 * Get a teacher according to an Id
 	 * 
-	 * @param id with the identifier of a teacher
+	 * @param id with the identifier
 	 * @return ResponseEntity with the teacher required
 	 */
 	@GetMapping("{id}")
@@ -63,7 +63,7 @@ public class TeacherController {
 	 * @return ResponseEntity with a message
 	 */
 	@DeleteMapping("{id}")
-	public ResponseEntity<String>deteteTeacher(@PathVariable Long id){
+	public ResponseEntity<String>deteteTeacherById(@PathVariable Long id){
 		teacherService.deleteTeacherById(id);
 		return ResponseEntity.ok("Teacher with identifier " + id + " deleted successfully");
 	}
