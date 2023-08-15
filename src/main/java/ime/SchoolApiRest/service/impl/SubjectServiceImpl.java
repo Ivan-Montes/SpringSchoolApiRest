@@ -12,6 +12,8 @@ import ime.SchoolApiRest.mapper.SubjectMapper;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.service.SubjectService;
 
+import ime.SchoolApiRest.exception.*;
+
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
@@ -26,8 +28,9 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public SubjectBasicDto getSubjectDtoById(Long subjectId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return SubjectMapper.toSubjectBasicDto(subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId)));
+		
 	}
 
 	@Override

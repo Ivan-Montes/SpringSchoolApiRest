@@ -61,7 +61,10 @@ class SubjectControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 	
-		result.andExpect(MockMvcResultMatchers.status().isOk());
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].name", org.hamcrest.Matchers.equalTo("101")));
 		verify(subjectService,times(1)).getAllEagerSubjectDto();
 	}
 
