@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
+import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.mapper.SubjectMapper;
+import ime.SchoolApiRest.mapper.TeacherMapper;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.service.SubjectService;
 
@@ -35,14 +37,19 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public void deleteSubjectById(Long subjectId) {
-		// TODO Auto-generated method stub
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		if ( subject.getTeacher() != null ) throw new TeacherAssociatedException(subjectId);
+		if ( subject.getStudents() != null && !subject.getStudents().isEmpty() ) throw new StudentAssociatedException(subjectId);
+		subjectRepo.deleteById(subjectId);
 		
 	}
 
 	@Override
 	public SubjectBasicDto createSubject(SubjectBasicCreationDto sbcDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return SubjectMapper.toSubjectBasicDto(subjectRepo.save(SubjectMapper.dtoCreationToSubject(sbcDto)));
+		
 	}
 
 	@Override
