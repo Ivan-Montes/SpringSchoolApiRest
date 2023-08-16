@@ -10,7 +10,6 @@ import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.mapper.SubjectMapper;
-import ime.SchoolApiRest.mapper.TeacherMapper;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.service.SubjectService;
 

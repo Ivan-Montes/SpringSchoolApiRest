@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
-import ime.SchoolApiRest.dto.TeacherBasicCreationDto;
-import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.service.SubjectService;
 import jakarta.validation.Valid;
 
