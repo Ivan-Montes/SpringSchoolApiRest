@@ -14,7 +14,7 @@ public class SubjectAssociatedException extends GeneralException {
 	public SubjectAssociatedException(Long identifier) {
 		super();
 		this.setName("SubjectAssociatedException");
-		this.setMessage("Some Subject is still associated in the Teacher");
+		this.setMessage("Some Subject is still associated in the element");
 		this.setIdentifier(identifier);
 	}
 }
