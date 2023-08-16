@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.entity.Subject;
@@ -36,6 +37,12 @@ public class SubjectMapper {
 												.name(subject.getName())
 												.build()
 											:new SubjectBasicDto();
+	}
+
+	public static Subject dtoCreationToSubject(SubjectBasicCreationDto sbcDto) {
+		Subject subject = new Subject();
+		subject.setName(sbcDto.getName());
+		return subject;
 	}
 	
 	
