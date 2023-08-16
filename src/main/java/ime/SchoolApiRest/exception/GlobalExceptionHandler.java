@@ -23,7 +23,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(ime.SchoolApiRest.exception.SubjectAssociatedException.class)
+	@ExceptionHandler({ime.SchoolApiRest.exception.SubjectAssociatedException.class, 
+						ime.SchoolApiRest.exception.StudentAssociatedException.class,
+						ime.SchoolApiRest.exception.TeacherAssociatedException.class})
 	public ResponseEntity<String> subjectAssociatedException(SubjectAssociatedException ex){
 		
 		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(),HttpStatus.PRECONDITION_REQUIRED);
