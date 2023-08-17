@@ -19,6 +19,12 @@ import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.service.SubjectService;
 import jakarta.validation.Valid;
 
+/**
+ * Controller for Subject environment
+ * 
+ * @author Ivan-Montes
+ *
+ */
 @RestController
 @RequestMapping("/api/subjects")
 public class SubjectController {
