@@ -83,7 +83,7 @@ public class TeacherController {
 	/**
 	 * Update fields in a teacher
 	 * 
-	 * @param tbd Object TeacherBasicCreationDto with the new info
+	 * @param tbd Object TeacherBasicDto with the new info
 	 * @return ResponseEntity with the teacher modified
 	 */
 	@PutMapping
