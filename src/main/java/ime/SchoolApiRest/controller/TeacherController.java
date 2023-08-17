@@ -115,5 +115,6 @@ public class TeacherController {
 	public ResponseEntity<TeacherDto>removeSubject(@PathVariable Long teacherId, @PathVariable Long subjectId){
 		TeacherDto teacherDto = teacherService.removeSubjectFromTeacher(teacherId, subjectId);
 		return ResponseEntity.ok(teacherDto);
-	}
+	}	
+	
 }
