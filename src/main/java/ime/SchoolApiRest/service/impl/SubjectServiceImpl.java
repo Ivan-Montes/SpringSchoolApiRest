@@ -9,8 +9,10 @@ import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.entity.Subject;
+import ime.SchoolApiRest.entity.Teacher;
 import ime.SchoolApiRest.mapper.SubjectMapper;
 import ime.SchoolApiRest.repository.SubjectRepository;
+import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.service.SubjectService;
 
 import ime.SchoolApiRest.exception.*;
@@ -20,6 +22,9 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	private SubjectRepository subjectRepo;
+
+	@Autowired
+	private TeacherRepository teacherRepo;
 	
 	@Override
 	public Set<SubjectDto> getAllEagerSubjectDto() {
@@ -53,8 +58,25 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public SubjectBasicDto updateSubject(Long subjectId, SubjectBasicDto sbDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		subject.setName(sbDto.getName());
+		Subject subjectUpdated = subjectRepo.save(subject);
+		
+		return SubjectMapper.toSubjectBasicDto(subjectUpdated);
+		
+	}
+
+	@Override
+	public SubjectDto addTeacherToSubject(Long subjectId, Long teacherId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
+		subject.setTeacher(teacher);
+		Subject subjectUpdated = subjectRepo.save(subject);
+		
+		return SubjectMapper.toSubjectDto(subjectUpdated);
+		
 	}
 
 }

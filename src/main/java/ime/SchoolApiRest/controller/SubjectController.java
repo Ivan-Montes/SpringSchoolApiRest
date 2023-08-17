@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,4 +74,30 @@ public class SubjectController {
 		SubjectBasicDto sbDto = subjectService.createSubject(sbcDto);
 		return new ResponseEntity<SubjectBasicDto>(sbDto, HttpStatus.CREATED);
 	}
+	
+	/**
+	 * Update fields in a Subject
+	 * 
+	 * @param tbd Object SubjectBasicDto with the new info
+	 * @return ResponseEntity with the teacher modified
+	 */
+	@PutMapping
+	public ResponseEntity<SubjectBasicDto>updateSubject(@Valid @RequestBody SubjectBasicDto sbDto){
+		return ResponseEntity.ok(subjectService.updateSubject(sbDto.getSubjectId(), sbDto));
+	}
+	
+	/**
+	 * Add a Teacher in a Subject
+	 * 
+	 * @param subjectId identifier of a Subject
+	 * @param teacherId identifier of a teacher
+	 * @return ResponseEntity with the Subject modified
+	 */
+	@GetMapping("{subjectId}/{teacherId}")
+	public ResponseEntity<SubjectDto>addTeacher(@PathVariable Long subjectId, @PathVariable Long teacherId){
+		
+		return ResponseEntity.ok(subjectService.addTeacherToSubject(subjectId, teacherId));
+		
+	}
+	
 }

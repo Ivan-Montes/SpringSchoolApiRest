@@ -20,4 +20,6 @@ public interface SubjectService {
 	
 	SubjectBasicDto updateSubject(Long subjectId, SubjectBasicDto sbDto);
 	
+	SubjectDto addTeacherToSubject(Long subjectId, Long teacherId);
+	
 }
