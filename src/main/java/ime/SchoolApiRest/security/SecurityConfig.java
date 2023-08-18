@@ -17,17 +17,16 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
 		return http
-				//.cors(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable) 
                 .authorizeHttpRequests(auth -> {
                 	//auth.requestMatchers(AntPathRequestMatcher.antMatcher("**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll();
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).permitAll(); // API REST
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll(); // H2 database
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll(); // Swagger open api
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll(); // Swagger open api
                 	auth.anyRequest().authenticated();
                 })
-                //.headers(head-> head.frameOptions(f->f.sameOrigin()))
+                .headers(head-> head.frameOptions(f->f.sameOrigin())) // H2 database
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .build();		
