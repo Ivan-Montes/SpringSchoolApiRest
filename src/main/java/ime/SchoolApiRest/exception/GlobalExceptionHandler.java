@@ -26,9 +26,9 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ime.SchoolApiRest.exception.SubjectAssociatedException.class, 
 						ime.SchoolApiRest.exception.StudentAssociatedException.class,
 						ime.SchoolApiRest.exception.TeacherAssociatedException.class})
-	public ResponseEntity<String> subjectAssociatedException(SubjectAssociatedException ex){
+	public ResponseEntity<String> subjectAssociatedException(GeneralException ex){
 		
-		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(),HttpStatus.PRECONDITION_REQUIRED);
+		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
 	}
 	
 	@ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
@@ -45,7 +45,9 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<String>methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
+		
 		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);		
+		
 	}
 	
 }
