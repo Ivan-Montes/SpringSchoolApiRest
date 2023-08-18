@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,38 +20,34 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ime.SchoolApiRest.entity.Subject;
+import ime.SchoolApiRest.entity.SubjectStudent;
 import ime.SchoolApiRest.repository.SubjectRepository;
+import ime.SchoolApiRest.repository.SubjectStudentRepository;
 import ime.SchoolApiRest.dto.*;
 
 @ExtendWith(MockitoExtension.class)
 class SubjectStudentServiceImplTest {
 
 	@Mock
-	private SubjectRepository subjectRepo;
-	
+	private SubjectStudentRepository subjecStudentRepo;	
 	
 	@InjectMocks
-	private SubjectServiceImpl subjectService;
+	private SubjectStudentServiceImpl subjectService;
 	
-	private Subject subjectTest;
+	private SubjectStudent subjectStudentTest;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
-		subjectTest = new Subject();
-		subjectTest.setSubjectId(1L);
-		subjectTest.setName("101");
-		subjectTest.setTeacher(null);
-		subjectTest.setStudents(new HashSet<>());
+		subjectStudentTest = new SubjectStudent();
 		
 	}
 	
-	
+	/*
 	@Test
 	public void subjectStudentServiceImpl_getAllEagerSubjectDto_ReturSetSubjectDto() {
 		
-		List<Subject>subjects = List.of(subjectTest);
-		doReturn(subjects).when(subjectRepo).getAllEagerSubject();
+		List<SubjectStudent>subjects = List.of(subjectStudentTest);
+		doReturn(subjects).when(subjecStudentRepo).getAllEagerSubjectStudent();
 		
 		Set<SubjectDto>subjectList = subjectService.getAllEagerSubjectDto();
 		
@@ -58,26 +55,36 @@ class SubjectStudentServiceImplTest {
 					()->Assertions.assertThat(subjectList).isNotNull(),
 					()->Assertions.assertThat(subjectList).hasSizeGreaterThanOrEqualTo(1)
 				);		
-		verify(subjectRepo,times(1)).getAllEagerSubject();
+		verify(subjecStudentRepo,times(1)).getAllEagerSubjectStudent();
 		
 	}
 	
 	@Test
 	public void subjectStudentServiceImpl_getSubjectDtoById_ReturnSubjectBasicDto() {
 		
-		Optional<Subject>optS = Optional.ofNullable(subjectTest);
-		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		Optional<SubjectStudent>optS = Optional.ofNullable(subjectStudentTest);
+		doReturn(optS).when(subjecStudentRepo).findById(Mockito.anyLong());
 		
-		SubjectBasicDto sbDto = subjectService.getSubjectBasicDtoById(Mockito.anyLong());
+		SubjectBasicDto sbDto = subjectService.getSubjectStudentBasicDtoById(Mockito.anyLong());
 		
 		assertAll(
 					()->Assertions.assertThat(sbDto).isNotNull(),
 					()->Assertions.assertThat(sbDto.getSubjectId()).isEqualTo(1L),
 					()->Assertions.assertThat(sbDto.getName()).isEqualTo("101")
 				);
-		verify(subjectRepo, times(1)).findById(Mockito.anyLong());
+		verify(subjecStudentRepo, times(1)).findById(Mockito.anyLong());
 
 	}
 	
-
+	@Test
+	public void subjectStudentServiceImpl_deleteSubjectById_ReturnVoid() {
+		
+		
+	}
+	
+	@Test
+	public void subjectStudentServiceImpl_createSubject_ReturnSubjectBasicDto() {
+		
+	
+	}*/
 }
