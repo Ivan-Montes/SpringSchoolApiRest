@@ -20,7 +20,11 @@ public class SecurityConfig {
 				//.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("**")).permitAll();
+                	//auth.requestMatchers(AntPathRequestMatcher.antMatcher("**")).permitAll();
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).permitAll();
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll();
+                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll();
                 	auth.anyRequest().authenticated();
                 })
                 //.headers(head-> head.frameOptions(f->f.sameOrigin()))
