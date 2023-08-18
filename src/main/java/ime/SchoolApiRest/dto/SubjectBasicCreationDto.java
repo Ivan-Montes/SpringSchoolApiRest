@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 public class SubjectBasicCreationDto {
 	
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50,  message="{Size.Subject.name}")
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Subject.name}")
 	private String name;
 	
