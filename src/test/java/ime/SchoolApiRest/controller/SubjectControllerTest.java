@@ -17,9 +17,12 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ime.SchoolApiRest.dto.*;
 import ime.SchoolApiRest.service.impl.SubjectServiceImpl;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,9 +41,13 @@ class SubjectControllerTest {
 	@MockBean
 	private SubjectServiceImpl subjectService;
 	
+	@Autowired
+    private ObjectMapper objectMapper;
+	
 	private final String path = "/api/subjects";
 	private SubjectDto subjectDto;
 	private SubjectBasicDto subjectBasicDto;
+	private SubjectBasicCreationDto sbcDto;
 	
 	@BeforeEach
 	public void createUsersTest() {
@@ -55,6 +62,11 @@ class SubjectControllerTest {
 						.subjectId(1L)
 						.name("101")
 						.build();
+		
+		sbcDto = SubjectBasicCreationDto.builder()
+										.name("101")
+										.build();
+				
 	}
 	
 	@Test
@@ -79,8 +91,10 @@ class SubjectControllerTest {
 		
 		doReturn(subjectBasicDto).when(subjectService).getSubjectBasicDtoById(Mockito.anyLong());
 		
-		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path + "/{id}", Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON));
+		ResultActions result = mvc.perform( MockMvcRequestBuilders
+																.get(path + "/{id}", Mockito.anyLong())
+																.contentType(MediaType.APPLICATION_JSON)
+											);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
@@ -88,6 +102,46 @@ class SubjectControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("101")));
 		verify(subjectService,times(1)).getSubjectBasicDtoById(Mockito.anyLong());
 
+	}
+	
+	@Test
+	public void subjectController_deleteSubjectByIdReturnString() throws Exception{
+		
+		doNothing().when(subjectService).deleteSubjectById(Mockito.anyLong());
+		
+		ResultActions result = mvc.perform( MockMvcRequestBuilders.delete(path + "/{id}", Mockito.anyLong())
+																	.contentType(MediaType.APPLICATION_JSON)
+											);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		verify(subjectService,times(1)).deleteSubjectById(Mockito.anyLong());
+		
+	}
+	
+	@Test
+	public void subjectController_createSubject_ReturnSubjectBasicDto() throws Exception{
+		
+		doReturn(subjectBasicDto).when(subjectService).createSubject(Mockito.any(SubjectBasicCreationDto.class));
+		
+		ResultActions result = mvc.perform( MockMvcRequestBuilders
+																.post(path)
+																.contentType(MediaType.APPLICATION_JSON)
+																.content(objectMapper.writeValueAsString(sbcDto))
+											);
+		
+		result.andExpect(MockMvcResultMatchers.status().isCreated())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()));
+		verify(subjectService,times(1)).createSubject(Mockito.any(SubjectBasicCreationDto.class));
+	}
+	
+	@Test
+	public void subjectController_updateSubject_ReturnSubjectBasicDto() throws Exception{
+		
+	}
+	
+	@Test
+	public void subjectController_addTeacher_ReturnSubjectDto() throws Exception{
+		
 	}
 
 }
