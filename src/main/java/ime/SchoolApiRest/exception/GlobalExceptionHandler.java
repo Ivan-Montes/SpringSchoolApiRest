@@ -3,6 +3,7 @@ package ime.SchoolApiRest.exception;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -26,7 +27,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ime.SchoolApiRest.exception.SubjectAssociatedException.class, 
 						ime.SchoolApiRest.exception.StudentAssociatedException.class,
 						ime.SchoolApiRest.exception.TeacherAssociatedException.class})
-	public ResponseEntity<String> subjectAssociatedException(GeneralException ex){
+	public ResponseEntity<String> elementtAssociatedException(GeneralException ex){
 		
 		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
 	}
@@ -47,6 +48,13 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String>methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
 		
 		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);		
+		
+	}
+	
+	@ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
+	public ResponseEntity<String>badCredentialsException(BadCredentialsException ex){
+		
+		return new ResponseEntity<String>("BadCredentialsException" + simpleText, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
 		
 	}
 	
