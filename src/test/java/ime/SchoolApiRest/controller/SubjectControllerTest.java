@@ -173,7 +173,9 @@ class SubjectControllerTest {
 
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)));
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacher.name", org.hamcrest.Matchers.equalTo("Mrs")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.teacher.surname", org.hamcrest.Matchers.equalTo("Smith")));
 		verify(subjectService,times(1)).addTeacherToSubject(Mockito.anyLong(), Mockito.anyLong());
 		
 	}
