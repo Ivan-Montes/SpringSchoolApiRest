@@ -21,11 +21,11 @@ import java.util.HashSet;
 @Builder
 public class SubjectDto{
 
-	@NotNull(message="{NotNull.Subject.name}")
+	@NotNull(message="{NotNull.Identity.id}")
 	private Long subjectId;
 	
-	@Size(min = 1, max = 50)
-	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Subject.name}")
+	@Size(min = 1, max = 50, message="{Size.Identity.name}")
+	@Pattern( regexp = "[a-zA-Z0-9\\s\\-&]+", message="{Pattern.Subject.name}")
 	private String name;
 
 	private TeacherBasicDto teacher;

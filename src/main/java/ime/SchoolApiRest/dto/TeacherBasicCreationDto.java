@@ -15,11 +15,11 @@ import lombok.Setter;
 @Builder
 public class TeacherBasicCreationDto {
 
-	@Size(min = 1, max = 50, message="{Size.Teacher.name}")
-	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.name}")
+	@Size(min = 1, max = 50, message="{Size.Identity.name}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.name}")
 	private String name;
 	
-	@Size(min = 1, max = 50, message="{Size.Teacher.surname}")
-	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.surname}")
+	@Size(min = 1, max = 50, message="{Size.Identity.surname}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.surname}")
 	private String surname;
 }

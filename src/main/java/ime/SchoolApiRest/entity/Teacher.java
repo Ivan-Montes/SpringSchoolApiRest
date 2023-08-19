@@ -32,12 +32,12 @@ public class Teacher {
 	
 	@Column(nullable = false, length = 50 )
 	@Size(min = 1, max = 50)
-	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.name}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.name}")
 	private String name;
 	
 	@Column(nullable=false, length = 50 )
 	@Size(min = 1, max = 50)
-	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Teacher.surname}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.surname}")
 	private String surname;
 	
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
