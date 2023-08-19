@@ -53,18 +53,18 @@ class SubjectControllerTest {
 	public void createUsersTest() {
 		subjectDto = SubjectDto.builder()
 					.subjectId(1L)
-					.name("101")
+					.name("Programacion JAVA")
 					.teacher(null)
 					.subjectStudents(new HashSet<>())
 					.build();
 					
 		subjectBasicDto = SubjectBasicDto.builder()
 						.subjectId(1L)
-						.name("101")
+						.name("Programacion JAVA")
 						.build();
 		
 		sbcDto = SubjectBasicCreationDto.builder()
-										.name("101")
+										.name("Programacion JAVA")
 										.build();
 				
 	}
@@ -82,7 +82,7 @@ class SubjectControllerTest {
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].subjectId", org.hamcrest.Matchers.equalTo(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].name", org.hamcrest.Matchers.equalTo("101")));
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].name", org.hamcrest.Matchers.equalTo("Programacion JAVA")));
 		verify(subjectService,times(1)).getAllEagerSubjectDto();
 	}
 	
@@ -99,7 +99,7 @@ class SubjectControllerTest {
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("101")));
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Programacion JAVA")));
 		verify(subjectService,times(1)).getSubjectBasicDtoById(Mockito.anyLong());
 
 	}
@@ -130,7 +130,9 @@ class SubjectControllerTest {
 											);
 		
 		result.andExpect(MockMvcResultMatchers.status().isCreated())
-		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()));
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo("Programacion JAVA")));
 		verify(subjectService,times(1)).createSubject(Mockito.any(SubjectBasicCreationDto.class));
 	}
 	
