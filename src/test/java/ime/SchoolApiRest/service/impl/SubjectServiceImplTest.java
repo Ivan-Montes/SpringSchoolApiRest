@@ -24,9 +24,12 @@ import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.entity.Subject;
+import ime.SchoolApiRest.entity.SubjectStudent;
+import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.entity.Teacher;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.repository.TeacherRepository;
+import ime.SchoolApiRest.repository.StudentRepository;
 
 @ExtendWith(MockitoExtension.class)
 class SubjectServiceImplTest {
@@ -36,6 +39,8 @@ class SubjectServiceImplTest {
 	
 	@Mock
 	private TeacherRepository teacherRepo;
+	@Mock
+	private StudentRepository studentRepo;
 	
 	@InjectMocks
 	private SubjectServiceImpl subjectService;
@@ -44,6 +49,7 @@ class SubjectServiceImplTest {
 	private SubjectBasicCreationDto sbcDtoTest; 
 	private SubjectBasicDto sbDtoTest;
 	private Teacher teacherTest;
+	private Student studentTest;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
@@ -62,6 +68,12 @@ class SubjectServiceImplTest {
 		teacherTest.setName("Jane");
 		teacherTest.setSurname("Doe");
 		teacherTest.setSubjects(new HashSet<>());
+		
+		studentTest = new Student();
+		studentTest.setStudentId(1L);
+		studentTest.setName("Philip J");
+		studentTest.setSurname("Fry");
+		studentTest.setSubjects(new HashSet<>());
 	}
 	
 	
@@ -169,5 +181,31 @@ class SubjectServiceImplTest {
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
 	}
 	
+	@Test
+	public void subjectServiceImpl_addStudentToSubject_ReturnSubjectDto() {
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Student>optStu = Optional.ofNullable(studentTest);
+		subjectTest.setTeacher(teacherTest);
+		teacherTest.getSubjects().add(subjectTest);		
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		//doNothing().when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
+		
+		SubjectDto subjectDtoUpdated = subjectService.addStudentToSubject(1L, Mockito.anyLong());
+		
+		assertAll(
+				()->Assertions.assertThat(subjectDtoUpdated).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectId()).isEqualTo(1L),
+				()->Assertions.assertThat(subjectDtoUpdated.getTeacher()).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getTeacher().getTeacherId()).isEqualTo(1L),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(1)
+			);		
+	verify(teacherRepo,times(1)).findById(Mockito.anyLong());
+	verify(subjectRepo,times(1)).save(Mockito.any(Subject.class));
+	verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		
+	}
 	
 }
