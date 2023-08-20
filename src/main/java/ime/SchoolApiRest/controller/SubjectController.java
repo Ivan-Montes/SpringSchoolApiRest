@@ -87,7 +87,7 @@ public class SubjectController {
 	 * Update fields in a Subject
 	 * 
 	 * @param tbd Object SubjectBasicDto with the new info
-	 * @return ResponseEntity with the teacher modified
+	 * @return ResponseEntity with the Subject modified
 	 */
 	@PutMapping
 	public ResponseEntity<SubjectBasicDto>updateSubject(@Valid @RequestBody SubjectBasicDto sbDto){
@@ -108,4 +108,31 @@ public class SubjectController {
 		
 	}
 	
+	/**
+	 * Add a Student in a Subject
+	 * 
+	 * @param subjectId identifier of a Subject
+	 * @param studentId identifier of a Student
+	 * @return ResponseEntity with the Subject modified
+	 */
+	@PutMapping("{subjectId}/students/{studentId}")
+	public ResponseEntity<SubjectDto>addStudentToSubject(@PathVariable Long subjectId, @PathVariable Long studentId){
+		
+		return ResponseEntity.ok(subjectService.addStudentToSubject(subjectId, studentId));
+		
+	}
+
+	/**
+	 * Remove a Student in a Subject
+	 * 
+	 * @param subjectId identifier of a Subject
+	 * @param studentId identifier of a Student
+	 * @return ResponseEntity with the Subject modified
+	 */
+	@DeleteMapping("{subjectId}/students/{studentId}")
+	public ResponseEntity<SubjectDto>removeStudentFromSubject(@PathVariable Long subjectId, @PathVariable Long studentId){
+		
+		return ResponseEntity.ok(subjectService.removeStudentFromSubject(subjectId, studentId));
+		
+	}
 }

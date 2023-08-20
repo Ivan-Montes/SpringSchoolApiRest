@@ -22,4 +22,7 @@ public interface SubjectService {
 	
 	SubjectDto addTeacherToSubject(Long subjectId, Long teacherId);
 	
+	SubjectDto addStudentToSubject(Long subjectId, Long studentId);
+
+	SubjectDto removeStudentFromSubject(Long subjectId, Long studentId);
 }

@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.service.impl;
 
 import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +9,9 @@ import org.springframework.stereotype.Service;
 import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
-import ime.SchoolApiRest.entity.Subject;
-import ime.SchoolApiRest.entity.Teacher;
+import ime.SchoolApiRest.entity.*;
 import ime.SchoolApiRest.mapper.SubjectMapper;
-import ime.SchoolApiRest.repository.SubjectRepository;
-import ime.SchoolApiRest.repository.TeacherRepository;
+import ime.SchoolApiRest.repository.*;
 import ime.SchoolApiRest.service.SubjectService;
 
 import ime.SchoolApiRest.exception.*;
@@ -25,6 +24,12 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	private TeacherRepository teacherRepo;
+	
+	@Autowired
+	private StudentRepository studentRepo;
+	
+	@Autowired
+	private SubjectStudentRepository subjectStudentRepo;
 	
 	@Override
 	public Set<SubjectDto> getAllEagerSubjectDto() {
@@ -78,5 +83,37 @@ public class SubjectServiceImpl implements SubjectService {
 		return SubjectMapper.toSubjectDto(subjectUpdated);
 		
 	}
+
+	@Override
+	public SubjectDto addStudentToSubject(Long subjectId, Long studentId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(),student.getStudentId());
+		SubjectStudent ss = new SubjectStudent(ssId,subject,student,null);
+		
+		if( subject.getStudents() == null ) {		
+			subject.setStudents(new HashSet<>());
+		}
+		
+		subject.getStudents().add(ss);
+		student.getSubjects().add(ss);
+		subjectStudentRepo.save(ss);
+		Subject subjectUpdated = subjectRepo.save(subject);
+		//Student studentUpdated = studentRepo.save(student);
+		
+		return SubjectMapper.toSubjectDto(subjectUpdated);
+	}
+
+	@Override
+	public SubjectDto removeStudentFromSubject(Long subjectId, Long studentId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		
+		return null;
+	}
+	
+	
 
 }
