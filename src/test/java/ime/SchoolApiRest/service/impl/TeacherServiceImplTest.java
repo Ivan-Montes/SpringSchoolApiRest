@@ -208,9 +208,7 @@ class TeacherServiceImplTest {
 				);
 		verify(teacherRepo,times(1)).findById(Mockito.anyLong());
 		verify(teacherRepo,times(1)).save(Mockito.any(Teacher.class));
-		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
-		
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());		
 		
 	}
-	
 }
