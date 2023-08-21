@@ -110,8 +110,19 @@ public class SubjectServiceImpl implements SubjectService {
 		
 		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
 		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(),student.getStudentId());
+		SubjectStudent ss = subjectStudentRepo.findById(ssId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+
+		if( subject.getStudents() == null ) {		
+			subject.setStudents(new HashSet<>());
+		}
 		
-		return null;
+		subject.getStudents().remove(ss);
+		student.getSubjects().remove(ss);
+		subjectStudentRepo.save(ss);
+		Subject subjectUpdated = subjectRepo.save(subject);
+		
+		return SubjectMapper.toSubjectDto(subjectUpdated);
 	}
 	
 	
