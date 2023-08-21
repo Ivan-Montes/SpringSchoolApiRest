@@ -3,6 +3,7 @@ package ime.SchoolApiRest.controller;
 
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -50,8 +51,11 @@ class SubjectControllerTest {
 	private SubjectBasicCreationDto sbcDto;
 	private TeacherBasicDto tbDto;
 	private final String NAME_SUBJ = "Programacion JAVA";
+	
+	
 	@BeforeEach
 	public void createUsersTest() {
+		
 		subjectDto = SubjectDto.builder()
 					.subjectId(1L)
 					.name(NAME_SUBJ)
@@ -89,6 +93,7 @@ class SubjectControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].subjectId", org.hamcrest.Matchers.equalTo(1)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)));
 		verify(subjectService,times(1)).getAllEagerSubjectDto();
+		
 	}
 	
 	@Test
@@ -139,6 +144,7 @@ class SubjectControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)));
 		verify(subjectService,times(1)).createSubject(Mockito.any(SubjectBasicCreationDto.class));
+		
 	}
 	
 	@Test
@@ -167,7 +173,7 @@ class SubjectControllerTest {
 		doReturn(subjectDto).when(subjectService).addTeacherToSubject(Mockito.anyLong(), Mockito.anyLong());
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders
-				.get(path + "/{idSubject}/{idTeacher}", Mockito.anyLong(), Mockito.anyLong())
+				.get(path + "/{subjectId}/{teacherId}", Mockito.anyLong(), Mockito.anyLong())
 				.contentType(MediaType.APPLICATION_JSON)
 				);
 
@@ -180,4 +186,46 @@ class SubjectControllerTest {
 		
 	}
 
+	@Test
+	public void subjectController_addStudentToSubject_ReturnSubjectDto() throws Exception{
+		
+		subjectDto.setTeacher(tbDto);
+		subjectDto.getSubjectStudents().add(new SubjectStudentDto());		
+		doReturn(subjectDto).when(subjectService).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		
+		ResultActions result = mvc.perform( MockMvcRequestBuilders
+				.put(path + "/{subjectId}/students/{studentId}", Mockito.anyLong(), Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON)
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.collection.IsCollectionWithSize.hasSize(1)));
+		verify(subjectService,times(1)).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		
+	}
+	
+	@Test
+	@Disabled
+	public void subjectController_removeStudentFromSubject_ReturnSubjectDto() throws Exception{
+		
+		doReturn(subjectDto).when(subjectService).removeStudentFromSubject(Mockito.anyLong(), Mockito.anyLong());
+
+		ResultActions result = mvc.perform( MockMvcRequestBuilders
+				.delete(path + "/{subjectId}/students/{studentId}", Mockito.anyLong(), Mockito.anyLong())
+				.contentType(MediaType.APPLICATION_JSON)
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(NAME_SUBJ)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.collection.IsCollectionWithSize.hasSize(0)));
+		verify(subjectService,times(1)).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		
+	}
 }

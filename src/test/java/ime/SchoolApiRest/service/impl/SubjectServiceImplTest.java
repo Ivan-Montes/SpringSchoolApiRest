@@ -23,11 +23,13 @@ import org.mockito.Mockito;
 import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.SubjectStudent;
 import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.entity.Teacher;
 import ime.SchoolApiRest.repository.SubjectRepository;
+import ime.SchoolApiRest.repository.SubjectStudentRepository;
 import ime.SchoolApiRest.repository.TeacherRepository;
 import ime.SchoolApiRest.repository.StudentRepository;
 
@@ -39,8 +41,12 @@ class SubjectServiceImplTest {
 	
 	@Mock
 	private TeacherRepository teacherRepo;
+	
 	@Mock
 	private StudentRepository studentRepo;
+	
+	@Mock
+	private SubjectStudentRepository subjectStudentRepo;
 	
 	@InjectMocks
 	private SubjectServiceImpl subjectService;
@@ -189,7 +195,7 @@ class SubjectServiceImplTest {
 		teacherTest.getSubjects().add(subjectTest);		
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
-		//doNothing().when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		doReturn(new SubjectStudent()).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
 		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
 		
 		SubjectDto subjectDtoUpdated = subjectService.addStudentToSubject(1L, Mockito.anyLong());
@@ -200,12 +206,44 @@ class SubjectServiceImplTest {
 				()->Assertions.assertThat(subjectDtoUpdated.getTeacher()).isNotNull(),
 				()->Assertions.assertThat(subjectDtoUpdated.getTeacher().getTeacherId()).isEqualTo(1L),
 				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isNotNull(),
-				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(1)
-			);		
-	verify(teacherRepo,times(1)).findById(Mockito.anyLong());
-	verify(subjectRepo,times(1)).save(Mockito.any(Subject.class));
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(1),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(studentTest.getStudentId())
+			);
 	verify(subjectRepo,times(1)).findById(Mockito.anyLong());
-		
+	verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
+	verify(subjectRepo,times(1)).save(Mockito.any(Subject.class));
 	}
+	
+	@Test
+	public void subjectServiceImpl_removeStudentFromSubject_ReturnSubjectDto() {
+		
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Student>optStu = Optional.ofNullable(studentTest);
+		subjectTest.setTeacher(teacherTest);
+		teacherTest.getSubjects().add(subjectTest);		
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(new SubjectStudent()).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
+		
+		SubjectDto subjectDtoUpdated = subjectService.removeStudentFromSubject(1L, Mockito.anyLong());
+		
+		assertAll(
+				()->Assertions.assertThat(subjectDtoUpdated).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectId()).isEqualTo(1L),
+				()->Assertions.assertThat(subjectDtoUpdated.getTeacher()).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isNotNull(),
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(0)
+				
+				);
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
+		verify(subjectRepo,times(1)).save(Mockito.any(Subject.class));
+	}	
+	
+	
 	
 }
