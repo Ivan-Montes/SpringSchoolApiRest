@@ -26,6 +26,7 @@ import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.SubjectStudent;
+import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.entity.Teacher;
 import ime.SchoolApiRest.repository.SubjectRepository;
@@ -166,10 +167,10 @@ class SubjectServiceImplTest {
 	@Test
 	public void subjectServiceImpl_addTeacherToSubject_ReturnSubjectDto() {
 
-		Optional<Subject>optS = Optional.ofNullable(subjectTest);
-		Optional<Teacher>optT = Optional.ofNullable(teacherTest);
 		subjectTest.setTeacher(teacherTest);
 		teacherTest.getSubjects().add(subjectTest);
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Teacher>optT = Optional.ofNullable(teacherTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
 		doReturn(optT).when(teacherRepo).findById(Mockito.anyLong());
 		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
@@ -189,10 +190,11 @@ class SubjectServiceImplTest {
 	
 	@Test
 	public void subjectServiceImpl_addStudentToSubject_ReturnSubjectDto() {
-		Optional<Subject>optS = Optional.ofNullable(subjectTest);
-		Optional<Student>optStu = Optional.ofNullable(studentTest);
+		
 		subjectTest.setTeacher(teacherTest);
 		teacherTest.getSubjects().add(subjectTest);		
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Student>optStu = Optional.ofNullable(studentTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
 		doReturn(new SubjectStudent()).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
@@ -218,15 +220,14 @@ class SubjectServiceImplTest {
 	
 	@Test
 	public void subjectServiceImpl_removeStudentFromSubject_ReturnSubjectDto() {
-		
+
+		subjectTest.setTeacher(teacherTest);
+		teacherTest.getSubjects().add(subjectTest);	
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		Optional<Student>optStu = Optional.ofNullable(studentTest);
-		subjectTest.setTeacher(teacherTest);
-		teacherTest.getSubjects().add(subjectTest);		
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
-		doReturn(new SubjectStudent()).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
-		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
+		doNothing().when(subjectStudentRepo).deleteById(Mockito.any(SubjectStudentId.class));
 		
 		SubjectDto subjectDtoUpdated = subjectService.removeStudentFromSubject(1L, Mockito.anyLong());
 		
@@ -235,15 +236,10 @@ class SubjectServiceImplTest {
 				()->Assertions.assertThat(subjectDtoUpdated.getSubjectId()).isEqualTo(1L),
 				()->Assertions.assertThat(subjectDtoUpdated.getTeacher()).isNotNull(),
 				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isNotNull(),
-				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(0)
-				
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(0)				
 				);
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
 		verify(studentRepo,times(1)).findById(Mockito.anyLong());
-		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
-		verify(subjectRepo,times(1)).save(Mockito.any(Subject.class));
-	}	
-	
-	
-	
+		verify(subjectStudentRepo,times(1)).deleteById(Mockito.any(SubjectStudentId.class));
+	}
 }

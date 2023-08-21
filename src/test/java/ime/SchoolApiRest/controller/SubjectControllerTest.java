@@ -209,7 +209,6 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	@Disabled
 	public void subjectController_removeStudentFromSubject_ReturnSubjectDto() throws Exception{
 		
 		doReturn(subjectDto).when(subjectService).removeStudentFromSubject(Mockito.anyLong(), Mockito.anyLong());
@@ -225,7 +224,7 @@ class SubjectControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.collection.IsCollectionWithSize.hasSize(0)));
-		verify(subjectService,times(1)).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		verify(subjectService,times(1)).removeStudentFromSubject(Mockito.anyLong(), Mockito.anyLong());
 		
 	}
 }
