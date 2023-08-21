@@ -100,7 +100,6 @@ public class SubjectServiceImpl implements SubjectService {
 		student.getSubjects().add(ss);
 		subjectStudentRepo.save(ss);
 		Subject subjectUpdated = subjectRepo.save(subject);
-		//Student studentUpdated = studentRepo.save(student);
 		
 		return SubjectMapper.toSubjectDto(subjectUpdated);
 	}
@@ -111,18 +110,10 @@ public class SubjectServiceImpl implements SubjectService {
 		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
 		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
 		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(),student.getStudentId());
-		SubjectStudent ss = subjectStudentRepo.findById(ssId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
-
-		if( subject.getStudents() == null ) {		
-			subject.setStudents(new HashSet<>());
-		}
 		
-		subject.getStudents().remove(ss);
-		student.getSubjects().remove(ss);
-		subjectStudentRepo.save(ss);
-		Subject subjectUpdated = subjectRepo.save(subject);
+		subjectStudentRepo.deleteById(ssId);
 		
-		return SubjectMapper.toSubjectDto(subjectUpdated);
+		return SubjectMapper.toSubjectDto(subject);
 	}
 	
 	
