@@ -23,7 +23,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-//@Data
 public class Student {
 
 	@Id
@@ -40,6 +39,7 @@ public class Student {
 	private String surname;
 	
 	@OneToMany(mappedBy = "student")
+	//@OneToMany(mappedBy = "student", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<SubjectStudent> subjects = new HashSet<>();
 
 	@Override
