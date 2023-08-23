@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.mapper;
 
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ import ime.SchoolApiRest.entity.SubjectStudent;
 public class SubjectStudentMapper {
 
 	
-	public static Set<SubjectStudentDto> toListSubjectStudentDto(Set<SubjectStudent>subjectStudents){
+	public static Set<SubjectStudentDto> toSetSubjectStudentDto(Set<SubjectStudent>subjectStudents){
 		
 		return subjectStudents.stream()
 								.map(SubjectStudentMapper::toSubjectStudentDto)
@@ -25,5 +26,12 @@ public class SubjectStudentMapper {
 																.averageGrade(subjectStudent.getAverageGrade())
 																.build();
 		
+	}
+	
+	public static List<SubjectStudentDto> toListSubjectStudentDto(List<SubjectStudent>subjectStudents){
+			
+			return subjectStudents.stream()
+									.map(SubjectStudentMapper::toSubjectStudentDto)
+									.collect(Collectors.toList());
 	}
 }
