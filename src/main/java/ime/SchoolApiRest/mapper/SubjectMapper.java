@@ -24,7 +24,7 @@ public class SubjectMapper {
 											.subjectId(subject.getSubjectId())
 											.name(subject.getName())
 											.teacher(TeacherMapper.toTeacherBasicDto(subject.getTeacher()))
-											.subjectStudents(SubjectStudentMapper.toListSubjectStudentDto(subject.getStudents()))
+											.subjectStudents(SubjectStudentMapper.toSetSubjectStudentDto(subject.getStudents()))
 											.build()
 								: new SubjectDto();
 							
