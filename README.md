@@ -2,13 +2,14 @@
 
 ### :construction_worker::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction_worker:
 
-Welcome to Api Rest with Spring Framework. A small work simulating a school structure.
+Welcome to my Api Rest with Spring Framework. :fire::rainbow: A small work simulating a quite fake school structure. 
 
 
 ## Table of contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [It's not a bug, it's a feature](#features)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
@@ -20,9 +21,9 @@ You could Use the jar file hosted in /target or clone the whole project
 
 ## Usage
 
-Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI hosted in [Render](https://render.com/)
+Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI hosted in [Render](https://render.com/). But be quick, free stuff doesn't last long :wink:
 
-If not, ensure you add the path /api/ to your requests:
+If not, ensure you add the path /api/ to your requests in postman, as the typical web develores does (or try hard and use VIM :muscle::muscle: ):
 
 ```
 ** Get a List of all teachers **
@@ -32,10 +33,18 @@ https://springschoolapirest.onrender.com/api/teachers
 https://springschoolapirest.onrender.com/api/teachers/1
 ```
 
+## Features
+
+### :zap: Spring Security full extra deluxe
+
+### :zap: Authentic Oauth2 with authentic GitHub authentication 
+
+### :zap: JUnit test everywhere
+
 
 ## Maintainers
 
-Just me, [Ivan](https://github.com/Ivan-Montes)
+Just me, [Ivan](https://github.com/Ivan-Montes) :sweat_smile:
 
 
 ## Contributing
