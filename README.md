@@ -23,7 +23,7 @@ You could Use the jar file hosted in /target or clone the whole project
 
 Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI hosted in [Render](https://render.com/). But be quick, free stuff doesn't last long :wink:
 
-If not, ensure you add the path /api/ to your requests in postman, as the typical web develores does (or try hard and use VIM :muscle::muscle: ):
+If not, ensure you add the path /api/ to your requests in postman, as the typical web developers does (or try hard and use VIM :muscle::muscle: ):
 
 ```
 ** Get a List of all teachers **
