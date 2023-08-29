@@ -30,10 +30,6 @@ public class SecurityConfig {
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll(); // H2 database
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll(); // Swagger open api
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll(); // Swagger open api
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/oauth2/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/login/**")).permitAll();
-                	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll();
                 	auth.anyRequest().authenticated();
                 })
                 .headers(head-> head.frameOptions(f->f.sameOrigin())) // H2 database
