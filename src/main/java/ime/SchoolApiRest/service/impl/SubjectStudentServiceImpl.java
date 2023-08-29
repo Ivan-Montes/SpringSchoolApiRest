@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import ime.SchoolApiRest.dto.SubjectStudentCreationDto;
 import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
-import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.entity.SubjectStudent;
 import ime.SchoolApiRest.exception.ResourceNotFoundException;
@@ -22,9 +21,9 @@ public class SubjectStudentServiceImpl implements SubjectStudentService {
 	private SubjectStudentRepository subjectStudentRepo;
 	
 	@Override
-	public List<SubjectStudentDto> getAllSubjectStudent() {
+	public List<SubjectStudentCuteDto> getAllSubjectStudent() {
 		
-		return SubjectStudentMapper.toListSubjectStudentDto(subjectStudentRepo.findAll());
+		return SubjectStudentMapper.toListSubjectStudentCuteDto(subjectStudentRepo.findAll());
 		
 	}
 

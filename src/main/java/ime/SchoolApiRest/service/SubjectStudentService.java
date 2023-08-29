@@ -7,7 +7,7 @@ import ime.SchoolApiRest.entity.SubjectStudentId;
 @Service
 public interface SubjectStudentService {
 
-	List<SubjectStudentDto>getAllSubjectStudent();
+	List<SubjectStudentCuteDto>getAllSubjectStudent();
 	
 	SubjectStudentCuteDto getSubjectStudentCuteDtoById(Long subjectId, Long studentId);
 	

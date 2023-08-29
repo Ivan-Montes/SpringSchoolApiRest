@@ -44,6 +44,14 @@ public class SubjectStudentMapper {
 																.studentName(subjectStudent.getStudent().getName())
 																.studentSurname(subjectStudent.getStudent().getSurname())
 																.subjectName(subjectStudent.getSubject().getName())
+																.averageGrade(subjectStudent.getAverageGrade())
 																.build();
 	}
+	
+	public static List<SubjectStudentCuteDto> toListSubjectStudentCuteDto(List<SubjectStudent>subjectStudents){
+		
+		return subjectStudents.stream()
+								.map(SubjectStudentMapper::toSubjectStudentCuteDto)
+								.collect(Collectors.toList());
+}
 }
