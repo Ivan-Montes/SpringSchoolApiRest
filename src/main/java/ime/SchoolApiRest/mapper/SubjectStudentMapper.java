@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
 import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.SubjectStudent;
 
@@ -33,5 +34,16 @@ public class SubjectStudentMapper {
 			return subjectStudents.stream()
 									.map(SubjectStudentMapper::toSubjectStudentDto)
 									.collect(Collectors.toList());
+	}
+
+	public static SubjectStudentCuteDto toSubjectStudentCuteDto(SubjectStudent subjectStudent) {
+		
+		return subjectStudent == null? new SubjectStudentCuteDto():SubjectStudentCuteDto.builder()
+																.studentId(subjectStudent.getId().getStudentId())
+																.subjectId(subjectStudent.getId().getSubjectId())
+																.studentName(subjectStudent.getStudent().getName())
+																.studentSurname(subjectStudent.getStudent().getSurname())
+																.subjectName(subjectStudent.getSubject().getName())
+																.build();
 	}
 }
