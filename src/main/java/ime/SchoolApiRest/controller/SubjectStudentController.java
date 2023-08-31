@@ -2,12 +2,16 @@ package ime.SchoolApiRest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ime.SchoolApiRest.dto.SubjectStudentCreationDto;
 import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
 import ime.SchoolApiRest.service.impl.SubjectStudentServiceImpl;
 
@@ -48,7 +52,17 @@ public class SubjectStudentController {
 		return ResponseEntity.ok(subjectStudentService.getSubjectStudentCuteDtoById(subjectId, studentId) );
 				
 	}
-	
-	
+	/**
+	 * Create new SubjectStudent
+	 * 
+	 * @param sscDto Object to create
+	 * @return ResponseEntity with the new element
+	 */
+	@PostMapping
+	public ResponseEntity<SubjectStudentCuteDto> createSubjectStudent(@RequestBody SubjectStudentCreationDto sscDto){
+		
+		return new ResponseEntity<>(subjectStudentService.createSubjectStudent(sscDto), HttpStatus.CREATED);
+				
+	}
 
 }
