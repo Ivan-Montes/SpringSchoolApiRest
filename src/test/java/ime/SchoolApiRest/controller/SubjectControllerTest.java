@@ -113,7 +113,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_deleteSubjectByIdReturnString() throws Exception{
+	public void subjectController_deleteSubjectById_ReturnString() throws Exception{
 		
 		doNothing().when(subjectService).deleteSubjectById(Mockito.anyLong());
 		
