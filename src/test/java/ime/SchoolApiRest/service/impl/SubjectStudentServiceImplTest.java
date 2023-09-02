@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -119,6 +120,20 @@ class SubjectStudentServiceImplTest {
 	@Test
 	public void subjectStudentServiceImpl_deleteSubjectStudentById_ReturnVoid() {
 		
+		subjectStudentTest.setStudent(studentTest);
+		subjectStudentTest.setSubject(subjectTest);	
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Student>optStu = Optional.ofNullable(studentTest);
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doNothing().when(subjectStudentRepo).deleteById(Mockito.any(SubjectStudentId.class));
+		
+		subjectService.deleteSubjectStudentById(1l, Mockito.anyLong());
+
+		verify(subjectRepo, times(1)).findById(Mockito.anyLong());
+		verify(studentRepo, times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo, times(1)).deleteById(Mockito.any(SubjectStudentId.class));
+
 	}
 	
 	@Test
