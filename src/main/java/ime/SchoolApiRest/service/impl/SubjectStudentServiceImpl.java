@@ -45,8 +45,12 @@ public class SubjectStudentServiceImpl implements SubjectStudentService {
 	}
 
 	@Override
-	public void deleteSubjectStudentById(SubjectStudentId subjectStudentId) {
-		// TODO Auto-generated method stub
+	public void deleteSubjectStudentById(Long subjectId, Long studentId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
+		subjectStudentRepo.deleteById(ssId);
 		
 	}
 

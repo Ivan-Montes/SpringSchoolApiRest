@@ -11,7 +11,7 @@ public interface SubjectStudentService {
 	
 	SubjectStudentCuteDto getSubjectStudentCuteDtoById(Long subjectId, Long studentId);
 	
-	void deleteSubjectStudentById(SubjectStudentId subjectStudentId);
+	void deleteSubjectStudentById(Long subjectId, Long studentId);
 	
 	SubjectStudentCuteDto createSubjectStudent(SubjectStudentCreationDto sscDto);
 	
