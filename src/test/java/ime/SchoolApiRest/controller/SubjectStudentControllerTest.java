@@ -1,7 +1,6 @@
 package ime.SchoolApiRest.controller;
 
 
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,7 +22,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ime.SchoolApiRest.dto.*;
 import ime.SchoolApiRest.service.impl.SubjectStudentServiceImpl;
 
 @WebMvcTest(SubjectStudentController.class)
@@ -36,10 +37,14 @@ class SubjectStudentControllerTest {
 	
 	@MockBean
 	private SubjectStudentServiceImpl subjectStudentService;
+
+	@Autowired
+    private ObjectMapper objectMapper;
 	
 	private final String path = "/api/subjectstudents";
 	private SubjectStudentCuteDto sscDto;
 	private Double mark9 = 9.9;
+	private SubjectStudentCreationDto ssCreationDto;
 	
 	@BeforeEach
 	public void createObjectsTest() {
@@ -52,6 +57,11 @@ class SubjectStudentControllerTest {
 				.averageGrade(mark9)
 				.build();
 		
+		ssCreationDto = SubjectStudentCreationDto.builder()
+				.subjectId(1l)
+				.studentId(1l)
+				.averageGrade(mark9)
+				.build();
 	}
 	
 	
@@ -61,7 +71,8 @@ class SubjectStudentControllerTest {
 		doReturn(List.of(sscDto)).when(subjectStudentService).getAllSubjectStudent();
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path)
-				.contentType(MediaType.APPLICATION_JSON));
+				//.contentType(MediaType.APPLICATION_JSON)
+				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
@@ -103,7 +114,20 @@ class SubjectStudentControllerTest {
 	@Test
 	public void subjectStudentController_createSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
 		
+		doReturn(sscDto).when(subjectStudentService).createSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));
 		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.post(path)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(ssCreationDto))
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isCreated())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.averageGrade", org.hamcrest.Matchers.equalTo(mark9)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		;
+		verify(subjectStudentService,times(1)).createSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));		
 		
 	}
 
