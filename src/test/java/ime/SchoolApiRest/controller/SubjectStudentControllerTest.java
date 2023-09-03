@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.controller;
 
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -106,7 +107,13 @@ class SubjectStudentControllerTest {
 	@Test
 	public void subjectStudentController_deleteSubjectStudentById_ReturnString() throws Exception{
 		
+		doNothing().when(subjectStudentService).deleteSubjectStudentById(1L, Mockito.anyLong());
 		
+		ResultActions result = mvc.perform( MockMvcRequestBuilders.delete(path)
+				.contentType(MediaType.APPLICATION_JSON)
+				
+				
+);
 		
 		
 	}
