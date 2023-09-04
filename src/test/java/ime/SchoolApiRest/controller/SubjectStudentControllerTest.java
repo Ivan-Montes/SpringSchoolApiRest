@@ -72,7 +72,6 @@ class SubjectStudentControllerTest {
 		doReturn(List.of(sscDto)).when(subjectStudentService).getAllSubjectStudent();
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path)
-				//.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -107,15 +106,20 @@ class SubjectStudentControllerTest {
 	@Test
 	public void subjectStudentController_deleteSubjectStudentById_ReturnString() throws Exception{
 		
-		doNothing().when(subjectStudentService).deleteSubjectStudentById(1L, Mockito.anyLong());
+		doNothing().when(subjectStudentService).deleteSubjectStudentById(Mockito.anyLong(), Mockito.anyLong());
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders.delete(path)
 				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\r\n"
+						+ "\"subjectId\":\"2\",\r\n"
+						+ "\"studentId\":\"2\"\r\n"
+						+ "}")
 				
-				
-);
+				);
 		
-		
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		verify(subjectStudentService,times(1)).deleteSubjectStudentById(Mockito.anyLong(), Mockito.anyLong());
+
 	}
 	
 	@Test
