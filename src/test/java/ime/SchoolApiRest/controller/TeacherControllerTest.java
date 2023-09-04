@@ -77,7 +77,6 @@ class TeacherControllerTest {
 		doReturn(teachers).when(teacherService).getAllEagerTeachersDto();
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path)
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -92,7 +91,6 @@ class TeacherControllerTest {
 		doReturn(teacherBasicDto).when(teacherService).getTeacherDtoById(Mockito.anyLong());
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path + "/{id}", Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -109,7 +107,6 @@ class TeacherControllerTest {
 		doNothing().when(teacherService).deleteTeacherById(Mockito.anyLong());
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk());
@@ -160,7 +157,6 @@ class TeacherControllerTest {
 		doReturn(teacherDto).when(teacherService).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path + "/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -180,7 +176,6 @@ class TeacherControllerTest {
 		doReturn(teacherDto).when(teacherService).removeSubjectFromTeacher(Mockito.anyLong(), Mockito.anyLong());
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete(path + "/{teacherId}/{subjectId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 		);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())

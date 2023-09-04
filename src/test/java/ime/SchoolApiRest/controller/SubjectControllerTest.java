@@ -83,7 +83,6 @@ class SubjectControllerTest {
 		doReturn(subjects).when(subjectService).getAllEagerSubjectDto();
 		
 		ResultActions result = mvc.perform(MockMvcRequestBuilders.get(path)
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 	
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -101,7 +100,6 @@ class SubjectControllerTest {
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders
 																.get(path + "/{id}", Mockito.anyLong())
-																.contentType(MediaType.APPLICATION_JSON)
 											);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -118,7 +116,6 @@ class SubjectControllerTest {
 		doNothing().when(subjectService).deleteSubjectById(Mockito.anyLong());
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders.delete(path + "/{id}", Mockito.anyLong())
-																	.contentType(MediaType.APPLICATION_JSON)
 											);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk());
@@ -172,7 +169,6 @@ class SubjectControllerTest {
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders
 				.get(path + "/{subjectId}/{teacherId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -193,7 +189,6 @@ class SubjectControllerTest {
 		
 		ResultActions result = mvc.perform( MockMvcRequestBuilders
 				.put(path + "/{subjectId}/students/{studentId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
@@ -213,7 +208,6 @@ class SubjectControllerTest {
 
 		ResultActions result = mvc.perform( MockMvcRequestBuilders
 				.delete(path + "/{subjectId}/students/{studentId}", Mockito.anyLong(), Mockito.anyLong())
-				.contentType(MediaType.APPLICATION_JSON)
 				);
 		
 		result.andExpect(MockMvcResultMatchers.status().isOk())
