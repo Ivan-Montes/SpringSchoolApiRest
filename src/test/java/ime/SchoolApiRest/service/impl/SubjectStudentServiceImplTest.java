@@ -46,6 +46,7 @@ class SubjectStudentServiceImplTest {
 	private Subject subjectTest;
 	private Student studentTest;
 	private Double mark9 = 9.9;
+	private Double mark3 = 3.3;
 	private SubjectStudentCreationDto sscDto;
 	
 	@BeforeEach
@@ -160,4 +161,32 @@ class SubjectStudentServiceImplTest {
 		verify(subjectStudentRepo, times(1)).save(Mockito.any(SubjectStudent.class));	
 	}
 	
+	@Test
+	public void subjectStudentServiceImpl_updateSubjectStudent_ReturnSubjectStudentCuteDto() {
+		
+		sscDto.setAverageGrade(mark3);
+		subjectStudentTest.setStudent(studentTest);
+		subjectStudentTest.setSubject(subjectTest);		
+		Optional<Subject>optS = Optional.ofNullable(subjectTest);
+		Optional<Student>optStu = Optional.ofNullable(studentTest);
+		Optional<SubjectStudent> optSubStu = Optional.ofNullable(subjectStudentTest);
+		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(optSubStu).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));
+		doReturn(subjectStudentTest).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		
+		SubjectStudentCuteDto subStuDtoFound = subjectService.updateSubjectStudent(sscDto);
+		
+		assertAll(
+				()->Assertions.assertThat(subStuDtoFound).isNotNull(),
+				()->Assertions.assertThat(subStuDtoFound.getAverageGrade()).isEqualTo(mark3),
+				()->Assertions.assertThat(subStuDtoFound.getStudentId()).isEqualTo(subjectStudentTest.getId().getStudentId()),
+				()->Assertions.assertThat(subStuDtoFound.getSubjectId()).isEqualTo(subjectStudentTest.getId().getSubjectId())
+				);
+		verify(subjectRepo, times(1)).findById(Mockito.anyLong());
+		verify(studentRepo, times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo, times(1)).findById(Mockito.any(SubjectStudentId.class));
+		verify(subjectStudentRepo, times(1)).save(Mockito.any(SubjectStudent.class));	
+		
+	}
 }

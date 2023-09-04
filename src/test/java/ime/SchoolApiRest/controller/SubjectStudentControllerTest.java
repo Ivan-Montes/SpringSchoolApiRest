@@ -45,6 +45,7 @@ class SubjectStudentControllerTest {
 	private final String path = "/api/subjectstudents";
 	private SubjectStudentCuteDto sscDto;
 	private Double mark9 = 9.9;
+	private Double mark3 = 3.3;
 	private SubjectStudentCreationDto ssCreationDto;
 	
 	@BeforeEach
@@ -141,5 +142,27 @@ class SubjectStudentControllerTest {
 		verify(subjectStudentService,times(1)).createSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));		
 		
 	}
+	
+	@Test
+	public void subjectStudentController_updateSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
+		
+		sscDto.setAverageGrade(mark3);
+		doReturn(sscDto).when(subjectStudentService).updateSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));
 
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put(path)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(ssCreationDto))
+		);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.averageGrade", org.hamcrest.Matchers.equalTo(mark3)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		;
+		verify(subjectStudentService,times(1)).updateSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));	
+
+	}
+	
+	
 }
