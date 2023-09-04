@@ -98,9 +98,10 @@ public class SubjectStudentController {
 	 * @return ResponseEntity with the SubjectStudentCuteDto modified
 	 */
 	@PutMapping
-	public ResponseEntity<SubjectStudentCuteDto> updateSubjectStudent(SubjectStudentCreationDto sscDto){
+	public ResponseEntity<SubjectStudentCuteDto> updateSubjectStudent(@RequestBody SubjectStudentCreationDto sscDto){
 		
-		return null;
+		return ResponseEntity.ok(subjectStudentService.updateSubjectStudent(sscDto));
+		
 	}
 	
 }

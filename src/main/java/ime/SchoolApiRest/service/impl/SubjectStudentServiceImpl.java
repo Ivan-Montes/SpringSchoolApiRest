@@ -60,7 +60,7 @@ public class SubjectStudentServiceImpl implements SubjectStudentService {
 		Subject subject = subjectRepo.findById(sscDto.getSubjectId()).orElseThrow( () -> new ResourceNotFoundException(sscDto.getSubjectId()));
 		Student student = studentRepo.findById(sscDto.getStudentId()).orElseThrow( () -> new ResourceNotFoundException(sscDto.getStudentId()));
 		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
-		SubjectStudent ss = new SubjectStudent(ssId,subject,student,sscDto.getAverageGrade());
+		SubjectStudent ss = new SubjectStudent(ssId,subject,student, sscDto.getAverageGrade());
 		
 		return SubjectStudentMapper.toSubjectStudentCuteDto(subjectStudentRepo.save(ss));
 		
@@ -68,8 +68,13 @@ public class SubjectStudentServiceImpl implements SubjectStudentService {
 
 	@Override
 	public SubjectStudentCuteDto updateSubjectStudent(SubjectStudentCreationDto sscDto) {
-		// TODO Auto-generated method stub
-		return null;
+
+		subjectRepo.findById(sscDto.getSubjectId()).orElseThrow( () -> new ResourceNotFoundException(sscDto.getSubjectId()));
+		studentRepo.findById(sscDto.getStudentId()).orElseThrow( () -> new ResourceNotFoundException(sscDto.getStudentId()));
+		SubjectStudent subjectStudentFound = subjectStudentRepo.findById(new SubjectStudentId(sscDto.getSubjectId(),sscDto.getStudentId())).orElseThrow( ()-> new ResourceNotFoundException( sscDto.getStudentId() ) );
+		subjectStudentFound.setAverageGrade(sscDto.getAverageGrade());
+		
+		return SubjectStudentMapper.toSubjectStudentCuteDto(subjectStudentRepo.save(subjectStudentFound));
 	}
 	
 	

@@ -2,7 +2,6 @@ package ime.SchoolApiRest.service;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import ime.SchoolApiRest.dto.*;
-import ime.SchoolApiRest.entity.SubjectStudentId;
 
 @Service
 public interface SubjectStudentService {
