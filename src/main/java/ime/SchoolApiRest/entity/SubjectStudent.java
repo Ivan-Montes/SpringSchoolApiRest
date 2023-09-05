@@ -34,8 +34,8 @@ public class SubjectStudent {
 	private Student student;
 	
 	@Column(name = "avegare_grade")
-	@Min(value=0)
-	@Max(value=10)
+	@Min(value=0, message = "{Min.SubjectStudent.avegare_grade}")
+	@Max(value=10, message = "{Max.SubjectStudent.avegare_grade}")
 	private Double averageGrade;	
 	
 	
