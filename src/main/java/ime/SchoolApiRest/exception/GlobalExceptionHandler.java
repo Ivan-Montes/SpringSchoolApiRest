@@ -7,6 +7,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import jakarta.validation.ConstraintViolationException;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.validation.FieldError;
 
@@ -31,7 +34,7 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
 	}
-	
+	//Called due to @Valid tag
 	@ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> methodArgumentNotValidException(MethodArgumentNotValidException ex){
 		
@@ -55,6 +58,15 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String>badCredentialsException(BadCredentialsException ex){
 		
 		return new ResponseEntity<String>("BadCredentialsException" + simpleText, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
+		
+	}
+	
+	//Called by Hibernate after check class/attributes annotations 
+	@ExceptionHandler(
+		jakarta.validation.ConstraintViolationException.class)
+	public ResponseEntity<String> jakartaValidationConstraintViolationException(ConstraintViolationException ex){
+		
+		return new ResponseEntity<String>("ConstraintViolationException\n\n" + ex.getMessage() + "\n", HttpStatus.BAD_REQUEST);
 		
 	}
 	
