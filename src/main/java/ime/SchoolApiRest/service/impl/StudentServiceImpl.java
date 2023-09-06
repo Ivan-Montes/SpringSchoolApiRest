@@ -2,20 +2,27 @@ package ime.SchoolApiRest.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.mapper.StudentMapper;
+import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.service.StudentService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
+	@Autowired
+	private StudentRepository studentRepo;
+	
 	@Override
 	public List<StudentDto> getAllStudent() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return StudentMapper.toListStudentDto(studentRepo.findAll());
+		
 	}
 
 	@Override
