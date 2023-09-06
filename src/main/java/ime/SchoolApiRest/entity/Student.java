@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +32,13 @@ public class Student {
 	private Long studentId;	
 
 	@Column(nullable = false, length = 50 )
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50, message="{Size.Identity.name}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.name}")
 	private String name;
 	
 	@Column(nullable=false, length = 50 )
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50, message="{Size.Identity.name}")
+	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.surname}")
 	private String surname;
 	
 	@OneToMany(mappedBy = "student")

@@ -1,7 +1,5 @@
 package ime.SchoolApiRest.dto;
 
-
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,11 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class StudentBasicDto {
+public class StudentBasicCreationDto {
 
-	@NotNull(message="{NotNull.Identity.id}")
-	private Long studentId;
-	
 	@Size(min = 1, max = 50, message="{Size.Identity.name}")
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.name}")
 	private String name;
@@ -28,5 +23,4 @@ public class StudentBasicDto {
 	@Size(min = 1, max = 50, message="{Size.Identity.name}")
 	@Pattern( regexp = "[a-zA-Z\\s\\-&]+", message="{Pattern.Identity.surname}")
 	private String surname;
-	
 }
