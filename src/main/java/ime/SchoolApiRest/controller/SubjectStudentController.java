@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ime.SchoolApiRest.dto.SubjectStudentCreationDto;
 import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
 import ime.SchoolApiRest.service.impl.SubjectStudentServiceImpl;
+import jakarta.validation.Valid;
 
 /**
  * Controller for SubjectStudent environment
@@ -62,7 +63,7 @@ public class SubjectStudentController {
 	 * @return ResponseEntity with the new element
 	 */
 	@PostMapping
-	public ResponseEntity<SubjectStudentCuteDto> createSubjectStudent(@RequestBody SubjectStudentCreationDto sscDto){
+	public ResponseEntity<SubjectStudentCuteDto> createSubjectStudent(@Valid @RequestBody SubjectStudentCreationDto sscDto){
 		
 		return new ResponseEntity<>(subjectStudentService.createSubjectStudent(sscDto), HttpStatus.CREATED);
 				
@@ -98,7 +99,7 @@ public class SubjectStudentController {
 	 * @return ResponseEntity with the SubjectStudentCuteDto modified
 	 */
 	@PutMapping
-	public ResponseEntity<SubjectStudentCuteDto> updateSubjectStudent(@RequestBody SubjectStudentCreationDto sscDto){
+	public ResponseEntity<SubjectStudentCuteDto> updateSubjectStudent(@Valid @RequestBody SubjectStudentCreationDto sscDto){
 		
 		return ResponseEntity.ok(subjectStudentService.updateSubjectStudent(sscDto));
 		
