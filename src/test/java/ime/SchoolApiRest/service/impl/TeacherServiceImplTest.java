@@ -76,7 +76,8 @@ class TeacherServiceImplTest {
 		
 		assertAll(
 					()->Assertions.assertThat(list).isNotNull(),
-					()->Assertions.assertThat(list).isNotEmpty()
+					()->Assertions.assertThat(list).isNotEmpty(),
+					()->Assertions.assertThat(list).hasSize(1)
 				);		
 		verify(teacherRepo, times(1)).findAllEager();
 		
