@@ -4,10 +4,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,8 +40,20 @@ public class StudentController {
 		
 		return ResponseEntity.ok(studentService.getAllStudent());
 		
+	}	
+
+	/**
+	 * Get a Student according to an Id
+	 * 
+	 * @param id with the identifier
+	 * @return ResponseEntity with the Student required
+	 */
+	@Operation(summary="Get a Student according to an Id", description="Get a Student according to an Id, @return ResponseEntity with the Student required")
+	@GetMapping("{id}")
+	public ResponseEntity<StudentDto>getStudentDtoById(@PathVariable Long id){
+		
+		return ResponseEntity.ok(studentService.getStudentDtoById(id));
+		
 	}
-	
-	
 
 }

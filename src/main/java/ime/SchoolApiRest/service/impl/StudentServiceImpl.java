@@ -11,7 +11,7 @@ import ime.SchoolApiRest.dto.StudentDto;
 import ime.SchoolApiRest.mapper.StudentMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.service.StudentService;
-
+import ime.SchoolApiRest.exception.*;
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -27,8 +27,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public StudentDto getStudentDtoById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return StudentMapper.toStudentDto( studentRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(id) ) );
 	}
 
 	@Override
