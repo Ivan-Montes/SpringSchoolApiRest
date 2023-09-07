@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ime.SchoolApiRest.dto.StudentDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Controller for Student environment
@@ -16,6 +18,7 @@ import ime.SchoolApiRest.service.impl.StudentServiceImpl;
  * @author Ivan-Montes
  *
  */
+@Tag(name = "Student Controller", description="Outlook on Student API")
 @RestController
 @RequestMapping("api/students")
 public class StudentController {
@@ -28,6 +31,7 @@ public class StudentController {
 	 * 
 	 * @return ResponseEntity with a List of Student
 	 */
+	@Operation(summary="Get a List of all students", description="Get a List of all students, @return ResponseEntity with a List of StudentDto")
 	@GetMapping
 	public ResponseEntity<List<StudentDto>> getAllStudent(){
 		

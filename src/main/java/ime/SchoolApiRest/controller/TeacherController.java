@@ -18,6 +18,8 @@ import ime.SchoolApiRest.dto.TeacherBasicCreationDto;
 import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.dto.TeacherDto;
 import ime.SchoolApiRest.service.TeacherService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 /**
  * Controller for Teacher environment
@@ -25,6 +27,7 @@ import jakarta.validation.Valid;
  * @author Ivan-Montes
  *
  */
+@Tag(name = "Teacher Controller", description="Outlook on Teacher API")
 @RestController
 @RequestMapping("/api/teachers")
 public class TeacherController {
@@ -37,6 +40,7 @@ public class TeacherController {
 	 * 
 	 * @return ResponseEntity with a List of TeacherDto
 	 */
+	@Operation(summary="Get a List of all teachers", description="Get a List of all teachers, @return ResponseEntity with a List of TeacherDto")
 	@GetMapping
 	public ResponseEntity<List<TeacherDto>> getAllEagerTeachersDto(){
 		
@@ -49,6 +53,7 @@ public class TeacherController {
 	 * @param id with the identifier
 	 * @return ResponseEntity with the teacher required
 	 */
+	@Operation(summary="Get a teacher according to an Id", description="Get a teacher according to an Id, @return ResponseEntity with the teacher required")
 	@GetMapping("{id}")
 	public ResponseEntity<TeacherBasicDto>getTeacherDtoById(@PathVariable Long id){
 		
@@ -62,6 +67,7 @@ public class TeacherController {
 	 * @param id with the identifier of a teacher
 	 * @return ResponseEntity with a message
 	 */
+	@Operation(summary="Delete a teacher by its Id", description="Delete a teacher by its Id, @return ResponseEntity with a message")
 	@DeleteMapping("{id}")
 	public ResponseEntity<String>deteteTeacherById(@PathVariable Long id){
 		teacherService.deleteTeacherById(id);
@@ -74,6 +80,7 @@ public class TeacherController {
 	 * @param tbcDto. Object TeacherBasicCreationDto for adding in the DB
 	 * @return ResponseEntity with the teacher required
 	 */
+	@Operation(summary="Create a new teacher", description="Create a new teacher, @return ResponseEntity with the teacher required")
 	@PostMapping
 	public ResponseEntity<TeacherBasicDto>createTeacher(@Valid @RequestBody TeacherBasicCreationDto tbcDto){
 		TeacherBasicDto tbd = teacherService.createTeacher(tbcDto);
@@ -86,6 +93,7 @@ public class TeacherController {
 	 * @param tbd Object TeacherBasicDto with the new info
 	 * @return ResponseEntity with the teacher modified
 	 */
+	@Operation(summary="Update fields in a teacher", description="Update fields in a teacher, @return ResponseEntity with the teacher modified")
 	@PutMapping
 	public ResponseEntity<TeacherBasicDto>updateTeacher(@Valid @RequestBody TeacherBasicDto tbd){
 		return ResponseEntity.ok(teacherService.updateTeacher(tbd.getTeacherId(), tbd));
@@ -98,6 +106,7 @@ public class TeacherController {
 	 * @param subjectId identifier of a subject
 	 * @return ResponseEntity with the teacher modified
 	 */
+	@Operation(summary="Add a subject in a teacher", description="Add a subject in a teacher, @return ResponseEntity with the teacher modified")
 	@GetMapping("{teacherId}/{subjectId}")
 	public ResponseEntity<TeacherDto>addSubject(@PathVariable Long teacherId, @PathVariable Long subjectId){
 		TeacherDto teacherDto = teacherService.addSubjectToTeacher(teacherId, subjectId);
@@ -111,6 +120,7 @@ public class TeacherController {
 	 * @param subjectId identifier of a subject
 	 * @return ResponseEntity with the teacher modified
 	 */
+	@Operation(summary="Remove a subject from a teacher", description="Remove a subject from a teacher, @return ResponseEntity with the teacher modified")
 	@DeleteMapping("{teacherId}/{subjectId}")
 	public ResponseEntity<TeacherDto>removeSubject(@PathVariable Long teacherId, @PathVariable Long subjectId){
 		TeacherDto teacherDto = teacherService.removeSubjectFromTeacher(teacherId, subjectId);

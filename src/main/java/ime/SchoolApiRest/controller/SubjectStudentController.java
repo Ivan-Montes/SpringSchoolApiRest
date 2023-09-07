@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ime.SchoolApiRest.dto.SubjectStudentCreationDto;
 import ime.SchoolApiRest.dto.SubjectStudentCuteDto;
 import ime.SchoolApiRest.service.impl.SubjectStudentServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 /**
@@ -25,6 +27,7 @@ import jakarta.validation.Valid;
  * @author Ivan-Montes
  *
  */
+@Tag(name = "SubjectStudent Controller", description="Outlook on SubjectStudent API")
 @RestController
 @RequestMapping("/api/subjectstudents")
 public class SubjectStudentController {
@@ -37,6 +40,7 @@ public class SubjectStudentController {
 	 * 
 	 * @return ResponseEntity with a List of SubjectStudentDto
 	 */
+	@Operation(summary="Get a List of all subjectstudents", description="Get a List of all subjectstudents, @return ResponseEntity with a List of SubjectStudentCuteDto")
 	@GetMapping
 	public ResponseEntity<List<SubjectStudentCuteDto>>getAll(){
 		
@@ -50,6 +54,7 @@ public class SubjectStudentController {
 	 *
 	 * @return ResponseEntity with the SubjectStudent required
 	 */
+	@Operation(summary="Get a SubjectStudent according to an Id", description="Get a SubjectStudent according to an Id, @return ResponseEntity with the SubjectStudent required")
 	@GetMapping("/get-by-composite-key")
 	public ResponseEntity<SubjectStudentCuteDto>getSubjectStudentCuteDtoById(@RequestParam Long subjectId, @RequestParam Long studentId){
 		
@@ -62,6 +67,7 @@ public class SubjectStudentController {
 	 * @param sscDto Object to create
 	 * @return ResponseEntity with the new element
 	 */
+	@Operation(summary="Create new SubjectStudent", description="Create new SubjectStudent, @return ResponseEntity with the new element")
 	@PostMapping
 	public ResponseEntity<SubjectStudentCuteDto> createSubjectStudent(@Valid @RequestBody SubjectStudentCreationDto sscDto){
 		
@@ -76,6 +82,7 @@ public class SubjectStudentController {
 	 * @param request Composite key
 	 * @return ResponseEntity with message
 	 */
+	@Operation(summary="Delete a deleteSubjectStudent by Id", description="Delete a deleteSubjectStudent by Id, @return ResponseEntity with message")
 	@DeleteMapping
 	public ResponseEntity<String>deleteSubjectStudentById(@RequestBody Map<String, String> request){
 		
@@ -98,6 +105,7 @@ public class SubjectStudentController {
 	 * @param tbd Object SubjectStudent with the new info
 	 * @return ResponseEntity with the SubjectStudentCuteDto modified
 	 */
+	@Operation(summary="Update fields in a SubjectStudent", description="Update fields in a SubjectStudent, @return ResponseEntity with the SubjectStudentCuteDto modified")
 	@PutMapping
 	public ResponseEntity<SubjectStudentCuteDto> updateSubjectStudent(@Valid @RequestBody SubjectStudentCreationDto sscDto){
 		

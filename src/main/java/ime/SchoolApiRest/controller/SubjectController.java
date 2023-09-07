@@ -17,6 +17,8 @@ import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
 import ime.SchoolApiRest.dto.SubjectBasicDto;
 import ime.SchoolApiRest.dto.SubjectDto;
 import ime.SchoolApiRest.service.SubjectService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 /**
@@ -25,6 +27,7 @@ import jakarta.validation.Valid;
  * @author Ivan-Montes
  *
  */
+@Tag(name = "Subject Controller", description="Outlook on Subject API")
 @RestController
 @RequestMapping("/api/subjects")
 public class SubjectController {
@@ -37,6 +40,7 @@ public class SubjectController {
 	 * 
 	 * @return ResponseEntity with a List of SubjectDto
 	 */
+	@Operation(summary="Get a List of all subjects", description="Get a List of all subjects, @return ResponseEntity with a List of SubjectDto")
 	@GetMapping
 	public ResponseEntity<Set<SubjectDto>> getAllEagerSubjectDto(){
 		
@@ -50,6 +54,7 @@ public class SubjectController {
 	 * @param id with the identifier
 	 * @return ResponseEntity with the subject required
 	 */
+	@Operation(summary="Get a subject according to an Id", description="Get a subject according to an Id, @return ResponseEntity with the subject required")
 	@GetMapping("{id}")
 	public ResponseEntity<SubjectBasicDto> getSubjectBasicDtoById(@PathVariable Long id){
 		
@@ -63,6 +68,7 @@ public class SubjectController {
 	 * @param id with the identifier
 	 * @return ResponseEntity with a message
 	 */
+	@Operation(summary="Delete a Subject by its Id", description="Delete a Subject by its Id, @return ResponseEntity with a message")
 	@DeleteMapping("{id}")
 	public ResponseEntity<String>deleteSubjectById(@PathVariable Long id){
 		
@@ -77,6 +83,7 @@ public class SubjectController {
 	 * @param tbcDto. Object SubjectBasicCreationDto for adding in the DB
 	 * @return ResponseEntity with the Subject required
 	 */
+	@Operation(summary="Create a new Subject", description="Create a new Subject, @return ResponseEntity with the Subject required")
 	@PostMapping
 	public ResponseEntity<SubjectBasicDto>createSubject(@Valid @RequestBody SubjectBasicCreationDto sbcDto){
 		SubjectBasicDto sbDto = subjectService.createSubject(sbcDto);
@@ -89,6 +96,7 @@ public class SubjectController {
 	 * @param tbd Object SubjectBasicDto with the new info
 	 * @return ResponseEntity with the Subject modified
 	 */
+	@Operation(summary="Update fields in a Subject", description="Update fields in a Subject, @return ResponseEntity with the Subject modified")
 	@PutMapping
 	public ResponseEntity<SubjectBasicDto>updateSubject(@Valid @RequestBody SubjectBasicDto sbDto){
 		return ResponseEntity.ok(subjectService.updateSubject(sbDto.getSubjectId(), sbDto));
@@ -101,6 +109,7 @@ public class SubjectController {
 	 * @param teacherId identifier of a teacher
 	 * @return ResponseEntity with the Subject modified
 	 */
+	@Operation(summary="Add a Teacher in a Subject", description="Add a Teacher in a Subject, @return ResponseEntity with the Subject modified")
 	@GetMapping("{subjectId}/{teacherId}")
 	public ResponseEntity<SubjectDto>addTeacher(@PathVariable Long subjectId, @PathVariable Long teacherId){
 		
@@ -115,6 +124,7 @@ public class SubjectController {
 	 * @param studentId identifier of a Student
 	 * @return ResponseEntity with the Subject modified
 	 */
+	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Subject modified")
 	@PutMapping("{subjectId}/students/{studentId}")
 	public ResponseEntity<SubjectDto>addStudentToSubject(@PathVariable Long subjectId, @PathVariable Long studentId){
 		
@@ -129,6 +139,7 @@ public class SubjectController {
 	 * @param studentId identifier of a Student
 	 * @return ResponseEntity with the Subject modified
 	 */
+	@Operation(summary="Remove a Student in a Subject", description="Remove a Student in a Subject, @return ResponseEntity with the Subject modified")
 	@DeleteMapping("{subjectId}/students/{studentId}")
 	public ResponseEntity<SubjectDto>removeStudentFromSubject(@PathVariable Long subjectId, @PathVariable Long studentId){
 		
