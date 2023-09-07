@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
-import ime.SchoolApiRest.dto.TeacherBasicDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
