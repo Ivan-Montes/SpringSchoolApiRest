@@ -12,6 +12,7 @@ import ime.SchoolApiRest.mapper.StudentMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.service.StudentService;
 import ime.SchoolApiRest.exception.*;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -32,15 +33,18 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void deleteStudentDtoById(Long id) {
-		// TODO Auto-generated method stub
+	public void deleteStudentById(Long id) {
+		
+		studentRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(id) );
+		studentRepo.deleteById(id);
 		
 	}
 
 	@Override
-	public StudentBasicDto createStudent(StudentBasicCreationDto student) {
-		// TODO Auto-generated method stub
-		return null;
+	public StudentBasicDto createStudent(StudentBasicCreationDto student) {		
+		
+		return StudentMapper.fromStudentToStudentBasicDto(studentRepo.save(StudentMapper.fromStudentBasicCreationDtoToStudent(student)));
+		
 	}
 
 	@Override
