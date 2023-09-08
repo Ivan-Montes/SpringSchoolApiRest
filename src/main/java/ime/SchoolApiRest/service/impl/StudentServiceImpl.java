@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.mapper.StudentMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.service.StudentService;
@@ -35,7 +37,10 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void deleteStudentById(Long id) {
 		
-		studentRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(id) );
+		Student studentFound = studentRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(id) );
+		
+		if( studentFound.getSubjects() != null && !studentFound.getSubjects().isEmpty() ) throw new SubjectAssociatedException(id);
+		
 		studentRepo.deleteById(id);
 		
 	}
@@ -49,8 +54,12 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public StudentBasicDto updateStudent(StudentBasicDto student) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Student studentFound = studentRepo.findById(student.getStudentId()).orElseThrow( ()-> new ResourceNotFoundException(student.getStudentId()) );
+		studentFound.setName(student.getName());
+		studentFound.setSurname(student.getSurname());
+		
+		return StudentMapper.fromStudentToStudentBasicDto(studentRepo.save(studentFound));
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class StudentMapper {
 		if ( sbcDto != null ) {
 
 			student.setName(sbcDto.getName());
-			student.setName(sbcDto.getSurname());
+			student.setSurname(sbcDto.getSurname());
 			
 		}		
 		
