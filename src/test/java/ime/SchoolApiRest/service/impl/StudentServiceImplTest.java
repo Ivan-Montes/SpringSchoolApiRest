@@ -1,6 +1,7 @@
 package ime.SchoolApiRest.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ime.SchoolApiRest.dto.StudentBasicCreationDto;
+import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
 import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.repository.StudentRepository;
@@ -34,6 +37,8 @@ class StudentServiceImplTest {
 	private Student studentTest;
 	private String nameStu = "Philip J";
 	private String surnameStu = "Fry";
+	private StudentBasicDto sbDtoTest;
+	private StudentBasicCreationDto sbcDtoTest;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
@@ -44,6 +49,18 @@ class StudentServiceImplTest {
 		studentTest.setSurname(surnameStu);
 		studentTest.setSubjects(new HashSet<>());
 		
+		sbDtoTest = StudentBasicDto.builder()
+							.studentId(1L)
+							.name(nameStu)
+							.surname(surnameStu)
+							.build();
+		
+		sbcDtoTest = StudentBasicCreationDto.builder()
+										.name(nameStu)
+										.surname(surnameStu)
+										.build();
+				
+				
 		
 		
 	}
@@ -85,14 +102,31 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_deleteStudentDtoById_ReturnVoid() {
+	public void studentServiceImpl_deleteStudentById_ReturnVoid() {
 		
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doNothing().when(studentRepo).deleteById(Mockito.anyLong());
+		
+		studentService.deleteStudentById(Mockito.anyLong());
+		
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(studentRepo,times(1)).deleteById(Mockito.anyLong());
 	}
 	
 	@Test
 	public void studentServiceImpl_createStudent_ReturnStudentBasicDto() {
 		
+		doReturn(studentTest).when(studentRepo).save(Mockito.any(Student.class));
 		
+		StudentBasicDto sbDtoCreated = studentService.createStudent(sbcDtoTest);
+		
+		assertAll(
+				()->Assertions.assertThat(sbDtoCreated).isNotNull(),
+				()->Assertions.assertThat(sbDtoCreated.getStudentId()).isEqualTo(1L),
+				()->Assertions.assertThat(sbDtoCreated.getSurname()).isEqualTo(surnameStu)
+				);
+		verify(studentRepo,times(1)).save(Mockito.any(Student.class));
 	}
 	
 	@Test
