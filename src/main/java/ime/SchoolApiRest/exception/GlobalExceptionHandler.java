@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import jakarta.validation.ConstraintViolationException;
-
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.validation.FieldError;
 
@@ -61,13 +59,16 @@ public class GlobalExceptionHandler {
 		
 	}
 	
-	//Called by Hibernate after check class/attributes annotations 
-	@ExceptionHandler(
-		jakarta.validation.ConstraintViolationException.class)
-	public ResponseEntity<String> jakartaValidationConstraintViolationException(ConstraintViolationException ex){
+	
+	@ExceptionHandler({
+		jakarta.validation.ConstraintViolationException.class,// <== Called by Hibernate after check class/attributes annotations 
+		org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException.class})		
+	public ResponseEntity<String> jakartaValidationConstraintViolationException(Exception ex){
 		
 		return new ResponseEntity<String>("ConstraintViolationException\n\n" + ex.getMessage() + "\n", HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	
 	
 }
