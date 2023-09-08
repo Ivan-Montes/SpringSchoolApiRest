@@ -132,6 +132,19 @@ class StudentServiceImplTest {
 	@Test
 	public void studentServiceImpl_updateStudent_ReturnStudentBasicDto() {
 		
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(studentTest).when(studentRepo).save(Mockito.any(Student.class));
+		
+		StudentBasicDto sbDtoCreated = studentService.updateStudent(sbDtoTest);
+		
+		assertAll(
+				()->Assertions.assertThat(sbDtoCreated).isNotNull(),
+				()->Assertions.assertThat(sbDtoCreated.getStudentId()).isEqualTo(1L),
+				()->Assertions.assertThat(sbDtoCreated.getSurname()).isEqualTo(surnameStu)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(studentRepo,times(1)).save(Mockito.any(Student.class));
 		
 	}
 	

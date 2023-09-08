@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
+import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 
 @WebMvcTest(StudentController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -48,6 +50,7 @@ class StudentControllerTest {
 	private String nameStu = "Philip J";
 	private String surnameStu = "Fry";
 	private StudentBasicDto sbDtoTest;
+	private StudentBasicCreationDto sbcDtoTest;
 	
 	
 	@BeforeEach
@@ -65,6 +68,10 @@ class StudentControllerTest {
 				.surname(surnameStu)
 				.build();
 
+		sbcDtoTest = StudentBasicCreationDto.builder()
+										.name(nameStu)
+										.surname(surnameStu)
+										.build();
 		
 	}
 	
@@ -114,6 +121,35 @@ class StudentControllerTest {
 	@Test
 	void studentController_createStudent_ReturnStudentBasicDto() throws Exception{
 		
+		doReturn(sbDtoTest).when(studentService).createStudent(Mockito.any(StudentBasicCreationDto.class));
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.post(path)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(sbcDtoTest))
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isCreated())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo(surnameStu)));
+		verify(studentService,times(1)).createStudent(Mockito.any(StudentBasicCreationDto.class));
+	}
+	
+	@Test
+	void studentController_updateStudent_ReturnStudentBasicDto() throws Exception{
+		
+		doReturn(sbDtoTest).when(studentService).updateStudent(Mockito.any(StudentBasicDto.class));
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put(path)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(sbDtoTest))
+				);
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo(surnameStu)));
+		verify(studentService,times(1)).updateStudent(Mockito.any(StudentBasicDto.class));
 		
 	}
 }
