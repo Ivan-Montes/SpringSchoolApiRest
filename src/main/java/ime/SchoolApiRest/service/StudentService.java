@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 
 @Service
 public interface StudentService {
@@ -25,5 +26,7 @@ public interface StudentService {
 	StudentDto addStudentToSubjectWithMark(Long studentId, Long subjectId, Double averageGrade);
 	
 	StudentDto removeStudentToSubject(Long studentId, Long subjectId);
+
+	StudentDto addStudentToSubjectWithMark(SubjectStudentDto subjectStudentDto);
 	
 }
