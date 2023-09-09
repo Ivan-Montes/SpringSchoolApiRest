@@ -19,6 +19,13 @@ public class GlobalExceptionHandler {
 
 	private final String simpleText = " _***- Identifier: ";
 	
+	@ExceptionHandler(ime.SchoolApiRest.exception.GeneralException.class)
+	public ResponseEntity<String> generalException(GeneralException ex){
+		
+		return new ResponseEntity<String>("GeneralException" + simpleText, HttpStatus.EXPECTATION_FAILED);
+	}
+	
+	
 	@ExceptionHandler(ime.SchoolApiRest.exception.ResourceNotFoundException.class)
 	public ResponseEntity<String> resourceNotFoundException(ResourceNotFoundException ex) {
 		
