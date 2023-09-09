@@ -20,10 +20,10 @@ public interface StudentService {
 	
 	StudentBasicDto updateStudent(StudentBasicDto student);
 	
-	StudentDto addStudentToSubject(Long subjectId, Long studentId);
+	StudentDto addStudentToSubject(Long studentId, Long subjectId);
 	
-	StudentDto addStudentToSubjectWithMark(Long subjectId, Long studentId, Double averageGrade);
+	StudentDto addStudentToSubjectWithMark(Long studentId, Long subjectId, Double averageGrade);
 	
-	StudentDto removeStudentToSubject(Long subjectId, Long studentId);
+	StudentDto removeStudentToSubject(Long studentId, Long subjectId);
 	
 }
