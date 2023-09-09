@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.Student;
 import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.SubjectStudent;
@@ -88,14 +89,36 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public StudentDto addStudentToSubjectWithMark(Long studentId, Long subjectId, Double averageGrade) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
+		if ( subjectStudentRepo.findById(ssId).isPresent() ) throw new GeneralException();
+		SubjectStudent ss = new SubjectStudent(ssId,subject,student, averageGrade);		
+		subjectStudentRepo.save(ss);		
+		
+		return StudentMapper.toStudentDto(student);
+		
 	}
-
+	
+	@Override
+	public StudentDto addStudentToSubjectWithMark(SubjectStudentDto subjectStudentDto) {
+		
+		Subject subject = subjectRepo.findById(subjectStudentDto.getSubjectId()).orElseThrow( () -> new ResourceNotFoundException(subjectStudentDto.getSubjectId()));
+		Student student = studentRepo.findById(subjectStudentDto.getStudentId()).orElseThrow( () -> new ResourceNotFoundException(subjectStudentDto.getStudentId()));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
+		if ( subjectStudentRepo.findById(ssId).isPresent() ) throw new GeneralException();
+		SubjectStudent ss = new SubjectStudent(ssId,subject,student, subjectStudentDto.getAverageGrade());		
+		subjectStudentRepo.save(ss);		
+		
+		return StudentMapper.toStudentDto(student);
+	}
+	
 	@Override
 	public StudentDto removeStudentToSubject(Long studentId, Long subjectId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

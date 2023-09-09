@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +40,7 @@ public class StudentController {
 	 * Get a List of all Student
 	 * 
 	 * @return ResponseEntity with a List of Student
+	 * 
 	 */
 	@Operation(summary="Get a List of all students", description="Get a List of all students, @return ResponseEntity with a List of StudentDto")
 	@GetMapping
@@ -53,6 +55,7 @@ public class StudentController {
 	 * 
 	 * @param id with the identifier
 	 * @return ResponseEntity with the Student required
+	 * 
 	 */
 	@Operation(summary="Get a Student according to an Id", description="Get a Student according to an Id, @return ResponseEntity with the Student required")
 	@GetMapping("{id}")
@@ -67,6 +70,7 @@ public class StudentController {
 	 * 
 	 * @param id with the identifier of a Student
 	 * @return ResponseEntity with a message
+	 * 
 	 */
 	@Operation(summary="Delete a Student by its Id", description="Delete a Student by its Id, @return ResponseEntity with a message")
 	@DeleteMapping("{id}")
@@ -82,6 +86,7 @@ public class StudentController {
 	 * 
 	 * @param sbcDto. Object StudentBasicCreationDto for adding in the DB
 	 * @return ResponseEntity with the Student required
+	 * 
 	 */
 	@Operation(summary="Create a new Student", description="Create a new Student, @return ResponseEntity with the Student required")
 	@PostMapping
@@ -96,6 +101,7 @@ public class StudentController {
 	 * 
 	 * @param tbd Object StudentBasicDto with the new info
 	 * @return ResponseEntity with the Student modified
+	 * 
 	 */
 	@Operation(summary="Update fields in a Student", description="Update fields in a Student, @return ResponseEntity with the Student modified")
 	@PutMapping
@@ -108,9 +114,10 @@ public class StudentController {
 	/**
 	 * Add a Student in a Subject
 	 * 
-	 * @param studentId identifier of a Subject
-	 * @param subjectId identifier of a Student
+	 * @param studentId identifier of a Student
+	 * @param subjectId identifier of a Subject
 	 * @return ResponseEntity with the Student
+	 * 
 	 */
 	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Student")
 	@PutMapping("{studentId}/subjects/{subjectId}")
@@ -121,6 +128,36 @@ public class StudentController {
 	}
 	
 	
+	/**
+	 * Add a Student in a Subject
+	 * 
+	 * @param studentId identifier of a Student
+	 * @param subjectId identifier of a Subject
+	 * @param averageGrade 
+	 * @return ResponseEntity with the Student
+	 * 
+	 */
+	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Student")
+	@PutMapping("{studentId}/subjects/{subjectId}/mark/{averageGrade}")
+	public ResponseEntity<StudentDto>addStudentToSubjectWithMark(@PathVariable Long studentId, @PathVariable Long subjectId, @PathVariable Double averageGrade){
+		
+		return ResponseEntity.ok(studentService.addStudentToSubjectWithMark(studentId, subjectId, averageGrade));
+				
+	}
 	
+	/**
+	 * Add a Student in a Subject
+	 * 
+	 * @param SubjectStudentDto
+	 * @return ResponseEntity with the Student
+	 * 
+	 */
+	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Student")
+	@PostMapping("{studentId}/subjects")
+	public ResponseEntity<StudentDto>addStudentToSubjectWithMark(@Valid @RequestBody SubjectStudentDto subjectStudentDto){
+		
+		return ResponseEntity.ok(studentService.addStudentToSubjectWithMark(subjectStudentDto));
+				
+	}
 	
 }
