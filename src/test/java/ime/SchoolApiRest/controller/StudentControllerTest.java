@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.service.impl.StudentServiceImpl;
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 
@@ -51,6 +52,8 @@ class StudentControllerTest {
 	private String surnameStu = "Fry";
 	private StudentBasicDto sbDtoTest;
 	private StudentBasicCreationDto sbcDtoTest;
+	private SubjectStudentDto ssDtoTest;
+	private Double mark9 = 9.9;
 	
 	
 	@BeforeEach
@@ -73,6 +76,11 @@ class StudentControllerTest {
 										.surname(surnameStu)
 										.build();
 		
+		ssDtoTest = SubjectStudentDto.builder()
+									.studentId(1L)
+									.subjectId(1L)
+									.averageGrade(mark9)
+									.build();
 	}
 	
 	@Test
@@ -152,4 +160,47 @@ class StudentControllerTest {
 		verify(studentService,times(1)).updateStudent(Mockito.any(StudentBasicDto.class));
 		
 	}
+	
+	@Test
+	void studentController_addStudentToSubject_ReturnStudentDto() throws Exception{
+		
+		studentDto.getSubjectStudents().add(ssDtoTest);
+		doReturn(studentDto).when(studentService).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put(path + "/{studentId}/subjects/{subjectId}", Mockito.anyLong(), Mockito.anyLong()));
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo(surnameStu)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].studentId",org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].subjectId",org.hamcrest.Matchers.equalTo(1)));
+		
+		verify(studentService,times(1)).addStudentToSubject(Mockito.anyLong(), Mockito.anyLong());
+		
+	}
+	
+	@Test
+	void studentController_addStudentToSubjectWithMark_ReturnStudentDto() throws Exception{
+		
+		studentDto.getSubjectStudents().add(ssDtoTest);
+		doReturn(studentDto).when(studentService).addStudentToSubjectWithMark(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyDouble());
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.put(path + "/{studentId}/subjects/{subjectId}/mark/{averageGrade}", Mockito.anyLong(), Mockito.anyLong(), Mockito.anyDouble() ));
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo(surnameStu)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].studentId",org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].subjectId",org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].averageGrade",org.hamcrest.Matchers.equalTo(mark9)));
+		
+		verify(studentService,times(1)).addStudentToSubjectWithMark(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyDouble());		
+	}
+	
 }
