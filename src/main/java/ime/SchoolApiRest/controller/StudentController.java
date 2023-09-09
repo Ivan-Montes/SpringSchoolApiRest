@@ -104,4 +104,23 @@ public class StudentController {
 		return ResponseEntity.ok(studentService.updateStudent(sbDto));
 		
 	}
+	
+	/**
+	 * Add a Student in a Subject
+	 * 
+	 * @param studentId identifier of a Subject
+	 * @param subjectId identifier of a Student
+	 * @return ResponseEntity with the Student
+	 */
+	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Student")
+	@PutMapping("{studentId}/subjects/{subjectId}")
+	public ResponseEntity<StudentDto>addStudentToSubject(@PathVariable Long studentId, @PathVariable Long subjectId){
+		
+		return ResponseEntity.ok(studentService.addStudentToSubject(studentId, subjectId));
+				
+	}
+	
+	
+	
+	
 }

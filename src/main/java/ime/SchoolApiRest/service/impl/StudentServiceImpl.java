@@ -10,8 +10,13 @@ import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
 import ime.SchoolApiRest.entity.Student;
+import ime.SchoolApiRest.entity.Subject;
+import ime.SchoolApiRest.entity.SubjectStudent;
+import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.mapper.StudentMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
+import ime.SchoolApiRest.repository.SubjectRepository;
+import ime.SchoolApiRest.repository.SubjectStudentRepository;
 import ime.SchoolApiRest.service.StudentService;
 import ime.SchoolApiRest.exception.*;
 
@@ -20,6 +25,13 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentRepository studentRepo;
+	
+	@Autowired
+	private SubjectStudentRepository subjectStudentRepo;
+
+	@Autowired
+	private SubjectRepository subjectRepo;
+	
 	
 	@Override
 	public List<StudentDto> getAllStudent() {
@@ -63,19 +75,27 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public StudentDto addStudentToSubject(Long subjectId, Long studentId) {
+	public StudentDto addStudentToSubject(Long studentId, Long subjectId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
+		if ( subjectStudentRepo.findById(ssId).isPresent() ) throw new GeneralException();
+		SubjectStudent ss = new SubjectStudent(ssId,subject,student, null);		
+		SubjectStudent ssCreated = subjectStudentRepo.save(ss);
+		
+		
+		return StudentMapper.toStudentDto(student);
+	}
+
+	@Override
+	public StudentDto addStudentToSubjectWithMark(Long studentId, Long subjectId, Double averageGrade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public StudentDto addStudentToSubjectWithMark(Long subjectId, Long studentId, Double averageGrade) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StudentDto removeStudentToSubject(Long subjectId, Long studentId) {
+	public StudentDto removeStudentToSubject(Long studentId, Long subjectId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
