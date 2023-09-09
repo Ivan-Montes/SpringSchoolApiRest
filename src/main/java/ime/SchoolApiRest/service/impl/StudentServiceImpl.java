@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
@@ -82,8 +81,7 @@ public class StudentServiceImpl implements StudentService {
 		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(), student.getStudentId());
 		if ( subjectStudentRepo.findById(ssId).isPresent() ) throw new GeneralException();
 		SubjectStudent ss = new SubjectStudent(ssId,subject,student, null);		
-		SubjectStudent ssCreated = subjectStudentRepo.save(ss);
-		
+		subjectStudentRepo.save(ss);		
 		
 		return StudentMapper.toStudentDto(student);
 	}

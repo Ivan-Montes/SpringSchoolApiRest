@@ -22,14 +22,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ime.SchoolApiRest.dto.StudentBasicCreationDto;
 import ime.SchoolApiRest.dto.StudentBasicDto;
 import ime.SchoolApiRest.dto.StudentDto;
+import ime.SchoolApiRest.dto.SubjectStudentDto;
 import ime.SchoolApiRest.entity.Student;
+import ime.SchoolApiRest.entity.Subject;
+import ime.SchoolApiRest.entity.SubjectStudent;
+import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.repository.StudentRepository;
+import ime.SchoolApiRest.repository.SubjectRepository;
+import ime.SchoolApiRest.repository.SubjectStudentRepository;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
 
 	@Mock
 	private StudentRepository studentRepo;
+
+	@Mock
+	private SubjectRepository subjectRepo;	
+
+	@Mock
+	private SubjectStudentRepository subjectStudentRepo;
 	
 	@InjectMocks
 	private StudentServiceImpl studentService;
@@ -39,6 +51,9 @@ class StudentServiceImplTest {
 	private String surnameStu = "Fry";
 	private StudentBasicDto sbDtoTest;
 	private StudentBasicCreationDto sbcDtoTest;
+	private Subject subjectTest;
+	private SubjectStudent subjectStudentTest;
+	private Double mark9 = 9.9;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
@@ -60,9 +75,19 @@ class StudentServiceImplTest {
 										.surname(surnameStu)
 										.build();
 				
-				
+
+		subjectTest = new Subject();
+		subjectTest.setSubjectId(1L);
+		subjectTest.setName("101");
+		subjectTest.setTeacher(null);
+		subjectTest.setStudents(new HashSet<>());		
 		
-		
+
+		subjectStudentTest = new SubjectStudent();
+		subjectStudentTest.setId(new SubjectStudentId(1L,1L));
+		subjectStudentTest.setStudent(null);
+		subjectStudentTest.setSubject(null);
+		subjectStudentTest.setAverageGrade(mark9);
 	}
 	
 	@Test
@@ -152,6 +177,31 @@ class StudentServiceImplTest {
 	@Test
 	public void studentServiceImpl_addStudentToSubject_ReturnStudentDto() {
 		
+		studentTest.getSubjects().add(subjectStudentTest);
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		Optional<Subject>optSub = Optional.ofNullable(subjectTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(optSub).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.empty()).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));		
+		doReturn(subjectStudentTest).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		
+		StudentDto studentModified = studentService.addStudentToSubject(1L, Mockito.anyLong());
+		
+		assertAll(
+				()->Assertions.assertThat(studentModified).isNotNull(),
+				()->Assertions.assertThat(studentModified.getStudentId()).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
+				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(1),
+				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(1),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getAverageGrade).isEqualTo(mark9)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));	
+		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
 	}
 	
 
