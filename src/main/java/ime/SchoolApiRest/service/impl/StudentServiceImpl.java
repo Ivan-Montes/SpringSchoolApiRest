@@ -14,7 +14,6 @@ import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.SubjectStudent;
 import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.mapper.StudentMapper;
-import ime.SchoolApiRest.mapper.SubjectMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.repository.SubjectStudentRepository;
