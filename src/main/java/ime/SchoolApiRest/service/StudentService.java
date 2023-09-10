@@ -25,8 +25,8 @@ public interface StudentService {
 	
 	StudentDto addStudentToSubjectWithMark(Long studentId, Long subjectId, Double averageGrade);
 	
-	StudentDto removeStudentToSubject(Long studentId, Long subjectId);
-
 	StudentDto addStudentToSubjectWithMark(SubjectStudentDto subjectStudentDto);
+
+	StudentDto removeStudenFromSubject(Long studentId, Long subjectId);
 	
 }
