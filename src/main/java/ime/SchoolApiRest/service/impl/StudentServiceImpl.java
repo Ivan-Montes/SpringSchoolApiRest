@@ -14,6 +14,7 @@ import ime.SchoolApiRest.entity.Subject;
 import ime.SchoolApiRest.entity.SubjectStudent;
 import ime.SchoolApiRest.entity.SubjectStudentId;
 import ime.SchoolApiRest.mapper.StudentMapper;
+import ime.SchoolApiRest.mapper.SubjectMapper;
 import ime.SchoolApiRest.repository.StudentRepository;
 import ime.SchoolApiRest.repository.SubjectRepository;
 import ime.SchoolApiRest.repository.SubjectStudentRepository;
@@ -115,9 +116,15 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public StudentDto removeStudentToSubject(Long studentId, Long subjectId) {
-		// TODO Auto-generated method stub
-		return null;
+	public StudentDto removeStudenFromSubject(Long studentId, Long subjectId) {
+		
+		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
+		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
+		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(),student.getStudentId());
+		subjectStudentRepo.findById(ssId).orElseThrow( ()-> new ResourceNotFoundException(student.getStudentId()) );
+		subjectStudentRepo.deleteById(ssId);
+		
+		return StudentMapper.toStudentDto(student);
 	}
 
 

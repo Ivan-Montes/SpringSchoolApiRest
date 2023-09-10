@@ -153,11 +153,28 @@ public class StudentController {
 	 * 
 	 */
 	@Operation(summary="Add a Student in a Subject", description="Add a Student in a Subject, @return ResponseEntity with the Student")
-	@PostMapping("{studentId}/subjects")
+	@PostMapping("/subjects")
 	public ResponseEntity<StudentDto>addStudentToSubjectWithMark(@Valid @RequestBody SubjectStudentDto subjectStudentDto){
 		
 		return ResponseEntity.ok(studentService.addStudentToSubjectWithMark(subjectStudentDto));
 				
+	}	
+
+	/**
+	 * Remove a Student from Subject
+	 * 
+	 * @param studentId identifier of a Student
+	 * @param subjectId identifier of a Subject
+	 * 
+	 * @return ResponseEntity with message
+	 * 
+	 */
+	@Operation(summary="Remove a Student from Subject", description="Remove a Student from Subject, @return ResponseEntity with message")
+	@DeleteMapping("{studentId}/subjects/{subjectId}")
+	public ResponseEntity<String>removeStudenFromSubject(@PathVariable Long studentId, @PathVariable Long subjectId){
+		
+		studentService.removeStudenFromSubject(studentId, subjectId);
+		return ResponseEntity.ok("Student removed successfully");
+		
 	}
-	
 }
