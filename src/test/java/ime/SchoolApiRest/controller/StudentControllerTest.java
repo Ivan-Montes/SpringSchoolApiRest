@@ -116,7 +116,7 @@ class StudentControllerTest {
 	}
 	
 	@Test
-	void studentController_deteteStudentById_ReturnVoid() throws Exception{
+	void studentController_deteteStudentById_ReturnString() throws Exception{
 		
 		doNothing().when(studentService).deleteStudentById(Mockito.anyLong());
 		
@@ -203,4 +203,31 @@ class StudentControllerTest {
 		verify(studentService,times(1)).addStudentToSubjectWithMark(Mockito.anyLong(), Mockito.anyLong(), Mockito.anyDouble());		
 	}
 	
+
+	@Test
+	void studentController_addStudentToSubjectWithMarkOverload1_ReturnStudentDto() throws Exception{
+		
+		studentDto.getSubjectStudents().add(ssDtoTest);
+		doReturn(studentDto).when(studentService).addStudentToSubjectWithMark( Mockito.any( SubjectStudentDto.class) );
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.post(path + "/subjects")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(ssDtoTest)));
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId", org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.surname", org.hamcrest.Matchers.equalTo(surnameStu)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.notNullValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents", org.hamcrest.Matchers.hasSize(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].studentId",org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].subjectId",org.hamcrest.Matchers.equalTo(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.subjectStudents[0].averageGrade",org.hamcrest.Matchers.equalTo(mark9)));
+		verify(studentService,times(1)).addStudentToSubjectWithMark( Mockito.any(SubjectStudentDto.class) );		
+		}	
+	
+	@Test
+	void studentController_removeStudenFromSubject_ReturnString() throws Exception{
+		
+	}
 }

@@ -53,6 +53,7 @@ class StudentServiceImplTest {
 	private StudentBasicCreationDto sbcDtoTest;
 	private Subject subjectTest;
 	private SubjectStudent subjectStudentTest;
+	private SubjectStudentDto ssDtoTest;
 	private Double mark9 = 9.9;
 	
 	@BeforeEach
@@ -88,6 +89,12 @@ class StudentServiceImplTest {
 		subjectStudentTest.setStudent(null);
 		subjectStudentTest.setSubject(null);
 		subjectStudentTest.setAverageGrade(mark9);
+		
+		ssDtoTest = SubjectStudentDto.builder()
+				.studentId(1L)
+				.subjectId(1L)
+				.averageGrade(mark9)
+				.build();
 	}
 	
 	@Test
@@ -217,6 +224,38 @@ class StudentServiceImplTest {
 		doReturn(subjectStudentTest).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
 		
 		StudentDto studentModified = studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9);
+		
+		assertAll(
+				()->Assertions.assertThat(studentModified).isNotNull(),
+				()->Assertions.assertThat(studentModified.getStudentId()).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
+				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(1),
+				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(1),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getAverageGrade).isEqualTo(mark9)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));	
+		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
+		
+	}
+	
+
+	@Test
+	public void studentServiceImpl_addStudentToSubjectWithMarkOverload1_ReturnStudentDto() {
+		
+		studentTest.getSubjects().add(subjectStudentTest);
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		Optional<Subject>optSub = Optional.ofNullable(subjectTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(optSub).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.empty()).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));		
+		doReturn(subjectStudentTest).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
+		
+		StudentDto studentModified = studentService.addStudentToSubjectWithMark(ssDtoTest);
 		
 		assertAll(
 				()->Assertions.assertThat(studentModified).isNotNull(),
