@@ -276,8 +276,28 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_removeStudentToSubject_ReturnStudentDto() {
+	public void studentServiceImpl_removeStudenFromSubject_ReturnStudentDto() {
 		
+		doReturn(Optional.ofNullable(studentTest)).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));	
+		doNothing().when(subjectStudentRepo).deleteById(Mockito.any(SubjectStudentId.class));
 		
+		StudentDto studentModified = studentService.removeStudenFromSubject(1L, Mockito.anyLong());
+		
+		assertAll(
+				()->Assertions.assertThat(studentModified).isNotNull(),
+				()->Assertions.assertThat(studentModified.getStudentId()).isEqualTo(1L),
+				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
+				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(0),
+				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(0)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));	
+		verify(subjectStudentRepo,times(1)).deleteById(Mockito.any(SubjectStudentId.class));		
 	}
+	
+	
 }
