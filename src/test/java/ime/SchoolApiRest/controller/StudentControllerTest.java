@@ -229,5 +229,11 @@ class StudentControllerTest {
 	@Test
 	void studentController_removeStudenFromSubject_ReturnString() throws Exception{
 		
+		doReturn(studentDto).when(studentService).removeStudenFromSubject( Mockito.anyLong(), Mockito.anyLong() );
+		
+		ResultActions result = mvc.perform(MockMvcRequestBuilders.delete(path + "/{studentId}/subjects/{subjectId}", Mockito.anyLong(), Mockito.anyLong()));
+		
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		verify(studentService,times(1)).removeStudenFromSubject(  Mockito.anyLong(), Mockito.anyLong() );
 	}
 }
