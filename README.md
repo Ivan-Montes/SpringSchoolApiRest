@@ -1,5 +1,3 @@
-## :construction::construction_worker: UNDER CONSTRUCCTION :construction_worker::construction:
-
 # :mortar_board: SpringSchoolApiRest :mortar_board:
 
 Welcome to my Api Rest with Spring Framework. :fire::rainbow: A small work simulating a quite fake school structure. 
