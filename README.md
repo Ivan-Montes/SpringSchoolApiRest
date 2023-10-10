@@ -42,7 +42,7 @@ https://springschoolapirest.onrender.com/api/teachers/1
 
 ## Maintainers
 
-Just me, [Ivan](https://github.com/Ivan-Montes) :sweat_smile:
+Just me, [Iván](https://github.com/Ivan-Montes) :sweat_smile:
 
 
 ## Contributing
