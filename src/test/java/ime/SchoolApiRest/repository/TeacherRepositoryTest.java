@@ -5,12 +5,15 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import ime.school_api_rest.entity.Teacher;
+import ime.school_api_rest.repository.TeacherRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.junit.jupiter.api.DisplayName;
 
 import java.util.List;
-import ime.SchoolApiRest.entity.Teacher;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)

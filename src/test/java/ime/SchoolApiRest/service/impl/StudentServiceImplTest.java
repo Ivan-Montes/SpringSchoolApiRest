@@ -19,17 +19,18 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ime.SchoolApiRest.dto.StudentBasicCreationDto;
-import ime.SchoolApiRest.dto.StudentBasicDto;
-import ime.SchoolApiRest.dto.StudentDto;
-import ime.SchoolApiRest.dto.SubjectStudentDto;
-import ime.SchoolApiRest.entity.Student;
-import ime.SchoolApiRest.entity.Subject;
-import ime.SchoolApiRest.entity.SubjectStudent;
-import ime.SchoolApiRest.entity.SubjectStudentId;
-import ime.SchoolApiRest.repository.StudentRepository;
-import ime.SchoolApiRest.repository.SubjectRepository;
-import ime.SchoolApiRest.repository.SubjectStudentRepository;
+import ime.school_api_rest.dto.StudentBasicCreationDto;
+import ime.school_api_rest.dto.StudentBasicDto;
+import ime.school_api_rest.dto.StudentDto;
+import ime.school_api_rest.dto.SubjectStudentDto;
+import ime.school_api_rest.entity.Student;
+import ime.school_api_rest.entity.Subject;
+import ime.school_api_rest.entity.SubjectStudent;
+import ime.school_api_rest.entity.SubjectStudentId;
+import ime.school_api_rest.repository.StudentRepository;
+import ime.school_api_rest.repository.SubjectRepository;
+import ime.school_api_rest.repository.SubjectStudentRepository;
+import ime.school_api_rest.service.impl.StudentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {

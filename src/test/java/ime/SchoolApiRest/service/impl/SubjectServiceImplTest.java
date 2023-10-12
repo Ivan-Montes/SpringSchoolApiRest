@@ -20,19 +20,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import ime.SchoolApiRest.dto.SubjectBasicCreationDto;
-import ime.SchoolApiRest.dto.SubjectBasicDto;
-import ime.SchoolApiRest.dto.SubjectDto;
-import ime.SchoolApiRest.dto.SubjectStudentDto;
-import ime.SchoolApiRest.entity.Subject;
-import ime.SchoolApiRest.entity.SubjectStudent;
-import ime.SchoolApiRest.entity.SubjectStudentId;
-import ime.SchoolApiRest.entity.Student;
-import ime.SchoolApiRest.entity.Teacher;
-import ime.SchoolApiRest.repository.SubjectRepository;
-import ime.SchoolApiRest.repository.SubjectStudentRepository;
-import ime.SchoolApiRest.repository.TeacherRepository;
-import ime.SchoolApiRest.repository.StudentRepository;
+import ime.school_api_rest.dto.SubjectBasicCreationDto;
+import ime.school_api_rest.dto.SubjectBasicDto;
+import ime.school_api_rest.dto.SubjectDto;
+import ime.school_api_rest.dto.SubjectStudentDto;
+import ime.school_api_rest.entity.Student;
+import ime.school_api_rest.entity.Subject;
+import ime.school_api_rest.entity.SubjectStudent;
+import ime.school_api_rest.entity.SubjectStudentId;
+import ime.school_api_rest.entity.Teacher;
+import ime.school_api_rest.repository.StudentRepository;
+import ime.school_api_rest.repository.SubjectRepository;
+import ime.school_api_rest.repository.SubjectStudentRepository;
+import ime.school_api_rest.repository.TeacherRepository;
+import ime.school_api_rest.service.impl.SubjectServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class SubjectServiceImplTest {

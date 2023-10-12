@@ -18,8 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ime.SchoolApiRest.dto.*;
-import ime.SchoolApiRest.service.impl.SubjectServiceImpl;
+import ime.school_api_rest.controller.SubjectController;
+import ime.school_api_rest.dto.*;
+import ime.school_api_rest.service.impl.SubjectServiceImpl;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;

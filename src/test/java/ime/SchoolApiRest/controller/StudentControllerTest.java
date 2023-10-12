@@ -26,11 +26,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ime.SchoolApiRest.dto.StudentBasicDto;
-import ime.SchoolApiRest.dto.StudentDto;
-import ime.SchoolApiRest.dto.SubjectStudentDto;
-import ime.SchoolApiRest.service.impl.StudentServiceImpl;
-import ime.SchoolApiRest.dto.StudentBasicCreationDto;
+import ime.school_api_rest.controller.StudentController;
+import ime.school_api_rest.dto.StudentBasicCreationDto;
+import ime.school_api_rest.dto.StudentBasicDto;
+import ime.school_api_rest.dto.StudentDto;
+import ime.school_api_rest.dto.SubjectStudentDto;
+import ime.school_api_rest.service.impl.StudentServiceImpl;
 
 @WebMvcTest(StudentController.class)
 @AutoConfigureMockMvc(addFilters = false)
