@@ -22,23 +22,24 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ime.school_api_rest.exception.GeneralException.class)
 	public ResponseEntity<String> generalException(GeneralException ex){
 		
-		return new ResponseEntity<String>("GeneralException" + simpleText, HttpStatus.EXPECTATION_FAILED);
-	}
-	
+		return new ResponseEntity<>("GeneralException" + simpleText, HttpStatus.EXPECTATION_FAILED);
+	}	
 	
 	@ExceptionHandler(ime.school_api_rest.exception.ResourceNotFoundException.class)
 	public ResponseEntity<String> resourceNotFoundException(ResourceNotFoundException ex) {
 		
-		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler({ime.school_api_rest.exception.SubjectAssociatedException.class, 
 						ime.school_api_rest.exception.StudentAssociatedException.class,
-						ime.school_api_rest.exception.TeacherAssociatedException.class})
-	public ResponseEntity<String> elementtAssociatedException(GeneralException ex){
+						ime.school_api_rest.exception.TeacherAssociatedException.class,
+						ime.school_api_rest.exception.RequirementNotMetException.class})
+	public ResponseEntity<String> elementAssociatedException(GeneralException ex){
 		
-		return new ResponseEntity<String>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
+		return new ResponseEntity<>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
 	}
+	
 	//Called due to @Valid tag
 	@ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> methodArgumentNotValidException(MethodArgumentNotValidException ex){
@@ -55,14 +56,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<String>methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
 		
-		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);		
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);		
 		
 	}
 	
 	@ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
 	public ResponseEntity<String>badCredentialsException(BadCredentialsException ex){
 		
-		return new ResponseEntity<String>("BadCredentialsException" + simpleText, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
+		return new ResponseEntity<>("BadCredentialsException" + simpleText, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
 		
 	}
 	
@@ -72,7 +73,7 @@ public class GlobalExceptionHandler {
 		org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException.class})		
 	public ResponseEntity<String> jakartaValidationConstraintViolationException(Exception ex){
 		
-		return new ResponseEntity<String>("ConstraintViolationException\n\n" + ex.getMessage() + "\n", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("ConstraintViolationException\n\n" + ex.getMessage() + "\n", HttpStatus.BAD_REQUEST);
 		
 	}
 	
