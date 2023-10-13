@@ -120,7 +120,7 @@ public class StudentServiceImpl implements StudentService {
 		Subject subject = subjectRepo.findById(subjectId).orElseThrow( () -> new ResourceNotFoundException(subjectId));
 		Student student = studentRepo.findById(studentId).orElseThrow( () -> new ResourceNotFoundException(studentId));
 		SubjectStudentId ssId = new SubjectStudentId(subject.getSubjectId(),student.getStudentId());
-		subjectStudentRepo.findById(ssId).orElseThrow( ()-> new ResourceNotFoundException(student.getStudentId()) );
+		if ( subjectStudentRepo.existsById(ssId) ) throw new ResourceNotFoundException( student.getStudentId() );
 		subjectStudentRepo.deleteById(ssId);
 		
 		return StudentMapper.toStudentDto(student);
