@@ -1,4 +1,4 @@
-package ime.SchoolApiRest.repository;
+package ime.school_api_rest.repository;
 
 import org.assertj.core.api.Assertions;
 

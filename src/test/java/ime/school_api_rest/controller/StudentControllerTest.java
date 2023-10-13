@@ -1,4 +1,4 @@
-package ime.SchoolApiRest.controller;
+package ime.school_api_rest.controller;
 
 
 import org.mockito.Mockito;

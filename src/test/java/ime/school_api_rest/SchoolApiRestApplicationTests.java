@@ -1,4 +1,4 @@
-package ime.SchoolApiRest;
+package ime.school_api_rest;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

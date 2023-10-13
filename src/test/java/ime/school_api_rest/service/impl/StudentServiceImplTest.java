@@ -1,4 +1,4 @@
-package ime.SchoolApiRest.service.impl;
+package ime.school_api_rest.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
