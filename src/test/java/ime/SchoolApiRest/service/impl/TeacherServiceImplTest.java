@@ -68,7 +68,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for getAllEagerTeachersDto method")
 	@Order(1)
-	public void TeacherServiceImpl_getAllEagerTeachersDto_ReturnListTeacherDto() {
+	void TeacherServiceImpl_getAllEagerTeachersDto_ReturnListTeacherDto() {
 		
 		List<Teacher>teachers = List.of(Mockito.mock(Teacher.class));
 		doReturn(teachers).when(teacherRepo).findAllEager();
@@ -87,7 +87,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for getTeacherDtoById method")
 	@Order(2)
-	public void TeacherServiceImpl_getTeacherDtoById_ReturnTeacherDto() {
+	void TeacherServiceImpl_getTeacherDtoById_ReturnTeacherDto() {
 		
 		Teacher teacher = Mockito.mock(Teacher.class);	
 		Optional<Teacher>opt = Optional.of(teacher);
@@ -105,7 +105,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for deleteTeacher method")
 	@Order(3)
-	public void TeacherServiceImpl_deteleTeacher_ReturnVoid() {
+	void TeacherServiceImpl_deteleTeacher_ReturnVoid() {
 		
 		Optional<Teacher>opt = Optional.ofNullable(teacherTest);
 		doReturn(opt).when(teacherRepo).findById(Mockito.anyLong());
@@ -121,7 +121,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for createTeacher method")
 	@Order(4)
-	public void TeacherServiceImpl_createTeacher_ReturnTeacherBasicDto() {
+	void TeacherServiceImpl_createTeacher_ReturnTeacherBasicDto() {
 		
 		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
 		
@@ -138,7 +138,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for updateTeacher method")
 	@Order(5)
-	public void TeacherServiceImpl_updateTeacher_ReturnTeacherBasicDto() {
+	void TeacherServiceImpl_updateTeacher_ReturnTeacherBasicDto() {
 		Optional<Teacher>opt = Optional.ofNullable(teacherTest);
 		doReturn(opt).when(teacherRepo).findById(Mockito.anyLong());
 		doReturn(teacherTest).when(teacherRepo).save(Mockito.any(Teacher.class));
@@ -157,7 +157,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for addSubjectToTeacher method")
 	@Order(6)
-	public void TeacherServiceImpl_addSubjectToTeacher_ReturnTeacherDto() {
+	void TeacherServiceImpl_addSubjectToTeacher_ReturnTeacherDto() {
 		Optional<Teacher>optT = Optional.ofNullable(teacherTest);
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		doReturn(optT).when(teacherRepo).findById(Mockito.anyLong());
@@ -185,7 +185,7 @@ class TeacherServiceImplTest {
 	@Test
 	@DisplayName("Test for removeSubjectFromTeacher method")
 	@Order(7)
-	public void TeacherServiceImpl_removeSubjectFromTeacher_ReturnTeacherDto() {
+	void TeacherServiceImpl_removeSubjectFromTeacher_ReturnTeacherDto() {
 		
 		teacherTest.getSubjects().add(subjectTest);
 		subjectTest.setTeacher(teacherTest);

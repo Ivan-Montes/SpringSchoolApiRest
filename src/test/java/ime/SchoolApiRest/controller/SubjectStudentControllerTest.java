@@ -69,7 +69,7 @@ class SubjectStudentControllerTest {
 	
 	
 	@Test
-	public void subjectStudentController_getAll_ReturnListSubjectStudentCuteDto() throws Exception {
+	void subjectStudentController_getAll_ReturnListSubjectStudentCuteDto() throws Exception {
 		
 		doReturn(List.of(sscDto)).when(subjectStudentService).getAllSubjectStudent();
 		
@@ -87,7 +87,7 @@ class SubjectStudentControllerTest {
 	}
 	
 	@Test
-	public void subjectStudentController_getSubjectStudentCuteDtoById_ReturnSubjectStudentCuteDto() throws Exception {
+	void subjectStudentController_getSubjectStudentCuteDtoById_ReturnSubjectStudentCuteDto() throws Exception {
 		
 		doReturn(sscDto).when(subjectStudentService).getSubjectStudentCuteDtoById(Mockito.anyLong(), Mockito.anyLong());
 		
@@ -106,7 +106,7 @@ class SubjectStudentControllerTest {
 	}
 	
 	@Test
-	public void subjectStudentController_deleteSubjectStudentById_ReturnString() throws Exception{
+	void subjectStudentController_deleteSubjectStudentById_ReturnString() throws Exception{
 		
 		doNothing().when(subjectStudentService).deleteSubjectStudentById(Mockito.anyLong(), Mockito.anyLong());
 		
@@ -125,7 +125,7 @@ class SubjectStudentControllerTest {
 	}
 	
 	@Test
-	public void subjectStudentController_createSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
+	void subjectStudentController_createSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
 		
 		doReturn(sscDto).when(subjectStudentService).createSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));
 		
@@ -145,7 +145,7 @@ class SubjectStudentControllerTest {
 	}
 	
 	@Test
-	public void subjectStudentController_updateSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
+	void subjectStudentController_updateSubjectStudent_ReturnSubjectStudentCuteDto() throws Exception {
 		
 		sscDto.setAverageGrade(mark3);
 		doReturn(sscDto).when(subjectStudentService).updateSubjectStudent(Mockito.any(SubjectStudentCreationDto.class));

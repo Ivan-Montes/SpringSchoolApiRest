@@ -99,7 +99,7 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_getAllStudent_ReturnList() {
+	void studentServiceImpl_getAllStudent_ReturnList() {
 		
 		List<Student>students = List.of(studentTest);
 		doReturn(students).when(studentRepo).findAll();
@@ -118,7 +118,7 @@ class StudentServiceImplTest {
 	}
 
 	@Test
-	public void studentServiceImpl_getStudentDtoById_ReturnStudent() {
+	void studentServiceImpl_getStudentDtoById_ReturnStudent() {
 		
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
@@ -135,7 +135,7 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_deleteStudentById_ReturnVoid() {
+	void studentServiceImpl_deleteStudentById_ReturnVoid() {
 		
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
@@ -148,7 +148,7 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_createStudent_ReturnStudentBasicDto() {
+	void studentServiceImpl_createStudent_ReturnStudentBasicDto() {
 		
 		doReturn(studentTest).when(studentRepo).save(Mockito.any(Student.class));
 		
@@ -163,7 +163,7 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_updateStudent_ReturnStudentBasicDto() {
+	void studentServiceImpl_updateStudent_ReturnStudentBasicDto() {
 		
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
@@ -183,7 +183,7 @@ class StudentServiceImplTest {
 	
 
 	@Test
-	public void studentServiceImpl_addStudentToSubject_ReturnStudentDto() {
+	void studentServiceImpl_addStudentToSubject_ReturnStudentDto() {
 		
 		studentTest.getSubjects().add(subjectStudentTest);
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
@@ -201,7 +201,6 @@ class StudentServiceImplTest {
 				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
 				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(1),
-				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(1),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getAverageGrade).isEqualTo(mark9)
@@ -214,7 +213,7 @@ class StudentServiceImplTest {
 	
 
 	@Test
-	public void studentServiceImpl_addStudentToSubjectWithMark_ReturnStudentDto() {
+	void studentServiceImpl_addStudentToSubjectWithMark_ReturnStudentDto() {
 		
 		studentTest.getSubjects().add(subjectStudentTest);
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
@@ -232,7 +231,6 @@ class StudentServiceImplTest {
 				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
 				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(1),
-				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(1),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getAverageGrade).isEqualTo(mark9)
@@ -246,7 +244,7 @@ class StudentServiceImplTest {
 	
 
 	@Test
-	public void studentServiceImpl_addStudentToSubjectWithMarkOverload1_ReturnStudentDto() {
+	void studentServiceImpl_addStudentToSubjectWithMarkOverload1_ReturnStudentDto() {
 		
 		studentTest.getSubjects().add(subjectStudentTest);
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
@@ -264,7 +262,6 @@ class StudentServiceImplTest {
 				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
 				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(1),
-				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(1),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getStudentId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getSubjectId).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).first().extracting(SubjectStudentDto::getAverageGrade).isEqualTo(mark9)
@@ -277,7 +274,7 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
-	public void studentServiceImpl_removeStudenFromSubject_ReturnStudentDto() {
+	void studentServiceImpl_removeStudenFromSubject_ReturnStudentDto() {
 		
 		doReturn(Optional.ofNullable(studentTest)).when(studentRepo).findById(Mockito.anyLong());
 		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
@@ -292,7 +289,7 @@ class StudentServiceImplTest {
 				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
 				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(0),
-				()->Assertions.assertThat(studentModified.getSubjectStudents().size()).isEqualTo(0)
+				()->Assertions.assertThat(studentModified.getSubjectStudents()).isEmpty()
 				);
 		verify(studentRepo,times(1)).findById(Mockito.anyLong());
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());

@@ -78,7 +78,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_getAllEagerSubjectDto_ReturnListSubjectDto() throws Exception {
+	void subjectController_getAllEagerSubjectDto_ReturnListSubjectDto() throws Exception {
 		
 		Set<SubjectDto>subjects = Set.of(subjectDto);		
 		doReturn(subjects).when(subjectService).getAllEagerSubjectDto();
@@ -95,7 +95,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_getSubjectBasicDtoById_ReturnSubjectBasicDto() throws Exception{
+	void subjectController_getSubjectBasicDtoById_ReturnSubjectBasicDto() throws Exception{
 		
 		doReturn(subjectBasicDto).when(subjectService).getSubjectBasicDtoById(Mockito.anyLong());
 		
@@ -112,7 +112,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_deleteSubjectById_ReturnString() throws Exception{
+	void subjectController_deleteSubjectById_ReturnString() throws Exception{
 		
 		doNothing().when(subjectService).deleteSubjectById(Mockito.anyLong());
 		
@@ -125,7 +125,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_createSubject_ReturnSubjectBasicDto() throws Exception{
+	void subjectController_createSubject_ReturnSubjectBasicDto() throws Exception{
 		
 		doReturn(subjectBasicDto).when(subjectService).createSubject(Mockito.any(SubjectBasicCreationDto.class));
 		
@@ -144,7 +144,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_updateSubject_ReturnSubjectBasicDto() throws Exception{
+	void subjectController_updateSubject_ReturnSubjectBasicDto() throws Exception{
 		
 		doReturn(subjectBasicDto).when(subjectService).updateSubject(Mockito.anyLong(), Mockito.any(SubjectBasicDto.class));
 		
@@ -163,7 +163,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_addTeacher_ReturnSubjectDto() throws Exception{
+	void subjectController_addTeacher_ReturnSubjectDto() throws Exception{
 		
 		subjectDto.setTeacher(tbDto);
 		doReturn(subjectDto).when(subjectService).addTeacherToSubject(Mockito.anyLong(), Mockito.anyLong());
@@ -182,7 +182,7 @@ class SubjectControllerTest {
 	}
 
 	@Test
-	public void subjectController_addStudentToSubject_ReturnSubjectDto() throws Exception{
+	void subjectController_addStudentToSubject_ReturnSubjectDto() throws Exception{
 		
 		subjectDto.setTeacher(tbDto);
 		subjectDto.getSubjectStudents().add(new SubjectStudentDto());		
@@ -203,7 +203,7 @@ class SubjectControllerTest {
 	}
 	
 	@Test
-	public void subjectController_removeStudentFromSubject_ReturnSubjectDto() throws Exception{
+	void subjectController_removeStudentFromSubject_ReturnSubjectDto() throws Exception{
 		
 		doReturn(subjectDto).when(subjectService).removeStudentFromSubject(Mockito.anyLong(), Mockito.anyLong());
 

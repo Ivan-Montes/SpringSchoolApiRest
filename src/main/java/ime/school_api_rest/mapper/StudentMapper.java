@@ -9,6 +9,7 @@ import ime.school_api_rest.entity.Student;
 
 public class StudentMapper {
 
+	private StudentMapper() {};
 
 	public static List<StudentDto> toListStudentDto(List<Student> students) {
 		

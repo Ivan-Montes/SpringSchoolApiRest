@@ -72,7 +72,7 @@ class TeacherControllerTest {
 	
 	
 	@Test
-	public void TeacherController_getAllEagerTeachersDto_ReturnListTeacherDto() throws Exception{
+	void TeacherController_getAllEagerTeachersDto_ReturnListTeacherDto() throws Exception{
 		
 		List<TeacherDto>teachers = List.of(Mockito.mock(TeacherDto.class));		
 		doReturn(teachers).when(teacherService).getAllEagerTeachersDto();
@@ -87,7 +87,7 @@ class TeacherControllerTest {
    }
 	
 	@Test
-	public void TeacherController_getTeacherDtoById_ReturnTeacherDto() throws Exception{
+	void TeacherController_getTeacherDtoById_ReturnTeacherDto() throws Exception{
 			
 		doReturn(teacherBasicDto).when(teacherService).getTeacherDtoById(Mockito.anyLong());
 		
@@ -103,7 +103,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_deteteTeacherById_ReturnString() throws Exception{
+	void TeacherController_deteteTeacherById_ReturnString() throws Exception{
 		
 		doNothing().when(teacherService).deleteTeacherById(Mockito.anyLong());
 		
@@ -117,7 +117,7 @@ class TeacherControllerTest {
 	
 
 	@Test
-	public void TeacherController_createTeacher_ReturnTeacherBasicDto() throws Exception {
+	void TeacherController_createTeacher_ReturnTeacherBasicDto() throws Exception {
 		
 		doReturn(teacherBasicDto).when(teacherService).createTeacher(Mockito.any(TeacherBasicCreationDto.class));
 		
@@ -134,7 +134,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_updateTeacher_ReturnTeacherBasicDto() throws Exception {		
+	void TeacherController_updateTeacher_ReturnTeacherBasicDto() throws Exception {		
 		
 		doReturn(teacherBasicDto).when(teacherService).updateTeacher(Mockito.anyLong(), Mockito.any(TeacherBasicDto.class));
 		
@@ -152,7 +152,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_addSubject_ReturnTeacherDto() throws Exception {
+	void TeacherController_addSubject_ReturnTeacherDto() throws Exception {
 		
 		teacherDto.setSubjects(Set.of(sbDto));
 		doReturn(teacherDto).when(teacherService).addSubjectToTeacher(Mockito.anyLong(), Mockito.anyLong());
@@ -172,7 +172,7 @@ class TeacherControllerTest {
 	}
 	
 	@Test
-	public void TeacherController_removeSubject_ReturnTeacherDto() throws Exception {
+	void TeacherController_removeSubject_ReturnTeacherDto() throws Exception {
 		
 		doReturn(teacherDto).when(teacherService).removeSubjectFromTeacher(Mockito.anyLong(), Mockito.anyLong());
 		

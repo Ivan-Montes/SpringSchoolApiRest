@@ -11,6 +11,7 @@ import ime.school_api_rest.entity.SubjectStudent;
 
 public class SubjectStudentMapper {
 
+	private SubjectStudentMapper() {};
 	
 	public static Set<SubjectStudentDto> toSetSubjectStudentDto(Set<SubjectStudent>subjectStudents){
 		

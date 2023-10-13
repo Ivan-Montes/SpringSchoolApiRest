@@ -82,7 +82,7 @@ class SubjectStudentServiceImplTest {
 	
 	
 	@Test
-	public void subjectStudentServiceImpl_getAllSubjectStudent_ReturListSubjectStudentCuteDto() {
+	void subjectStudentServiceImpl_getAllSubjectStudent_ReturListSubjectStudentCuteDto() {
 		
 		subjectStudentTest.setStudent(studentTest);
 		subjectStudentTest.setSubject(subjectTest);		
@@ -100,7 +100,7 @@ class SubjectStudentServiceImplTest {
 	}
 	
 	@Test
-	public void subjectStudentServiceImpl_getSubjectStudentCuteDtoById_ReturnSubjectStudentCuteDto() {
+	void subjectStudentServiceImpl_getSubjectStudentCuteDtoById_ReturnSubjectStudentCuteDto() {
 		
 		subjectStudentTest.setStudent(studentTest);
 		subjectStudentTest.setSubject(subjectTest);		
@@ -120,7 +120,7 @@ class SubjectStudentServiceImplTest {
 
 	
 	@Test
-	public void subjectStudentServiceImpl_deleteSubjectStudentById_ReturnVoid() {
+	void subjectStudentServiceImpl_deleteSubjectStudentById_ReturnVoid() {
 		
 		subjectStudentTest.setStudent(studentTest);
 		subjectStudentTest.setSubject(subjectTest);	
@@ -139,7 +139,7 @@ class SubjectStudentServiceImplTest {
 	}
 	
 	@Test
-	public void subjectStudentServiceImpl_createSubjectStudent_ReturnSubjectStudentCuteDto() {
+	void subjectStudentServiceImpl_createSubjectStudent_ReturnSubjectStudentCuteDto() {
 		
 		subjectStudentTest.setStudent(studentTest);
 		subjectStudentTest.setSubject(subjectTest);	
@@ -163,7 +163,7 @@ class SubjectStudentServiceImplTest {
 	}
 	
 	@Test
-	public void subjectStudentServiceImpl_updateSubjectStudent_ReturnSubjectStudentCuteDto() {
+	void subjectStudentServiceImpl_updateSubjectStudent_ReturnSubjectStudentCuteDto() {
 		
 		sscDto.setAverageGrade(mark3);
 		subjectStudentTest.setStudent(studentTest);

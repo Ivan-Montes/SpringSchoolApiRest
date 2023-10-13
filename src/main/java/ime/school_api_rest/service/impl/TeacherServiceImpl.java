@@ -84,16 +84,14 @@ public class TeacherServiceImpl implements TeacherService {
 		Teacher teacher = teacherRepo.findById(teacherId).orElseThrow( ()-> new ResourceNotFoundException(teacherId) );
 		Subject subject = subjectRepo.findById(subjectId).orElseThrow( ()-> new ResourceNotFoundException(subjectId) );
 		
-		if ( subject.getTeacher() != null && subject.getTeacher().getTeacherId() == teacher.getTeacherId() ) {
-			
-			if ( teacher.getSubjects() != null && teacher.getSubjects().stream().anyMatch( (s)->s.getSubjectId() == subject.getSubjectId()) ) {
-
-				subject.setTeacher(null);							
-				teacher.getSubjects().remove(subject);
-				
-			}
-		}
+		if( ( subject.getTeacher() != null && subject.getTeacher().getTeacherId().equals(teacher.getTeacherId() ) ) &&
+			( teacher.getSubjects() != null && teacher.getSubjects().stream().anyMatch( s -> s.getSubjectId().equals( subject.getSubjectId() ) ) ) 
+		) {
 		
+			subject.setTeacher(null);							
+			teacher.getSubjects().remove(subject);
+		
+		}
 		
 		Teacher teacherUpdated = teacherRepo.save(teacher);
 		

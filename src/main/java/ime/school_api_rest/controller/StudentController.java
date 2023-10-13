@@ -92,7 +92,7 @@ public class StudentController {
 	@PostMapping
 	public ResponseEntity<StudentBasicDto>createStudent(@Valid @RequestBody StudentBasicCreationDto sbcDto){
 		
-		return new ResponseEntity<StudentBasicDto>( studentService.createStudent(sbcDto) ,HttpStatus.CREATED);
+		return new ResponseEntity<>( studentService.createStudent(sbcDto) ,HttpStatus.CREATED);
 		
 	}
 

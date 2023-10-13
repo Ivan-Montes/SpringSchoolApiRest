@@ -86,7 +86,7 @@ class SubjectServiceImplTest {
 	
 	
 	@Test
-	public void subjectServiceImpl_getAllEagerSubjectDto_ReturSetSubjectDto() {
+	void subjectServiceImpl_getAllEagerSubjectDto_ReturSetSubjectDto() {
 		
 		List<Subject>subjects = List.of(subjectTest);
 		doReturn(subjects).when(subjectRepo).getAllEagerSubject();
@@ -102,7 +102,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_getSubjectDtoById_ReturnSubjectBasicDto() {
+	void subjectServiceImpl_getSubjectDtoById_ReturnSubjectBasicDto() {
 		
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
@@ -119,7 +119,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_deleteSubjectById_ReturnVoid() {
+	void subjectServiceImpl_deleteSubjectById_ReturnVoid() {
 		
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
@@ -132,7 +132,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_createSubject_ReturnSubjectBasicDto() {
+	void subjectServiceImpl_createSubject_ReturnSubjectBasicDto() {
 		
 		doReturn(subjectTest).when(subjectRepo).save(Mockito.any(Subject.class));
 		
@@ -147,7 +147,7 @@ class SubjectServiceImplTest {
 	}
 
 	@Test
-	public void subjectServiceImpl_updateSubject_ReturnSubjectBasicDto() {
+	void subjectServiceImpl_updateSubject_ReturnSubjectBasicDto() {
 		
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
@@ -166,7 +166,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_addTeacherToSubject_ReturnSubjectDto() {
+	void subjectServiceImpl_addTeacherToSubject_ReturnSubjectDto() {
 
 		subjectTest.setTeacher(teacherTest);
 		teacherTest.getSubjects().add(subjectTest);
@@ -190,7 +190,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_addStudentToSubject_ReturnSubjectDto() {
+	void subjectServiceImpl_addStudentToSubject_ReturnSubjectDto() {
 		
 		subjectTest.setTeacher(teacherTest);
 		teacherTest.getSubjects().add(subjectTest);		
@@ -220,7 +220,7 @@ class SubjectServiceImplTest {
 	}
 	
 	@Test
-	public void subjectServiceImpl_removeStudentFromSubject_ReturnSubjectDto() {
+	void subjectServiceImpl_removeStudentFromSubject_ReturnSubjectDto() {
 
 		subjectTest.setTeacher(teacherTest);
 		teacherTest.getSubjects().add(subjectTest);	

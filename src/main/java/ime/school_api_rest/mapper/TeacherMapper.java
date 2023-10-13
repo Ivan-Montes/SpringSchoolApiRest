@@ -11,29 +11,29 @@ import ime.school_api_rest.entity.Teacher;
 
 public class TeacherMapper {
 
+	private TeacherMapper() {};
+	
 	public static List<TeacherDto>listToTeacherDto(List<Teacher>list){
 		
-		List<TeacherDto> listDto = list.stream()
-										.map( t -> {
-											TeacherDto teacherDto = new TeacherDto();
-											teacherDto.setTeacherId(t.getTeacherId());
-											teacherDto.setName(t.getName());
-											teacherDto.setSurname(t.getSurname());
-											teacherDto.setSubjects(t.getSubjects()
-																	.stream()
-																	.map(s -> {
-																		SubjectBasicDto sbd = new SubjectBasicDto();
-																		sbd.setSubjectId(s.getSubjectId());
-																		sbd.setName(s.getName());
-																		return sbd;
-																	})
-																	.collect(Collectors.toSet())
-															);
-											return teacherDto;
-										})
-										.toList();
-		
-		return listDto;
+		return list.stream()
+						.map( t -> {
+							TeacherDto teacherDto = new TeacherDto();
+							teacherDto.setTeacherId(t.getTeacherId());
+							teacherDto.setName(t.getName());
+							teacherDto.setSurname(t.getSurname());
+							teacherDto.setSubjects(t.getSubjects()
+													.stream()
+													.map(s -> {
+														SubjectBasicDto sbd = new SubjectBasicDto();
+														sbd.setSubjectId(s.getSubjectId());
+														sbd.setName(s.getName());
+														return sbd;
+													})
+													.collect(Collectors.toSet())
+											);
+							return teacherDto;
+						})
+						.toList();
 	}
 	
 	public static TeacherBasicDto toTeacherBasicDto(Teacher teacher) {

@@ -11,6 +11,8 @@ import ime.school_api_rest.entity.Subject;
 
 public class SubjectMapper {
 
+	private SubjectMapper() {};
+	
 	public static Set<SubjectDto> toListSubjectDto(List<Subject> subjects) {
 		return subjects.stream()
 						.map(SubjectMapper::toSubjectDto)
