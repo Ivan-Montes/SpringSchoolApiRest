@@ -1,5 +1,6 @@
 package ime.school_api_rest.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -19,13 +20,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	@Value("${security.users.basic.passwd.local}")
+	private String passwd;
+	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
 		return http
                 .csrf(AbstractHttpConfigurer::disable) 
                 .authorizeHttpRequests(auth -> {
-                	//auth.requestMatchers(AntPathRequestMatcher.antMatcher("**")).permitAll();
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).permitAll(); // API REST
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll(); // H2 database
                 	auth.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll(); // Swagger open api
@@ -40,17 +43,17 @@ public class SecurityConfig {
 	}	
 	
 	@Bean
-	UserDetailsService users() {
+	UserDetailsService users() {		
 		
 		UserDetails user = User.builder()
 			.username("user")
-			.password(passwordEncoder().encode("password"))
+			.password(passwordEncoder().encode(passwd))
 			.roles("USER")
 			.build();
 		
 		UserDetails admin = User.builder()
 			.username("admin")
-			.password(passwordEncoder().encode("password"))
+			.password(passwordEncoder().encode(passwd))
 			.roles("USER", "ADMIN")
 			.build();
 		
