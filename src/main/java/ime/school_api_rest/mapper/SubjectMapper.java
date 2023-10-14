@@ -8,12 +8,14 @@ import ime.school_api_rest.dto.SubjectBasicCreationDto;
 import ime.school_api_rest.dto.SubjectBasicDto;
 import ime.school_api_rest.dto.SubjectDto;
 import ime.school_api_rest.entity.Subject;
+import lombok.experimental.UtilityClass;
 
-public class SubjectMapper {
-
-	private SubjectMapper() {};
+@UtilityClass
+public final class SubjectMapper {
+	
 	
 	public static Set<SubjectDto> toListSubjectDto(List<Subject> subjects) {
+		
 		return subjects.stream()
 						.map(SubjectMapper::toSubjectDto)
 						.collect(Collectors.toSet());
@@ -29,7 +31,7 @@ public class SubjectMapper {
 											.subjectStudents(SubjectStudentMapper.toSetSubjectStudentDto(subject.getStudents()))
 											.build()
 								: new SubjectDto();
-							
+		
 	}
 
 	public static SubjectBasicDto toSubjectBasicDto(Subject subject) {
@@ -39,14 +41,12 @@ public class SubjectMapper {
 												.name(subject.getName())
 												.build()
 											:new SubjectBasicDto();
-	}
+		}
 
 	public static Subject dtoCreationToSubject(SubjectBasicCreationDto sbcDto) {
+		
 		Subject subject = new Subject();
 		subject.setName(sbcDto.getName());
 		return subject;
 	}
-	
-	
-
 }

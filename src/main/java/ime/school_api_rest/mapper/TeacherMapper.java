@@ -8,10 +8,11 @@ import ime.school_api_rest.dto.TeacherBasicCreationDto;
 import ime.school_api_rest.dto.TeacherBasicDto;
 import ime.school_api_rest.dto.TeacherDto;
 import ime.school_api_rest.entity.Teacher;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
-public class TeacherMapper {
-
-	private TeacherMapper() {};
+@NoArgsConstructor(access= AccessLevel.PRIVATE)
+public final class TeacherMapper {
 	
 	public static List<TeacherDto>listToTeacherDto(List<Teacher>list){
 		

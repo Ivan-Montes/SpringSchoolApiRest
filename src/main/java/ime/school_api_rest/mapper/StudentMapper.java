@@ -7,9 +7,11 @@ import ime.school_api_rest.dto.StudentBasicDto;
 import ime.school_api_rest.dto.StudentDto;
 import ime.school_api_rest.entity.Student;
 
-public class StudentMapper {
+public final class StudentMapper {
 
-	private StudentMapper() {};
+	private StudentMapper() {
+		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+	};
 
 	public static List<StudentDto> toListStudentDto(List<Student> students) {
 		
@@ -49,8 +51,7 @@ public class StudentMapper {
 													.studentId(student.getStudentId())
 													.name(student.getName())
 													.surname(student.getSurname())
-													.build();
-		
+													.build();		
 	}
 
 }
