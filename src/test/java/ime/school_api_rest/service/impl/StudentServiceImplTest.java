@@ -30,7 +30,6 @@ import ime.school_api_rest.entity.SubjectStudentId;
 import ime.school_api_rest.repository.StudentRepository;
 import ime.school_api_rest.repository.SubjectRepository;
 import ime.school_api_rest.repository.SubjectStudentRepository;
-import ime.school_api_rest.service.impl.StudentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
@@ -278,7 +277,7 @@ class StudentServiceImplTest {
 		
 		doReturn(Optional.ofNullable(studentTest)).when(studentRepo).findById(Mockito.anyLong());
 		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
-		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));	
+		doReturn(false).when(subjectStudentRepo).existsById(Mockito.any(SubjectStudentId.class));	
 		doNothing().when(subjectStudentRepo).deleteById(Mockito.any(SubjectStudentId.class));
 		
 		StudentDto studentModified = studentService.removeStudenFromSubject(1L, Mockito.anyLong());
@@ -293,7 +292,7 @@ class StudentServiceImplTest {
 				);
 		verify(studentRepo,times(1)).findById(Mockito.anyLong());
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
-		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));	
+		verify(subjectStudentRepo,times(1)).existsById(Mockito.any(SubjectStudentId.class));
 		verify(subjectStudentRepo,times(1)).deleteById(Mockito.any(SubjectStudentId.class));		
 	}
 	
