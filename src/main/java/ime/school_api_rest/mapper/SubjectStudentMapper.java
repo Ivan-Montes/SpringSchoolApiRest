@@ -9,9 +9,11 @@ import ime.school_api_rest.dto.SubjectStudentCuteDto;
 import ime.school_api_rest.dto.SubjectStudentDto;
 import ime.school_api_rest.entity.SubjectStudent;
 
-public class SubjectStudentMapper {
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
-	private SubjectStudentMapper() {};
+@NoArgsConstructor(access= AccessLevel.PRIVATE)
+public final class SubjectStudentMapper {
 	
 	public static Set<SubjectStudentDto> toSetSubjectStudentDto(Set<SubjectStudent>subjectStudents){
 		
