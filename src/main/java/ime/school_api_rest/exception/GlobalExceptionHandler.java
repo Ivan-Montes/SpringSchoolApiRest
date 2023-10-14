@@ -17,7 +17,7 @@ import java.util.HashMap;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private final String simpleText = " _***- Identifier: ";
+	private final static String simpleText = " _***- Identifier: ";
 	
 	@ExceptionHandler(ime.school_api_rest.exception.GeneralException.class)
 	public ResponseEntity<String> generalException(GeneralException ex){
@@ -45,12 +45,12 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Map<String, String>> methodArgumentNotValidException(MethodArgumentNotValidException ex){
 		
 		Map<String, String> errors = new HashMap<>();
-		    ex.getBindingResult().getAllErrors().forEach((error) -> {
+		    ex.getBindingResult().getAllErrors().forEach( error -> {
 		        String fieldName = ((FieldError) error).getField();
 		        String errorMessage = error.getDefaultMessage();
 		        errors.put(fieldName, errorMessage);
 		    });
-		return new ResponseEntity<Map<String, String>>(errors, HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
