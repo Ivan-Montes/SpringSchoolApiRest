@@ -27,6 +27,9 @@ import ime.school_api_rest.entity.Student;
 import ime.school_api_rest.entity.Subject;
 import ime.school_api_rest.entity.SubjectStudent;
 import ime.school_api_rest.entity.SubjectStudentId;
+import ime.school_api_rest.exception.RequirementNotMetException;
+import ime.school_api_rest.exception.ResourceNotFoundException;
+import ime.school_api_rest.exception.SubjectAssociatedException;
 import ime.school_api_rest.repository.StudentRepository;
 import ime.school_api_rest.repository.SubjectRepository;
 import ime.school_api_rest.repository.SubjectStudentRepository;
@@ -134,6 +137,21 @@ class StudentServiceImplTest {
 	}
 	
 	@Test
+	void studentServiceImpl_getStudentDtoById_ReturnResourceNotFoundException() {
+		
+		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows( ResourceNotFoundException.class,
+				() -> studentService.getStudentDtoById(Mockito.anyLong()) );
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)	
+		);		
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	}
+	
+	@Test
 	void studentServiceImpl_deleteStudentById_ReturnVoid() {
 		
 		Optional<Student> optStu = Optional.ofNullable(studentTest);
@@ -146,6 +164,38 @@ class StudentServiceImplTest {
 		verify(studentRepo,times(1)).deleteById(Mockito.anyLong());
 	}
 	
+	@Test
+	void studentServiceImpl_deleteStudentById_ReturnResourceNotFoundException() {
+		
+		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				()-> studentService.deleteStudentById(Mockito.anyLong()));
+		
+		assertAll(
+				()-> Assertions.assertThat(ex).isNotNull(),
+				()-> Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	}
+	
+	@Test
+	void studentServiceImpl_deleteStudentById_ReturnSubjectAssociatedException() {
+		
+		studentTest.getSubjects().add(subjectStudentTest);
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(SubjectAssociatedException.class,
+				()-> studentService.deleteStudentById(Mockito.anyLong()));
+		
+		assertAll(
+				()-> Assertions.assertThat(ex).isNotNull(),
+				()-> Assertions.assertThat(ex.getClass()).isEqualTo(SubjectAssociatedException.class)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	}
+		
 	@Test
 	void studentServiceImpl_createStudent_ReturnStudentBasicDto() {
 		
@@ -180,7 +230,21 @@ class StudentServiceImplTest {
 		
 	}
 	
-
+	@Test
+	void studentServiceImpl_updateStudent_ReturnResourceNotFoundException() {
+		
+		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				() -> studentService.updateStudent(sbDtoTest));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	}
+	
 	@Test
 	void studentServiceImpl_addStudentToSubject_ReturnStudentDto() {
 		
@@ -210,7 +274,60 @@ class StudentServiceImplTest {
 		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
 	}
 	
+	@Test
+	void studentServiceImpl_addStudentToSubject_ReturnResourceNotFoundException() {
+		
+		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+	}
 
+	@Test
+	void studentServiceImpl_addStudentToSubject_ReturnResourceNotFoundException2() {
+
+		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+	}
+	
+	@Test
+	void studentServiceImpl_addStudentToSubject_ReturnRequirementNotMetException() {
+		
+		studentTest.getSubjects().add(subjectStudentTest);
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		Optional<Subject>optSub = Optional.ofNullable(subjectTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(optSub).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));
+		
+		Exception ex = assertThrows(RequirementNotMetException.class,
+				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(RequirementNotMetException.class)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));
+	}
+	
 	@Test
 	void studentServiceImpl_addStudentToSubjectWithMark_ReturnStudentDto() {
 		
@@ -239,9 +356,63 @@ class StudentServiceImplTest {
 		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));	
 		verify(subjectStudentRepo,times(1)).save(Mockito.any(SubjectStudent.class));
 		
+	}	
+
+	@Test
+	void studentServiceImpl_addStudentToSubjectWithMark_ReturnResourceNotFoundException() {
+		
+		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+	}
+
+	@Test
+	void studentServiceImpl_addStudentToSubjectWithMark_ReturnResourceNotFoundException2() {
+
+		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
+		
+		Exception ex = assertThrows(ResourceNotFoundException.class,
+				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
+				);
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
 	}
 	
-
+	@Test
+	void studentServiceImpl_addStudentToSubjectWithMark_ReturnRequirementNotMetException() {
+		
+		studentTest.getSubjects().add(subjectStudentTest);
+		Optional<Student> optStu = Optional.ofNullable(studentTest);
+		Optional<Subject>optSub = Optional.ofNullable(subjectTest);
+		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
+		doReturn(optSub).when(subjectRepo).findById(Mockito.anyLong());
+		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));
+		
+		Exception ex = assertThrows(RequirementNotMetException.class,
+				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+		
+		assertAll(
+				()->Assertions.assertThat(ex).isNotNull(),
+				()->Assertions.assertThat(ex.getClass()).isEqualTo(RequirementNotMetException.class)
+				);
+		verify(studentRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
+		verify(subjectStudentRepo,times(1)).findById(Mockito.any(SubjectStudentId.class));
+		
+	}	
+	
 	@Test
 	void studentServiceImpl_addStudentToSubjectWithMarkOverload1_ReturnStudentDto() {
 		
