@@ -9,8 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import ime.school_api_rest.entity.Subject;
-import ime.school_api_rest.repository.SubjectRepository;
-
 import java.util.List;
 
 
