@@ -33,7 +33,6 @@ import ime.school_api_rest.repository.StudentRepository;
 import ime.school_api_rest.repository.SubjectRepository;
 import ime.school_api_rest.repository.SubjectStudentRepository;
 import ime.school_api_rest.repository.TeacherRepository;
-import ime.school_api_rest.service.impl.SubjectServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class SubjectServiceImplTest {

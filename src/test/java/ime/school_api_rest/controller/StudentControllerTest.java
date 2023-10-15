@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ime.school_api_rest.controller.StudentController;
 import ime.school_api_rest.dto.StudentBasicCreationDto;
 import ime.school_api_rest.dto.StudentBasicDto;
 import ime.school_api_rest.dto.StudentDto;
