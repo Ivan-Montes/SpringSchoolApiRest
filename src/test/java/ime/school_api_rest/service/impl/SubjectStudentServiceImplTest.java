@@ -25,7 +25,6 @@ import ime.school_api_rest.entity.*;
 import ime.school_api_rest.repository.StudentRepository;
 import ime.school_api_rest.repository.SubjectRepository;
 import ime.school_api_rest.repository.SubjectStudentRepository;
-import ime.school_api_rest.service.impl.SubjectStudentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class SubjectStudentServiceImplTest {

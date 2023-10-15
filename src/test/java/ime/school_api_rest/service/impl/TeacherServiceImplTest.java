@@ -19,8 +19,6 @@ import ime.school_api_rest.dto.*;
 import ime.school_api_rest.entity.*;
 import ime.school_api_rest.repository.SubjectRepository;
 import ime.school_api_rest.repository.TeacherRepository;
-import ime.school_api_rest.service.impl.TeacherServiceImpl;
-
 import java.util.List;
 import java.util.Optional;
 
