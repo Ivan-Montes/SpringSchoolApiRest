@@ -10,7 +10,7 @@ import ime.school_api_rest.entity.Subject;
 public interface SubjectRepository extends JpaRepository<Subject,Long>{
 
 	@Query("SELECT s FROM Subject s LEFT JOIN FETCH s.students")
-	public List<Subject> getAllEagerSubject();
+	List<Subject> getAllEagerSubject();
 	
 	
 }

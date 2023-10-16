@@ -10,6 +10,6 @@ import ime.school_api_rest.entity.Teacher;
 public interface TeacherRepository extends JpaRepository<Teacher, Long>{
 
 	@Query("SELECT t FROM Teacher t left join fetch t.subjects")
-	public List<Teacher>findAllEager();
+	List<Teacher>findAllEager();
 	
 }
