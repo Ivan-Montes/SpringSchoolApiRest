@@ -115,6 +115,4 @@ public class SubjectServiceImpl implements SubjectService {
 		return SubjectMapper.toSubjectDto(subject);
 	}
 	
-	
-
 }
