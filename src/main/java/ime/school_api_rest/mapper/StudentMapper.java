@@ -6,12 +6,11 @@ import ime.school_api_rest.dto.StudentBasicCreationDto;
 import ime.school_api_rest.dto.StudentBasicDto;
 import ime.school_api_rest.dto.StudentDto;
 import ime.school_api_rest.entity.Student;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access= AccessLevel.PRIVATE)
 public final class StudentMapper {
-
-	private StudentMapper() {
-		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-	};
 
 	public static List<StudentDto> toListStudentDto(List<Student> students) {
 		
