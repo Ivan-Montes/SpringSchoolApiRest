@@ -7,12 +7,14 @@ import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Generated
 public class SubjectStudentId implements Serializable{
 	/**
 	 * 

@@ -3,6 +3,7 @@ package ime.school_api_rest.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@Generated
 public class Subject {
 
 	@Id
@@ -56,7 +58,6 @@ public class Subject {
 	@Override
 	public String toString() {
 		return "Subject [subjectId=" + subjectId + ", name=" + name + "]";
-	}
-	
+	}	
 	
 }
