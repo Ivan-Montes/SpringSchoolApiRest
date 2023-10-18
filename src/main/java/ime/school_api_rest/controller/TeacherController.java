@@ -84,7 +84,7 @@ public class TeacherController {
 	@PostMapping
 	public ResponseEntity<TeacherBasicDto>createTeacher(@Valid @RequestBody TeacherBasicCreationDto tbcDto){
 		TeacherBasicDto tbd = teacherService.createTeacher(tbcDto);
-		return new ResponseEntity<TeacherBasicDto>(tbd, HttpStatus.CREATED);
+		return new ResponseEntity<>(tbd, HttpStatus.CREATED);
 	}
 	
 	/**
