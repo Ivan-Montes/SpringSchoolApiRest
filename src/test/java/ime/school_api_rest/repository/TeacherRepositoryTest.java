@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.junit.jupiter.api.DisplayName;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import java.util.List;
 
 @DataJpaTest
@@ -22,10 +24,14 @@ class TeacherRepositoryTest {
 	
 	@Test
 	@DisplayName("Test for findAllEager method")
-	public void TeacherRepository_findAllEager_ReturnListTeacher() {
+	void TeacherRepository_findAllEager_ReturnListTeacher() {
+		
 		List<Teacher>teachers = teacherRepo.findAllEager();
-		Assertions.assertThat(teachers).isNotNull();
-		Assertions.assertThat(teachers.size()).isGreaterThanOrEqualTo(0);
+		
+		assertAll(
+				()->Assertions.assertThat(teachers).isNotNull(),
+				()->Assertions.assertThat(teachers).hasSizeGreaterThanOrEqualTo(0)
+				);
 	}
 	
 
