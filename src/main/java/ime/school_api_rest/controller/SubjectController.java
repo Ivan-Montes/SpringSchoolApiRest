@@ -87,7 +87,7 @@ public class SubjectController {
 	@PostMapping
 	public ResponseEntity<SubjectBasicDto>createSubject(@Valid @RequestBody SubjectBasicCreationDto sbcDto){
 		SubjectBasicDto sbDto = subjectService.createSubject(sbcDto);
-		return new ResponseEntity<SubjectBasicDto>(sbDto, HttpStatus.CREATED);
+		return new ResponseEntity<>(sbDto, HttpStatus.CREATED);
 	}
 	
 	/**
