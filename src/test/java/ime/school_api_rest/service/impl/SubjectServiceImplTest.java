@@ -60,6 +60,7 @@ class SubjectServiceImplTest {
 	private SubjectBasicDto sbDtoTest;
 	private Teacher teacherTest;
 	private Student studentTest;
+	private final long treintaYTres = 33L;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
@@ -126,7 +127,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.getSubjectBasicDtoById(Mockito.anyLong())
+				()->subjectService.getSubjectBasicDtoById( treintaYTres )
 				);
 		
 		assertAll(
@@ -141,7 +142,7 @@ class SubjectServiceImplTest {
 		
 		Optional<Subject>optS = Optional.ofNullable(subjectTest);
 		doReturn(optS).when(subjectRepo).findById(Mockito.anyLong());
-		doNothing().when(subjectRepo).deleteById(Mockito.anyLong());
+		doNothing().when(subjectRepo).deleteById( Mockito.anyLong() );
 		
 		subjectService.deleteSubjectById(Mockito.anyLong());
 		
@@ -155,7 +156,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.deleteSubjectById(Mockito.anyLong())
+				()->subjectService.deleteSubjectById( treintaYTres )
 				);
 		
 		assertAll(
@@ -171,7 +172,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(TeacherAssociatedException.class,
-				()->subjectService.deleteSubjectById(Mockito.anyLong())
+				()->subjectService.deleteSubjectById( treintaYTres )
 				);
 		
 		assertAll(
@@ -188,7 +189,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.ofNullable(subjectTest)).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(StudentAssociatedException.class,
-				()->subjectService.deleteSubjectById(Mockito.anyLong())
+				()->subjectService.deleteSubjectById( treintaYTres )
 				);
 		
 		assertAll(
@@ -238,7 +239,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.updateSubject(Mockito.anyLong(), sbDtoTest)
+				()->subjectService.updateSubject( treintaYTres, sbDtoTest)
 				);
 		
 		assertAll(
@@ -278,7 +279,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.addTeacherToSubject(1L, Mockito.anyLong())
+				()->subjectService.addTeacherToSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
@@ -296,7 +297,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(teacherRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.addTeacherToSubject(1L, Mockito.anyLong())
+				()->subjectService.addTeacherToSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
@@ -372,7 +373,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.addStudentToSubject(1L, Mockito.anyLong())
+				()->subjectService.addStudentToSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
@@ -390,7 +391,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.addStudentToSubject(1L, Mockito.anyLong())
+				()->subjectService.addStudentToSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
@@ -419,7 +420,7 @@ class SubjectServiceImplTest {
 				()->Assertions.assertThat(subjectDtoUpdated.getSubjectId()).isEqualTo(1L),
 				()->Assertions.assertThat(subjectDtoUpdated.getTeacher()).isNotNull(),
 				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isNotNull(),
-				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).hasSize(0)				
+				()->Assertions.assertThat(subjectDtoUpdated.getSubjectStudents()).isEmpty()				
 				);
 		verify(subjectRepo,times(1)).findById(Mockito.anyLong());
 		verify(studentRepo,times(1)).findById(Mockito.anyLong());
@@ -433,7 +434,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.removeStudentFromSubject(1L, Mockito.anyLong())
+				()->subjectService.removeStudentFromSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
@@ -451,7 +452,7 @@ class SubjectServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()->subjectService.removeStudentFromSubject(1L, Mockito.anyLong())
+				()->subjectService.removeStudentFromSubject(1L, treintaYTres )
 				);
 		
 		assertAll(
