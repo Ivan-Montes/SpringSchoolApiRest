@@ -10,7 +10,6 @@ import ime.school_api_rest.dto.SubjectDto;
 import ime.school_api_rest.entity.Subject;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.experimental.UtilityClass;
 
 @NoArgsConstructor(access= AccessLevel.PRIVATE)
 public final class SubjectMapper {	
