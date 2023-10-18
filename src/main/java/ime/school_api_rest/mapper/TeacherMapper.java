@@ -3,7 +3,6 @@ package ime.school_api_rest.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ime.school_api_rest.dto.SubjectBasicDto;
 import ime.school_api_rest.dto.TeacherBasicCreationDto;
 import ime.school_api_rest.dto.TeacherBasicDto;
 import ime.school_api_rest.dto.TeacherDto;
@@ -24,12 +23,7 @@ public final class TeacherMapper {
 							teacherDto.setSurname(t.getSurname());
 							teacherDto.setSubjects(t.getSubjects()
 													.stream()
-													.map(s -> {
-														SubjectBasicDto sbd = new SubjectBasicDto();
-														sbd.setSubjectId(s.getSubjectId());
-														sbd.setName(s.getName());
-														return sbd;
-													})
+													.map(SubjectMapper::toSubjectBasicDto)
 													.collect(Collectors.toSet())
 											);
 							return teacherDto;
@@ -62,12 +56,7 @@ public final class TeacherMapper {
 		teacherDto.setSurname(t.getSurname());
 		teacherDto.setSubjects(t.getSubjects()
 				.stream()
-				.map(s -> {
-					SubjectBasicDto sbd = new SubjectBasicDto();
-					sbd.setSubjectId(s.getSubjectId());
-					sbd.setName(s.getName());
-					return sbd;
-				})
+				.map(SubjectMapper::toSubjectBasicDto)
 				.collect(Collectors.toSet())
 				);
 		return teacherDto;
