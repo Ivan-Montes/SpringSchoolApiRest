@@ -9,6 +9,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import ime.school_api_rest.entity.Subject;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import java.util.List;
 
 
@@ -20,10 +23,13 @@ class SubjectRepositoryTest {
 	private SubjectRepository subjectRepo;
 	
 	@Test
-	public void SubjectRepository_getAllEagerSubject_ReturnListSubjectDto() {
+	void SubjectRepository_getAllEagerSubject_ReturnListSubjectDto() {
 		List<Subject> subjects = subjectRepo.getAllEagerSubject();
-		Assertions.assertThat(subjects).isNotNull();
-		Assertions.assertThat(subjects).hasSizeGreaterThanOrEqualTo(0);
+		
+		assertAll(
+				()->Assertions.assertThat(subjects).isNotNull(),
+				()->Assertions.assertThat(subjects).hasSizeGreaterThanOrEqualTo(0)
+				);
 	}
 
 }
