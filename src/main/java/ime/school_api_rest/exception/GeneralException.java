@@ -6,14 +6,14 @@ public class GeneralException extends RuntimeException{
 	private static final long serialVersionUID = -2217904719176665639L;
 	
 	private final String name;
-	private final String message;
+	private final String messageInfo;
 	private final Long identifier;
 	
 
 	public GeneralException(String name, String message, Long identifier) {
 		super();
 		this.name = name;
-		this.message = message;
+		this.messageInfo = message;
 		this.identifier = identifier;
 	}
 	
@@ -21,8 +21,8 @@ public class GeneralException extends RuntimeException{
 		return name;
 	}	
 	
-	public String getMessage() {
-		return message;
+	public String getMessageInfo() {
+		return messageInfo;
 	}
 	
 	public Long getIdentifier() {
