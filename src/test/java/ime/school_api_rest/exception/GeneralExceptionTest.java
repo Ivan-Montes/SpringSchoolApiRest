@@ -14,7 +14,7 @@ class GeneralExceptionTest {
 		
 		assertAll(
 				()->Assertions.assertThat(generalException.getName()).isEqualTo("general"),
-				()->Assertions.assertThat(generalException.getMessage()).isEqualTo("exception"),
+				()->Assertions.assertThat(generalException.getMessageInfo()).isEqualTo("exception"),
 				()->Assertions.assertThat(generalException.getIdentifier()).isEqualTo(33L)
 				);		
 	}
