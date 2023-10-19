@@ -58,6 +58,7 @@ class StudentServiceImplTest {
 	private SubjectStudent subjectStudentTest;
 	private SubjectStudentDto ssDtoTest;
 	private Double mark9 = 9.9;
+	private final long treintaYTres = 33L;
 	
 	@BeforeEach
 	private void SubjectServiceImpl_createUsers() {
@@ -142,7 +143,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows( ResourceNotFoundException.class,
-				() -> studentService.getStudentDtoById(Mockito.anyLong()) );
+				() -> studentService.getStudentDtoById( treintaYTres ) );
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -170,7 +171,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()-> studentService.deleteStudentById(Mockito.anyLong()));
+				()-> studentService.deleteStudentById( treintaYTres ));
 		
 		assertAll(
 				()-> Assertions.assertThat(ex).isNotNull(),
@@ -187,7 +188,7 @@ class StudentServiceImplTest {
 		doReturn(optStu).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(SubjectAssociatedException.class,
-				()-> studentService.deleteStudentById(Mockito.anyLong()));
+				()-> studentService.deleteStudentById( treintaYTres ));
 		
 		assertAll(
 				()-> Assertions.assertThat(ex).isNotNull(),
@@ -280,7 +281,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+				()-> studentService.addStudentToSubject(1L, treintaYTres ));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -296,7 +297,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+				()-> studentService.addStudentToSubject(1L,  treintaYTres ));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -317,7 +318,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));
 		
 		Exception ex = assertThrows(RequirementNotMetException.class,
-				()-> studentService.addStudentToSubject(1L, Mockito.anyLong()));
+				()-> studentService.addStudentToSubject(1L,  treintaYTres ));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -339,7 +340,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));		
 		doReturn(subjectStudentTest).when(subjectStudentRepo).save(Mockito.any(SubjectStudent.class));
 		
-		StudentDto studentModified = studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9);
+		StudentDto studentModified = studentService.addStudentToSubjectWithMark(1L, treintaYTres, mark9);
 		
 		assertAll(
 				()->Assertions.assertThat(studentModified).isNotNull(),
@@ -364,7 +365,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(subjectRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+				()-> studentService.addStudentToSubjectWithMark(1L, treintaYTres, mark9));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -380,7 +381,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.empty()).when(studentRepo).findById(Mockito.anyLong());
 		
 		Exception ex = assertThrows(ResourceNotFoundException.class,
-				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+				()-> studentService.addStudentToSubjectWithMark(1L, treintaYTres, mark9));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -401,7 +402,7 @@ class StudentServiceImplTest {
 		doReturn(Optional.ofNullable(subjectStudentTest)).when(subjectStudentRepo).findById(Mockito.any(SubjectStudentId.class));
 		
 		Exception ex = assertThrows(RequirementNotMetException.class,
-				()-> studentService.addStudentToSubjectWithMark(1L, Mockito.anyLong(), mark9));
+				()-> studentService.addStudentToSubjectWithMark(1L, treintaYTres, mark9));
 		
 		assertAll(
 				()->Assertions.assertThat(ex).isNotNull(),
@@ -458,7 +459,6 @@ class StudentServiceImplTest {
 				()->Assertions.assertThat(studentModified.getStudentId()).isEqualTo(1L),
 				()->Assertions.assertThat(studentModified.getSurname()).isEqualTo(surnameStu),
 				()->Assertions.assertThat(studentModified.getName()).isEqualTo(nameStu),
-				()->Assertions.assertThat(studentModified.getSubjectStudents()).hasSize(0),
 				()->Assertions.assertThat(studentModified.getSubjectStudents()).isEmpty()
 				);
 		verify(studentRepo,times(1)).findById(Mockito.anyLong());
