@@ -17,18 +17,18 @@ import java.util.HashMap;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private final static String simpleText = " _***- Identifier: ";
+	private static final String SIMPLE_TEXT_SEPARATOR = " _***- Identifier: ";
 	
 	@ExceptionHandler(ime.school_api_rest.exception.GeneralException.class)
 	public ResponseEntity<String> generalException(GeneralException ex){
 		
-		return new ResponseEntity<>("GeneralException" + simpleText, HttpStatus.EXPECTATION_FAILED);
+		return new ResponseEntity<>("GeneralException" + SIMPLE_TEXT_SEPARATOR, HttpStatus.EXPECTATION_FAILED);
 	}	
 	
 	@ExceptionHandler(ime.school_api_rest.exception.ResourceNotFoundException.class)
 	public ResponseEntity<String> resourceNotFoundException(ResourceNotFoundException ex) {
 		
-		return new ResponseEntity<>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ex.getMessage() + SIMPLE_TEXT_SEPARATOR + ex.getIdentifier(), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler({ime.school_api_rest.exception.SubjectAssociatedException.class, 
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
 						ime.school_api_rest.exception.RequirementNotMetException.class})
 	public ResponseEntity<String> elementAssociatedException(GeneralException ex){
 		
-		return new ResponseEntity<>(ex.getMessage() + simpleText + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
+		return new ResponseEntity<>(ex.getMessage() + SIMPLE_TEXT_SEPARATOR + ex.getIdentifier(), HttpStatus.PRECONDITION_REQUIRED);
 	}
 	
 	//Called due to @Valid tag
@@ -63,10 +63,9 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
 	public ResponseEntity<String>badCredentialsException(BadCredentialsException ex){
 		
-		return new ResponseEntity<>("BadCredentialsException" + simpleText, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
+		return new ResponseEntity<>("BadCredentialsException" + SIMPLE_TEXT_SEPARATOR, HttpStatus.PROXY_AUTHENTICATION_REQUIRED);		
 		
-	}
-	
+	}	
 	
 	@ExceptionHandler({
 		jakarta.validation.ConstraintViolationException.class,// <== Called by Hibernate after check class/attributes annotations 
@@ -75,8 +74,6 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>("ConstraintViolationException\n\n" + ex.getMessage() + "\n", HttpStatus.BAD_REQUEST);
 		
-	}
-	
-	
+	}	
 	
 }
