@@ -15,21 +15,49 @@ Welcome to my Api Rest with Spring Framework. :fire::rainbow: A small work simul
 
 ## Installation
 
-You could Use the jar file hosted in /target or clone the whole project
+Just cloning or downloading the project. Other option is to use the online version
 
 ## Usage
 
-Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI hosted in [Render](https://render.com/). But be quick, free stuff doesn't last long :wink:
+- Check and try the usage of [SpringSchoolApiRest](https://springschoolapirest.onrender.com/swagger-ui/index.html#/) using Open API and Swagger UI hosted in [Render](https://render.com/). But be quick, free stuff doesn't last long :wink:
 
-If not, ensure you add the path /api/ to your requests in postman, as the typical web developers does (or try hard and use VIM :muscle::muscle: ):
+If not, ensure you add the path /api/ to your requests in Postman, Httpiness or similar program
 
 ```
 ** Get a List of all teachers **
 https://springschoolapirest.onrender.com/api/teachers
 
-**  Get a teacher according to Id **
+**  Get a teacher according to an Id **
 https://springschoolapirest.onrender.com/api/teachers/1
 ```
+
+- Maybe you prefer to open it from you favorite IDE
+
+- Or you could use the jar file hosted in /target. For this, run this command from the folder and send your HTTP request to localhost:8080
+
+```
+java -jar school-api-rest-1.0.jar
+```
+
+Example of URL for and HTTP GET request in local environment
+
+```
+**  Get a student according to an Id **
+localhost:8080/api/students/2
+```
+
+- Also, you can use [Docker](https://docs.docker.com/engine/install/). Whether it is your flavor, first, from the inside of the main project folder, build the image using the settings from Dockerfile
+
+```
+docker build -t spring-school-api:latest .
+```
+
+Then create and run a container with, for instance, these settings
+
+```
+docker run --name spring-school-api-container -p 8080:8080 -d spring-school-api
+```
+
 
 ## Features
 
