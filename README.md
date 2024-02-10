@@ -46,6 +46,9 @@ Example of URL for and HTTP GET request in local environment
 localhost:8080/api/students/2
 ```
 
+In a local environment, you can visit localhost:8080/swagger-ui/index.html for any doubt
+
+
 - Also, you can use [Docker](https://docs.docker.com/engine/install/). Whether it is your flavor, first, from the inside of the main project folder, build the image using the settings from Dockerfile
 
 ```
