@@ -12,3 +12,8 @@ dependencies/
 
 *.log
 *.tmp
+
+.git
+.gitignore
+
+.env
