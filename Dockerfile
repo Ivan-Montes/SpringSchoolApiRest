@@ -1,4 +1,4 @@
-ARG TAG=17-jdk-alpine
+ARG TAG=17-jre-alpine
 FROM eclipse-temurin:${TAG}
 LABEL ime.school-api-rest.version="1.0"
 LABEL ime.school-api-rest.maintainer="IvanM"
