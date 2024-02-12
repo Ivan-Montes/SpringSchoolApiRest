@@ -1,6 +1,7 @@
 *.md
 !README.md
 
+target
 lib/
 dependencies/
 
@@ -15,3 +16,6 @@ dependencies/
 .gitignore
 
 .env
+
+conf/
+libraries/
