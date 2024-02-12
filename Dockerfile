@@ -1,9 +1,8 @@
-ARG TAG=17-jre-alpine
+ARG TAG=17-jdk-alpine
 FROM eclipse-temurin:${TAG}
 LABEL ime.school-api-rest.version="1.0"
 LABEL ime.school-api-rest.maintainer="IvanM"
 LABEL ime.school-api-rest.description="Just a simple dockerfile"
-VOLUME /tmp
 COPY target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]
