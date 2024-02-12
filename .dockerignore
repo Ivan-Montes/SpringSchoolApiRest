@@ -1,0 +1,14 @@
+*.md
+!README.md
+
+target/
+
+lib/
+dependencies/
+
+.DS_Store
+.idea/
+.classpath
+
+*.log
+*.tmp
