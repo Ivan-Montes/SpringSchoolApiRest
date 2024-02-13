@@ -24,4 +24,5 @@ public class SecuredAreaController {
 	public ResponseEntity<String>helloWorld(){
 		return ResponseEntity.ok("Hello Secured Brave new World");
 	}
+	
 }
