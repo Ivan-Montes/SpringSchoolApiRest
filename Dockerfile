@@ -1,6 +1,6 @@
 #BUILD
 # Set main image
-ARG TAG-BUILD=3-eclipse-temurin-17-alpine
+ARG TAG-BUILD=3.9-eclipse-temurin-17-alpine
 FROM maven:${TAG-BUILD} as builder
 
 # Set the working directory using variables
