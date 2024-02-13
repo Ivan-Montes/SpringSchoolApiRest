@@ -13,7 +13,7 @@ RUN mvn clean install
 
 # DEPLOY
 # Set main image
-ARG TAG-DEPLOY=17-jre-focal
+ARG TAG-DEPLOY=17-jre-alpine
 FROM eclipse-temurin:${TAG-DEPLOY}
 
 # Define meta info
