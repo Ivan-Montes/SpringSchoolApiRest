@@ -10,14 +10,10 @@ HELP.md
 *.log
 
 # Edited for RENDER plataform
-#target/
-#!.mvn/wrapper/maven-wrapper.jar
-#!**/src/main/**/target/
-#!**/src/test/**/target/
+target/
 
-# Other - Incompatible with RENDER??
+# Other
 target/*
-!target/*.jar
 
 ### STS ###
 .apt_generated
