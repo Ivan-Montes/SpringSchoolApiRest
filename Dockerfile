@@ -1,7 +1,6 @@
-#BUILD
+# BUILD
 # Set main image
-ARG TAG-BUILD=3.9.6-amazoncorretto-17-debian
-FROM maven:${TAG-BUILD} as builder
+FROM maven:3.9.6-eclipse-temurin-17-alpine as builder
 
 # Set the working directory using variables
 WORKDIR /app
