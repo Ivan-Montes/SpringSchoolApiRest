@@ -18,7 +18,7 @@ Just cloning or downloading the project.
 
 ## Usage
 
-- Check and try it from you favorite IDE. Take advantage of Open API and Swagger UI hosted in https://localhost:8080/swagger-ui/index.html
+- Check and try it from you favorite IDE. Take advantage of Open API and Swagger UI hosted in http://localhost:8080/swagger-ui/index.html
 
 - Or you could use the jar file hosted in /target. For this, run these commands from the folder and send your HTTP request to localhost:8080
 
@@ -32,7 +32,7 @@ Example of URL for and HTTP GET request in local environment
 
 ```
 ** Get a List of all teachers **
-http://localhost.onrender.com/api/teachers
+http://localhost:8080/api/teachers
 
 **  Get a student according to an Id **
 http://localhost:8080/api/students/2
